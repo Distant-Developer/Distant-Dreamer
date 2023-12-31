@@ -22,10 +22,20 @@ class dataSQL:
                 username TEXT,
                 email TEXT,
             );
+                                  
+            CREATE TABLE IF NOT EXISTS posts (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                owner_id INTEGER,
+            );
         ''')
         
-        # TODO!
+        # users
         # id -> unique id (each user assigned one)
         # token -> user's github id 
         # username -> user's github name
         # email -> user's github email
+
+        # posts
+        # id -> unique id (each post assigned one)
+        # owner_id -> unique id of user
+        # TODO! 
