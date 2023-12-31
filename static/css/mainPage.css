@@ -1,0 +1,13 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Your Nice Font', sans-serif; /* Replace 'Your Nice Font' with the actual font you want to use */
+  }
+
+.centered-text {
+    font-size: 3.5em; /* Adjust the font size as needed */
+    display: flex;
+  }
