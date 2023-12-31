@@ -12,10 +12,25 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            height: 100vh;
+            width: 100%;
+            margin: 0;
+        }
+
+        .flex-row-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            height: 100vh;
+            width: 100%;
+            padding: 20px;
         }
     </style>
     <body>
+
         <div class="flex-container">
+
             <div style="font-size: 3.5em;">
                 Distant Developer
             </div>
@@ -24,15 +39,19 @@
                 Social Networking for Developers
             </div>
 
+
+            <div style="margin-top: 1%; margin-bottom: 1%;" class="w-8/12 sm:w-4/12 px-4">
+                <img style="border-radius: 30px;" src="{{ url_for('static',filename='img/carbon.png') }}" alt="..." class="shadow rounded max-w-full h-auto align-middle border-none" />
+            </div>
+
             <button style="margin-top: 8px;"    class="btn btn-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
-                  </svg>
-                  
+                </svg>
+                
                 Sign Up
-              </button>
+            </button>
 
         </div>
-
     </body>
 </html>
