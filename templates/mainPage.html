@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html data-theme="night">
     <head>
-        <link rel= "stylesheet" type="text/css" href= "{{ url_for('static',filename='css/mainPage.css') }}"/>
         <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet" type="text/css" />
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/night-owl.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
     </head>
     <style>
         .flex-container {
@@ -35,23 +38,52 @@
                 Distant Developer
             </div>
 
-            <div style="font-size: 2em;">
+            <div style="font-size: 2em; margin-bottom: 1rem;">
                 Social Networking for Developers
             </div>
 
+            <div class="mockup-code">
+                <pre><code class="language-python" style="background-color: transparent; font-size: large; margin-top: auto; padding-bottom: 2%;">'''If this means something to you
+then you are the right place'''
 
-            <div style="margin-top: 1%; margin-bottom: 1%;" class="w-8/12 sm:w-4/12 px-4">
-                <img style="border-radius: 30px;" src="{{ url_for('static',filename='img/carbon.png') }}" alt="..." class="shadow rounded max-w-full h-auto align-middle border-none" />
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return 'Hello world.'
+
+app.run(host='0.0.0.0', port=8080)
+
+</code></pre>
+              </div>
+
+            
+            <div class="flex flex-row gap-x-4" style="margin-top: 8px;">
+            
+                <button class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
+                    </svg>
+                    
+                    Sign Up
+                </button>
+
+                <button class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                    </svg>
+                    
+                    
+                    Lobby
+                </button>
+
             </div>
 
-            <button style="margin-top: 8px;"    class="btn btn-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
-                </svg>
-                
-                Sign Up
-            </button>
-
         </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+        <script>hljs.highlightAll();</script>
     </body>
 </html>
