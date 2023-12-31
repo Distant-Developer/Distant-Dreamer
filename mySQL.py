@@ -17,14 +17,15 @@ class dataSQL:
     def create_tables(self):
         self.cursor.executescript('''
             CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 token TEXT UNIQUE,
                 username TEXT,
-                email TEXT
+                email TEXT,
             );
         ''')
-
-        #id -> Unique Github ID
-        #token -> todo()!
-        #username -> User's Username
-        #email -> Email Associated with Github
+        
+        # TODO!
+        # id -> unique id (each user assigned one)
+        # token -> user's github id 
+        # username -> user's github name
+        # email -> user's github email
