@@ -11,6 +11,9 @@ def index():
 @app.route("/lobby")
 def lobby():
     return render_template("lobby.html")
-    
+
+@app.route("/user")
+def userPage():
+    return render_template("userPage.html")
 if __name__ == "__main__":
     app.run()
