@@ -161,3 +161,4 @@ cython_debug/
 
 #SQL
 .db
+database.db

@@ -3,6 +3,7 @@ import mySQL
 
 app = Flask(__name__)
 db = mySQL.dataSQL("database.db")
+
 @app.route('/')
 def index():
     return render_template("mainPage.html")

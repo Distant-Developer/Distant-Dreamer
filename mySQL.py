@@ -20,14 +20,13 @@ class dataSQL:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 token TEXT UNIQUE,
                 username TEXT,
-                email TEXT,
+                email TEXT
             );
                                   
             CREATE TABLE IF NOT EXISTS posts (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                owner_id INTEGER,
-            );
-        ''')
+                owner_id INTEGER
+            );''')
         
         # users
         # id -> unique id (each user assigned one)
