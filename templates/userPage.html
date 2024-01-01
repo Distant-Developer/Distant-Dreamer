@@ -63,6 +63,11 @@
                           
                         <span class="text-2xl font-semibold whitespace-nowrap">#USERNAME HERE</span>
 
+                        <div class="badge badge-info gap-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4 stroke-current" viewBox="0 0 448 512"><path d="M224 0c17.7 0 32 14.3 32 32V48h16c17.7 0 32 14.3 32 32s-14.3 32-32 32H256v48H408c22.1 0 40 17.9 40 40c0 5.3-1 10.5-3.1 15.4L368 400H80L3.1 215.4C1 210.5 0 205.3 0 200c0-22.1 17.9-40 40-40H192V112H176c-17.7 0-32-14.3-32-32s14.3-32 32-32h16V32c0-17.7 14.3-32 32-32zM38.6 473.4L80 432H368l41.4 41.4c4.2 4.2 6.6 10 6.6 16c0 12.5-10.1 22.6-22.6 22.6H54.6C42.1 512 32 501.9 32 489.4c0-6 2.4-11.8 6.6-16z"/></svg>
+                          Staff
+                        </div>
+
                         <div class="flex flex-row items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="fill-current" height="24" width="24" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
                             <span class="self-center text-lg font-semibold whitespace-nowrap" style="color:oklch(var(--s));">Linkedin</span>
@@ -73,6 +78,32 @@
 
                           <span class="self-center text-lg font-semibold whitespace-nowrap" style="color:oklch(var(--s));">Github</span>
                         </div>
+
+                        <button class="btn" onclick="modal_user_detail.showModal()">Edit About Me</button>
+                        <dialog id="modal_user_detail" class="modal">
+                          <div class="modal-box modal-middle">
+                            
+                            <h3 class="font-bold text-lg">Editing My Identity...</h3>
+                            <p class="py-4">no way IRS!</p>
+
+                            <div class="label"><span class="label-text">Github Link</span></div>
+                            <input type="text" placeholder="..." class="input input-bordered input-primary w-full max-w-xs" />
+
+                            <div class="label"><span class="label-text">LinkedIn Link</span></div>
+                            <input type="text" placeholder="..." class="input input-bordered input-primary w-full max-w-xs" />
+
+                            
+                            
+                            <form method="post" class="modal-open">
+                              <!--<input type="text" name="description" id="description" placeholder="Type here" class="input input-bordered input-primary w-full max-w-xs" />-->
+                              
+                              <div class="modal-action p-1" style="margin: 0;">
+                                <button class="btn btn-primary">Save</button>
+                            </div>
+                            </form>
+                          </div>
+                        </dialog>
+
                     </div>
                     <div class="flex flex-col gap-2 grow">
                       <div class="divider hover:font-bold divider-primary"> About Me </div>
@@ -82,10 +113,6 @@
                       <button class="btn" onclick="modal_about_me.showModal()">Edit About Me</button>
                       <dialog id="modal_about_me" class="modal">
                         <div class="modal-box modal-middle">
-
-                          <form method="dialog">
-                            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                          </form>
                           
                           <h3 class="font-bold text-lg">Editing About Me...</h3>
                           <p class="py-4">Tell the world who you are</p>
@@ -95,13 +122,10 @@
                             <!--<input type="text" name="description" id="description" placeholder="Type here" class="input input-bordered input-primary w-full max-w-xs" />-->
                             <textarea name="description" id="description" placeholder="Type here" class="textarea textarea-primary w-full" placeholder="Bio"></textarea>
                             
-                            <div class="modal-action" style="margin-top: 0px;">
-                                <button class="btn">Save</button>
-                            </div>
+                            <div class="modal-action p-1" style="margin: 0;">
+                              <button class="btn btn-primary">Save</button>
+                          </div>
                           </form>
-
-
-                          
                         </div>
                       </dialog>
 
@@ -109,8 +133,9 @@
                       <div class="divider hover:font-bold divider-primary"> Experience </div>
                       <div class = "flex flex-col">
 
-                        <div class="flex flex-row p-4">
+                        <div class="flex flex-row p-4 group">
                           <img src="https://raw.githubusercontent.com/Distant-Developer/Distant-Dreamer/main/static/img/logo.svg" style="padding-right:20px;" class="h-12" style="aspect-ratio: 1/1;" alt="Flowbite Logo" />
+                          
                           <div class = "flex flex-col w-full">
                             <div class = "flex flex-row w-full">
                               <p class = "h-12 text-4xl flex-1"> Founder </p>
@@ -118,6 +143,15 @@
                             </div>
                             <p class = "text-base" style="color: oklch(var(--bc));"> Worked mostly on Full-stack code </p>
                           </div>
+
+
+                          <div class="hidden group-hover:block">
+                            <button class="btn btn-square btn-outline btn-warning" style="margin-left: 20px;">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                            </button>
+                          </div>
+
+
                         </div>
 
                       </div>
@@ -125,16 +159,12 @@
                       <button class="btn" onclick="modal_experience.showModal()">Add Experiences</button>
                       <dialog id="modal_experience" class="modal">
                         <div class="modal-box modal-middle">
-                          <form method="dialog">
-                            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                          </form>
                           
                           <h3 class="font-bold text-lg">Adding Experiences...</h3>
                           <p class="py-4">Show the world what you did</p>
                           
                           
-                          <form method="post" class="modal-open">
-                            <!--<input type="text" name="description" id="description" placeholder="Type here" class="input input-bordered input-primary w-full max-w-xs" />-->
+                          <form method="post">
                             <div class="label"><span class="label-text">Position Name</span></div>
                             <input type="text" placeholder="Name of Position" class="input input-bordered input-primary w-full max-w-xs" />
 
@@ -147,15 +177,56 @@
                             <div class="label"><span class="label-text">Description of Work</span></div>
                             <textarea name="description" id="description" placeholder="Type here" class="textarea textarea-primary w-full" placeholder="Bio"></textarea>
                             
-                            <div class="modal-action" style="margin-top: 0px;">
-                                <button class="btn">Save</button>
+                            <div class="modal-action p-1" style="margin: 0;">
+                                <button class="btn btn-primary">Save</button>
                             </div>
+                            
                           </form>
-
-
                         </div>
                       </dialog>
+
                       <div class="divider hover:font-bold divider-primary"> Education </div>
+
+                      <div class = "flex flex-col">
+                        <div class="flex flex-row p-4">
+                          <img src="https://raw.githubusercontent.com/Distant-Developer/Distant-Dreamer/main/static/img/logo.svg" style="padding-right:20px;" class="h-12" style="aspect-ratio: 1/1;" alt="Flowbite Logo" />
+                          <div class = "flex flex-col w-full">
+                            <div class = "flex flex-row w-full">
+                              <p class = "h-12 text-4xl flex-1"> Unniversity Name </p>
+                              <p class = "text-sm flex-none"> 2023 - 2024</p>
+                            </div>
+                            <p class = "text-base" style="color: oklch(var(--bc));"> what I did at the unniversity </p>
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <button class="btn" onclick="modal_education.showModal()">Add Education</button>
+                      <dialog id="modal_education" class="modal">
+                        <div class="modal-box modal-middle">
+                          
+                          <h3 class="font-bold text-lg">Adding Education...</h3>
+                          <p class="py-4">Show the world what you learn</p>
+                          
+                          
+                          <form method="post">
+                            <div class="label"><span class="label-text">Unniversity Name</span></div>
+                            <input type="text" placeholder="Campus Name" class="input input-bordered input-primary w-full max-w-xs" />
+
+                            <div class="label"><span class="label-text">Dates Studies</span></div>
+                            <input type="text" placeholder="" class="input input-bordered input-primary w-full max-w-xs" />
+
+                            <div class="label"><span class="label-text">Other Activities</span></div>
+                            <textarea name="description" id="description" placeholder="Type here" class="textarea textarea-primary w-full" placeholder="Bio"></textarea>
+                            
+                            <div class="modal-action p-1" style="margin: 0;">
+                                <button class="btn btn-primary">Save</button>
+                            </div>
+                            
+                          </form>
+                        </div>
+                      </dialog>
+
                       <div class="divider hover:font-bold divider-primary"> License & Certification </div>
                     </div>
                   </div>
