@@ -79,23 +79,24 @@
                       <article class="prose">
                         Default!
                       </article>
-                      <button class="btn" onclick="my_modal_1.showModal()">Edit About Me</button>
-                      <dialog id="my_modal_1" class="modal">
+                      <button class="btn" onclick="modal_about_me.showModal()">Edit About Me</button>
+                      <dialog id="modal_about_me" class="modal">
                         <div class="modal-box modal-middle">
 
                           <form method="dialog">
-                            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"></button>
+                            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                           </form>
                           
                           <h3 class="font-bold text-lg">Editing About Me...</h3>
-                          <p class="py-4">ESC Key to Leave and Enter Key to Save</p>
+                          <p class="py-4">Tell the world who you are</p>
                           
                           
                           <form method="post" class="modal-open">
                             <!--<input type="text" name="description" id="description" placeholder="Type here" class="input input-bordered input-primary w-full max-w-xs" />-->
                             <textarea name="description" id="description" placeholder="Type here" class="textarea textarea-primary w-full" placeholder="Bio"></textarea>
-                            <div class="modal-action">
-                                <button class="btn">Close</button>
+                            
+                            <div class="modal-action" style="margin-top: 0px;">
+                                <button class="btn">Save</button>
                             </div>
                           </form>
 
@@ -106,6 +107,54 @@
 
 
                       <div class="divider hover:font-bold divider-primary"> Experience </div>
+                      <div class = "flex flex-col">
+
+                        <div class="flex flex-row p-4">
+                          <img src="https://raw.githubusercontent.com/Distant-Developer/Distant-Dreamer/main/static/img/logo.svg" style="padding-right:20px;" class="h-12" style="aspect-ratio: 1/1;" alt="Flowbite Logo" />
+                          <div class = "flex flex-col w-full">
+                            <div class = "flex flex-row w-full">
+                              <p class = "h-12 text-4xl flex-1"> Founder </p>
+                              <p class = "text-sm flex-none"> 2023 - 2024</p>
+                            </div>
+                            <p class = "text-base" style="color: oklch(var(--bc));"> Worked mostly on Full-stack code </p>
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <button class="btn" onclick="modal_experience.showModal()">Add Experiences</button>
+                      <dialog id="modal_experience" class="modal">
+                        <div class="modal-box modal-middle">
+                          <form method="dialog">
+                            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                          </form>
+                          
+                          <h3 class="font-bold text-lg">Adding Experiences...</h3>
+                          <p class="py-4">Show the world what you did</p>
+                          
+                          
+                          <form method="post" class="modal-open">
+                            <!--<input type="text" name="description" id="description" placeholder="Type here" class="input input-bordered input-primary w-full max-w-xs" />-->
+                            <div class="label"><span class="label-text">Position Name</span></div>
+                            <input type="text" placeholder="Name of Position" class="input input-bordered input-primary w-full max-w-xs" />
+
+                            <div class="label"><span class="label-text">Company Name</span></div>
+                            <input type="text" placeholder="Company you worked for" class="input input-bordered input-primary w-full max-w-xs" />
+
+                            <div class="label"><span class="label-text">Dates Worked</span></div>
+                            <input type="text" placeholder="" class="input input-bordered input-primary w-full max-w-xs" />
+
+                            <div class="label"><span class="label-text">Description of Work</span></div>
+                            <textarea name="description" id="description" placeholder="Type here" class="textarea textarea-primary w-full" placeholder="Bio"></textarea>
+                            
+                            <div class="modal-action" style="margin-top: 0px;">
+                                <button class="btn">Save</button>
+                            </div>
+                          </form>
+
+
+                        </div>
+                      </dialog>
                       <div class="divider hover:font-bold divider-primary"> Education </div>
                       <div class="divider hover:font-bold divider-primary"> License & Certification </div>
                     </div>
