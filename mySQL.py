@@ -38,3 +38,6 @@ class dataSQL:
         # id -> unique id (each post assigned one)
         # owner_id -> unique id of user
         # TODO! 
+    
+    def execute_script(self, target):
+        self.cursor.executescript(f'''{target}''')

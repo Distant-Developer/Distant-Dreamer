@@ -1,8 +1,14 @@
 from flask import Flask, render_template, request
 import mySQL
+from secret import CLIENT_ID, CLIENT_SECRET
+from routes.authentication import *
 
 app = Flask(__name__)
-db = mySQL.dataSQL("database.db")
+app.secret_key = "SECRET_KEY"
+app.config["GITHUB_CLIENT_ID"] = CLIENT_ID
+app.config["GITHUB_CLIENT_SECRET"] = CLIENT_SECRET
+
+database = mySQL.dataSQL("database.db")
 
 @app.route('/')
 def index():
@@ -29,4 +35,6 @@ def businessTemplate():
     return render_template("businessTemplate.html")
 
 if __name__ == "__main__":
+    app.register_blueprint(authentication)
+    
     app.run()
