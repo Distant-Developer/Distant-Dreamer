@@ -1,4 +1,5 @@
 import sqlite3
+from SQL.Experience import Experience
 
 class dataSQL:
     def __init__(self, dbfile):
@@ -125,4 +126,15 @@ class dataSQL:
         list = self.use_database(
             "SELECT * from experiences where associated_user_id = ?", (users_id,), easySelect=False
         )
-        return list
+
+        experience_list = [Experience(*row) for row in list]
+
+        return experience_list
+    
+    def is_staff(self, users_id):
+        item = self.use_database(
+            "SELECT is_staff from users where id = ?", (users_id,)
+        )[0]
+
+        if item == 0: return False 
+        else: return True

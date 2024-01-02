@@ -27,12 +27,43 @@ def lobby():
 @app.route("/user", methods=['GET', 'POST'])
 def userPage():
     if request.method == 'POST':
-        incoming_message = request.form.get("description")  # Assuming you have a form field named 'message'
-        print("Incoming message:", incoming_message)
-    
-    experiences = database.get_experiences(session["id"])
+        action = request.form.get("action")  # Assuming you have a form field named 'message'
+        if action == "addEducation": 
+            database.use_database(
+                "INSERT INTO experiences (associated_user_id, company_name, company_logo_url, position_title, position_description, dates) VALUES (?, ?, ?, ?, ?, ?)",
+                (
+                    session["id"], 
+                    request.form.get("company_name"),
+                    request.form.get("company_logo"),
+                    request.form.get("position_name"),
+                    request.form.get("description"),
+                    request.form.get("position_dates")
+                    
+                ),
+            )
+
+            pass
+        elif action == "editEducation":
+            database.use_database(
+                f"UPDATE experiences SET company_name = ?, company_logo_url = ?, position_title = ?, position_description = ?, dates = ? WHERE id = ?;", 
+                (   
+                    request.form.get("company_name"),
+                    request.form.get("company_logo"),
+                    request.form.get("position_name"),
+                    request.form.get("description"),
+                    request.form.get("position_dates"),
+                    request.form.get("unique_id")
+                ),
+            )
+
         
-    return render_template("userPage.html", session=session)
+        return redirect(url_for('userPage'))
+
+            
+    experiences = database.get_experiences(session["id"])
+
+        
+    return render_template("userPage.html", session=session, experiences=experiences, is_staff=database.is_staff(session["id"]))
 
 @app.route("/jobs")
 def jobPostings():

@@ -63,10 +63,12 @@
                           
                         <span class="text-2xl font-semibold whitespace-nowrap">{{session.username}}</span>
 
+                        {% if is_staff %}
                         <div class="badge badge-info gap-2">
                           <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4 stroke-current" viewBox="0 0 448 512"><path d="M224 0c17.7 0 32 14.3 32 32V48h16c17.7 0 32 14.3 32 32s-14.3 32-32 32H256v48H408c22.1 0 40 17.9 40 40c0 5.3-1 10.5-3.1 15.4L368 400H80L3.1 215.4C1 210.5 0 205.3 0 200c0-22.1 17.9-40 40-40H192V112H176c-17.7 0-32-14.3-32-32s14.3-32 32-32h16V32c0-17.7 14.3-32 32-32zM38.6 473.4L80 432H368l41.4 41.4c4.2 4.2 6.6 10 6.6 16c0 12.5-10.1 22.6-22.6 22.6H54.6C42.1 512 32 501.9 32 489.4c0-6 2.4-11.8 6.6-16z"/></svg>
                           Staff
                         </div>
+                        {% endif %}
 
                         <div class="flex flex-row items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="fill-current" height="24" width="24" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
@@ -133,26 +135,82 @@
                       <div class="divider hover:font-bold divider-primary"> Experience </div>
                       <div class = "flex flex-col">
 
+                        {% for experience in experiences %}
                         <div class="flex flex-row p-4 group">
-                          <img src="https://raw.githubusercontent.com/Distant-Developer/Distant-Dreamer/main/static/img/logo.svg" style="padding-right:20px;" class="h-12" style="aspect-ratio: 1/1;" alt="Flowbite Logo" />
                           
-                          <div class = "flex flex-col w-full">
-                            <div class = "flex flex-row w-full">
-                              <p class = "h-12 text-4xl flex-1"> Founder </p>
-                              <p class = "text-sm flex-none"> 2023 - 2024</p>
+                          <img src="{{experience.company_logo_url}}" style="padding-right:20px;" class="h-12" style="aspect-ratio: 1/1;"/>
+                          
+                            <div class = "flex flex-col w-full">
+                              <div class = "flex flex-row w-full">
+                                <p class = "h-12 text-4xl flex-1"> {{experience.position_title}} </p>
+                                <p class = "text-sm flex-none"> {{experience.dates}} </p>
+                              </div>
+                              <p class = "text-base" style="color: oklch(var(--bc));"> {{experience.position_description}} </p>
+                            </div> 
+
+
+                            <div class = "flex flex-col gap-1" style="margin-left: 20px;">
+                              <div class="hidden group-hover:block">
+                                <button class="btn btn-square btn-outline btn-warning">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                </button>
+                              </div>
+
+                              <div class="hidden group-hover:block">
+                                <button onclick="edit_experience_{{experience.id}}.showModal()" class="btn btn-square btn-outline btn-primary">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="oklch(var(--p))" stroke="currentColor" viewBox="0 0 512 512"><path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"/></svg>
+                                </button>
+                                
+                                <dialog id="edit_experience_{{experience.id}}" class="modal">
+                                  <div class="modal-box modal-middle">
+                                    
+                                    <h3 class="font-bold text-lg">Adding Experiences...</h3>
+                                    <p class="py-4">Show the world what you did</p>
+                                    
+                                    
+                                    <form method="post">
+                                      <div class="label"><span class="label-text">Company Name</span></div>
+                                      <input type="text" name="company_name" placeholder="Company you worked for" value="{{experience.company_name}}" class="input input-bordered input-primary w-full max-w-xs" required/>
+          
+                                      <div class="label"><span class="label-text">Company Logo Url</span></div>
+                                      <input type="text" name="company_logo" placeholder="URL of Company Logo" value="{{experience.company_logo_url}}" class="input input-bordered input-primary w-full max-w-xs" required/>
+          
+                                      <div class="label"><span class="label-text">Position Name</span></div>
+                                      <input type="text" name="position_name" placeholder="Name of Position" value="{{experience.position_title}}"class="input input-bordered input-primary w-full max-w-xs" required/>
+          
+                                      <div class="label"><span class="label-text">Dates Worked</span></div>
+                                      <input type="text" name="position_dates" placeholder="June 2022 - March 2023" value="{{experience.dates}}" class="input input-bordered input-primary w-full max-w-xs" required/>
+          
+                                      <div class="label"><span class="label-text">Description of Work</span></div>
+                                      <textarea name="description" placeholder="Type here" class="textarea textarea-primary w-full">{{experience.position_description}}</textarea>
+          
+                                      <input type="hidden" name="action" value="editEducation"/>
+                                      <input type="hidden" name="unique_id" value="{{experience.id}}"/>
+                                      
+                                      <div class="modal-action p-1" style="margin: 0;">
+                                          <button class="btn btn-primary">Update</button>
+                                      </div>
+                                      
+                                    </form>
+                                  </div>
+                                </dialog>
+
+
+
+
+
+
+                              </div>
+
                             </div>
-                            <p class = "text-base" style="color: oklch(var(--bc));"> Worked mostly on Full-stack code </p>
-                          </div>
 
 
-                          <div class="hidden group-hover:block">
-                            <button class="btn btn-square btn-outline btn-warning" style="margin-left: 20px;">
-                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                            </button>
-                          </div>
+                          
 
 
                         </div>
+
+                        {% endfor %}
 
                       </div>
 
@@ -179,6 +237,8 @@
 
                             <div class="label"><span class="label-text">Description of Work</span></div>
                             <textarea name="description" id="description" placeholder="Type here" class="textarea textarea-primary w-full" placeholder="Bio"></textarea>
+
+                            <input type="hidden" name="action" value="addEducation"/>
                             
                             <div class="modal-action p-1" style="margin: 0;">
                                 <button class="btn btn-primary">Save</button>
@@ -187,6 +247,8 @@
                           </form>
                         </div>
                       </dialog>
+
+
 
                       <div class="divider hover:font-bold divider-primary"> Education </div>
 
