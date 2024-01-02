@@ -17,10 +17,11 @@ class dataSQL:
     def create_tables(self):
         self.cursor.executescript('''
             CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                token TEXT UNIQUE,
-                username TEXT,
-                email TEXT
+                "id"	INTEGER PRIMARY KEY AUTOINCREMENT,
+                "token"	TEXT UNIQUE,
+                "username"	TEXT DEFAULT NULL,
+                "email"	INTEGER,
+                "is_staff"	INTEGER NOT NULL DEFAULT 0
             );
                                   
             CREATE TABLE IF NOT EXISTS posts (
