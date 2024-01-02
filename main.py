@@ -10,21 +10,29 @@ app.config["GITHUB_CLIENT_SECRET"] = CLIENT_SECRET
 
 database = mySQL.dataSQL("database.db")
 
+def check_session(session):
+    return "token" in session and "username" in session and "id" in session
+
+
 @app.route('/')
 def index():
     return render_template("mainPage.html")
 
 @app.route("/lobby")
 def lobby():
-    return render_template("lobby.html")
+    sessionExists = check_session(session)
+    
+    return render_template("lobby.html", session=session)
 
 @app.route("/user", methods=['GET', 'POST'])
 def userPage():
     if request.method == 'POST':
         incoming_message = request.form.get("description")  # Assuming you have a form field named 'message'
         print("Incoming message:", incoming_message)
+    
+    experiences = database.get_experiences(session["id"])
         
-    return render_template("userPage.html")
+    return render_template("userPage.html", session=session)
 
 @app.route("/jobs")
 def jobPostings():

@@ -31,31 +31,26 @@ def authorize():
         "user", token=GITHUB.authorize_access_token()
     )
     profile = resp.json()
-    print(profile.get('email'))
 
-    x = database.execute_script(
-        "SELECT COUNT(*) FROM users WHERE token = ?", (profile["id"],)
-    )
-    if int(x[0]) >= 1:  # check if acct with token already exists
-        session["id"] = profile["id"]
+    if not database.user_exists(profile["id"]): 
+        database.use_database(
+            "INSERT INTO users (token, username, email, github_url) VALUES (?, ?, ?, ?)",
+            (
+                profile["id"], 
+                profile["login"],
+                profile["email"],
+                profile["html_url"]
+            ),
+        )
+    
+    id = database.use_database(
+        "SELECT id FROM users WHERE token = ?",
+        (profile["id"],)
+    )[0]
 
-        session["id"] =  str(profile["id"])
-        session["username"] = str(profile["login"])
-        target = session["id"]
-        return redirect("lobby")
-
-    db_thread = Thread(target=dataSQL(dbfile="database.db").use_database, args=(
-        "INSERT INTO users (username, token) VALUES (?, ?)",
-        (
-            profile["login"],
-            profile["id"],
-        ),
-    )
-    )
-    db_thread.start()
-    session["id"] = profile["id"]
-    session["id"] =  str(profile["id"])
+    session["token"] =  str(profile["id"])
     session["username"] = str(profile["login"])
+    session["id"] = id
 
     
     return redirect("lobby")
