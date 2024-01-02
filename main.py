@@ -24,5 +24,9 @@ def userPage():
 def jobPostings():
     return render_template("jobPosting.html")
 
+@app.route("/business") #this is for accessing a single business site 
+def businessTemplate():
+    return render_template("businessTemplate.html")
+
 if __name__ == "__main__":
     app.run()
