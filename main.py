@@ -20,5 +20,9 @@ def userPage():
         
     return render_template("userPage.html")
 
+@app.route("/jobs")
+def jobPostings():
+    return render_template("jobPosting.html")
+
 if __name__ == "__main__":
     app.run()
