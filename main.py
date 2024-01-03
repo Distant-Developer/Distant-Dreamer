@@ -13,6 +13,11 @@ database = mySQL.dataSQL("database.db")
 def check_session(session):
     return "token" in session and "username" in session and "id" in session
 
+@app.template_filter('nl2br')
+def nl2br_filter(s):
+    """Converts newlines to <br> tags."""
+    return s.replace('\n', '<br>')
+    
 
 @app.route('/')
 def index():
@@ -25,7 +30,7 @@ def lobby():
     return render_template("lobby.html", session=session)
 
 @app.route("/me", methods=['GET', 'POST'])
-def userPage():
+def mePage():
     if request.method == 'POST':
         action = request.form.get("action")  # Assuming you have a form field named 'message'
         if action == "addExp": 
@@ -107,7 +112,7 @@ def userPage():
             )
 
         
-        return redirect(url_for('userPage'))
+        return redirect(url_for('mePage'))
 
             
     experiences = database.get_experiences(session["id"])
@@ -115,7 +120,17 @@ def userPage():
     user = database.get_user(session["id"])
 
         
-    return render_template("userPage.html", session=session, experiences=experiences, user=user, educations=educations)
+    return render_template("mePage.html", session=session, experiences=experiences, user=user, educations=educations)
+
+@app.route("/user")
+def userPage():
+    id = request.args.get("id")
+    experiences = database.get_experiences(id)
+    educations = database.get_educations(id)
+    user = database.get_user(id)
+
+    return render_template("userPage.html", experiences=experiences, user=user, educations=educations)
+
 
 @app.route("/jobs")
 def jobPostings():
