@@ -1,3 +1,4 @@
+import re
 from flask import Flask, render_template, request
 import mySQL
 from secret import CLIENT_ID, CLIENT_SECRET
@@ -14,11 +15,21 @@ database = mySQL.dataSQL("database.db")
 def check_session(session):
     return "token" in session and "username" in session and "id" in session
 
-@app.template_filter('nl2br')
-def nl2br_filter(s):
-    """Converts newlines to <br> tags."""
-    return s.replace('\n', '<br>')
-    
+import markdown
+
+def convert_markdown_to_html(raw_text):
+    if raw_text == "" or raw_text == None:
+        return
+    # Define the pattern for matching <script> ... </script>
+    script_pattern = re.compile(r'<script\b[^>]*>.*?</script>', re.DOTALL)
+
+    # Use sub() method to replace matched patterns with an empty string
+    result_string = re.sub(script_pattern, '', raw_text)
+
+    html_content = markdown.markdown(raw_text)
+    return html_content
+
+
 
 @app.route('/')
 def index():
@@ -181,6 +192,14 @@ def verify():
 
     return render_template("verify.html")
 
+
+@app.route("/createPost", methods=['GET', 'POST'])
+def createPost():
+    if request.method == 'POST':
+        print("TEST")
+        return render_template("createPost.html", title=request.form.get("title", None), bef_content=request.form.get("content", None), content=convert_markdown_to_html(request.form.get("content", None)))
+    
+    return render_template("createPost.html", title="", content="...")
 if __name__ == "__main__":
 
     app.register_blueprint(authentication)

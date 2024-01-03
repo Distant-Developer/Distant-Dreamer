@@ -62,7 +62,7 @@ class dataSQL:
                 PRIMARY KEY("id" AUTOINCREMENT)
             );
                                   
-            CREATE TABLE "organizations" (
+            CREATE TABLE IF NOT EXISTS "organizations" (
                 "id"	INTEGER NOT NULL UNIQUE,
                 "owner_id"	INTEGER NOT NULL,
                 "type"	TEXT NOT NULL,
