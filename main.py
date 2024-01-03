@@ -140,7 +140,12 @@ def jobPostings():
 def businessTemplate():
     return render_template("businessTemplate.html")
 
+@app.route("/verify")
+def verify():
+    return render_template("verify.html")
+
 if __name__ == "__main__":
+
     app.register_blueprint(authentication)
     
     app.run()
