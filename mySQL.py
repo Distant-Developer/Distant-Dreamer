@@ -57,7 +57,19 @@ class dataSQL:
                 "position_description"	TEXT,
                 "dates" TEXT NOT NULL,
                 PRIMARY KEY("id" AUTOINCREMENT)
-            );''')
+            );
+                                  
+            CREATE TABLE "organizations" (
+                "id"	INTEGER NOT NULL UNIQUE,
+                "owner_id"	INTEGER NOT NULL,
+                "type"	TEXT NOT NULL,
+                "name"	TEXT NOT NULL,
+                "description"	TEXT,
+                "website"	TEXT,
+                "github_link"	TEXT,
+                PRIMARY KEY("id" AUTOINCREMENT)
+            );
+            ''')
         
         # users
         # id -> unique id (each user assigned one)
