@@ -55,15 +55,33 @@ def userPage():
                     request.form.get("unique_id")
                 ),
             )
+        
+        elif action == "delEducation":
+            database.use_database(
+                "DELETE FROM experiences WHERE id = ?", 
+                (   
+                    request.form.get("unique_id")
+                ),
+            )
+        
+        elif action == "upDescription":
+            database.use_database(
+                "UPDATE users SET description = ? WHERE id = ?", 
+                (   
+                    request.form.get("description"),
+                    session["id"]
+                ),
+            )
 
         
         return redirect(url_for('userPage'))
 
             
     experiences = database.get_experiences(session["id"])
+    user = database.get_user(session["id"])
 
         
-    return render_template("userPage.html", session=session, experiences=experiences, is_staff=database.is_staff(session["id"]))
+    return render_template("userPage.html", session=session, experiences=experiences, user=user)
 
 @app.route("/jobs")
 def jobPostings():

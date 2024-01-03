@@ -1,5 +1,6 @@
 import sqlite3
 from SQL.Experience import Experience
+from SQL.User import User
 
 class dataSQL:
     def __init__(self, dbfile):
@@ -24,7 +25,8 @@ class dataSQL:
                 "email"	INTEGER,
                 "is_staff"	INTEGER NOT NULL DEFAULT 0,
                 "linkedin_url" TEXT DEFAULT NULL,
-                "github_url" TEXT DEFAULT NULL
+                "github_url" TEXT DEFAULT NULL,
+                "description" TEXT DEFAULT NULL
             );
                                   
             CREATE TABLE IF NOT EXISTS posts (
@@ -131,6 +133,16 @@ class dataSQL:
 
         return experience_list
     
+    def get_user(self, users_id):
+        user_raw = self.use_database(
+            "SELECT * from users where id = ?", (users_id,), easySelect=False
+        )
+        #print(user_raw)
+        user = [User(*row) for row in user_raw]
+
+        return user[0]
+    
+
     def is_staff(self, users_id):
         item = self.use_database(
             "SELECT is_staff from users where id = ?", (users_id,)
