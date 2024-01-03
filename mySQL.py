@@ -1,6 +1,7 @@
 import sqlite3
 from SQL.Experience import Experience
 from SQL.User import User
+from SQL.Education import Education
 
 class dataSQL:
     def __init__(self, dbfile):
@@ -40,6 +41,16 @@ class dataSQL:
                 "company_name"	TEXT NOT NULL,
                 "company_logo_url"	TEXT NOT NULL,
                 "position_title"	TEXT NOT NULL,
+                "position_description"	TEXT,
+                "dates" TEXT NOT NULL,
+                PRIMARY KEY("id" AUTOINCREMENT)
+            );
+                                  
+            CREATE TABLE IF NOT EXISTS "educations" (
+                "id"	INTEGER,
+                "associated_user_id"	INTEGER NOT NULL,
+                "tuition_name"	TEXT NOT NULL,
+                "tuition_logo_url"	TEXT NOT NULL,
                 "position_description"	TEXT,
                 "dates" TEXT NOT NULL,
                 PRIMARY KEY("id" AUTOINCREMENT)
@@ -133,6 +144,14 @@ class dataSQL:
 
         return experience_list
     
+    def get_educations(self, users_id):
+        list = self.use_database(
+            "SELECT * from educations where associated_user_id = ?", (users_id,), easySelect=False
+        )
+
+        experience_list = [Education(*row) for row in list]
+        return experience_list
+
     def get_user(self, users_id):
         user_raw = self.use_database(
             "SELECT * from users where id = ?", (users_id,), easySelect=False

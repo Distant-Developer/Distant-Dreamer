@@ -28,7 +28,7 @@ def lobby():
 def userPage():
     if request.method == 'POST':
         action = request.form.get("action")  # Assuming you have a form field named 'message'
-        if action == "addEducation": 
+        if action == "addExp": 
             database.use_database(
                 "INSERT INTO experiences (associated_user_id, company_name, company_logo_url, position_title, position_description, dates) VALUES (?, ?, ?, ?, ?, ?)",
                 (
@@ -43,7 +43,7 @@ def userPage():
             )
 
             pass
-        elif action == "editEducation":
+        elif action == "editExp":
             database.use_database(
                 f"UPDATE experiences SET company_name = ?, company_logo_url = ?, position_title = ?, position_description = ?, dates = ? WHERE id = ?;", 
                 (   
@@ -56,9 +56,43 @@ def userPage():
                 ),
             )
         
-        elif action == "delEducation":
+        elif action == "delExp":
             database.use_database(
                 "DELETE FROM experiences WHERE id = ?", 
+                (   
+                    request.form.get("unique_id")
+                ),
+            )
+
+        if action == "addEdu": 
+            print("HI!")
+            database.use_database(
+                "INSERT INTO educations (associated_user_id, tuition_name, tuition_logo_url, position_description, dates) VALUES (?, ?, ?, ?, ?)",
+                (
+                    session["id"], 
+                    request.form.get("campus_name"),
+                    request.form.get("campus_logo"),
+                    request.form.get("description"),
+                    request.form.get("dates")
+                    
+                ),
+            )
+
+        elif action == "editEdu":
+            database.use_database(
+                f"UPDATE educations SET tuition_name = ?, tuition_logo_url = ?, position_description = ?, dates = ? WHERE id = ?;", 
+                (   
+                    request.form.get("campus_name"),
+                    request.form.get("campus_logo"),
+                    request.form.get("description"),
+                    request.form.get("dates"),
+                    request.form.get("unique_id")
+                ),
+            )
+        
+        elif action == "delEdu":
+            database.use_database(
+                "DELETE FROM educations WHERE id = ?", 
                 (   
                     request.form.get("unique_id")
                 ),
@@ -78,10 +112,13 @@ def userPage():
 
             
     experiences = database.get_experiences(session["id"])
+    educations = database.get_educations(session["id"])
+    for x in educations:
+        print(x.id)
     user = database.get_user(session["id"])
 
         
-    return render_template("userPage.html", session=session, experiences=experiences, user=user)
+    return render_template("userPage.html", session=session, experiences=experiences, user=user, educations=educations)
 
 @app.route("/jobs")
 def jobPostings():
