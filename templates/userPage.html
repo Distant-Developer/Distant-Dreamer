@@ -22,7 +22,7 @@
                     </div>
                     <div class="flex-1">
                         <a href="/user?={USERNAME}" class="flex items-center btn btn-ghost">
-                            <span class="self-center text-xl font-semibold whitespace-nowrap">#USERNAME HERE</span>
+                            <span class="self-center text-xl font-semibold whitespace-nowrap">#me-{{user.username}}</span>
                         </a>
                     </div>
                     <div class = "flex-none">
@@ -293,10 +293,10 @@
                                     <input type="text" name="campus_logo" placeholder="URL of Company Logo" value="{{education.tuition_logo_url}}" class="input input-bordered input-primary w-full max-w-xs" required/>
 
                                     <div class="label"><span class="label-text">Dates Studied</span></div>
-                                    <input type="text" name="dates" placeholder="June 2022 - March 2023" value="{{education.dates}}" class="input input-bordered input-primary w-full max-w-xs" required/>
+                                    <input type="text" name="dates" placeholder="June 2022 - March 2023" value="{{education.dates}}" class="input input-bordered input-primary w-full max-w-xs"/>
         
-                                    <div class="label"><span class="label-text">Description of Work</span></div>
-                                    <textarea name="description" placeholder="Type here" class="textarea textarea-primary w-full">{{education.position_description}}</textarea>
+                                    <div class="label"><span class="label-text">Description</span></div>
+                                    <textarea name="description" placeholder="Type here" class="textarea textarea-primary w-full">{{education.tuition_description}}</textarea>
         
                                     <input type="hidden" name="action" value="editEdu"/>
                                     <input type="hidden" name="unique_id" value="{{education.id}}"/>

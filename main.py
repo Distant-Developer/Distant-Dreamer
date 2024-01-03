@@ -24,7 +24,7 @@ def lobby():
     
     return render_template("lobby.html", session=session)
 
-@app.route("/user", methods=['GET', 'POST'])
+@app.route("/me", methods=['GET', 'POST'])
 def userPage():
     if request.method == 'POST':
         action = request.form.get("action")  # Assuming you have a form field named 'message'
@@ -65,7 +65,6 @@ def userPage():
             )
 
         if action == "addEdu": 
-            print("HI!")
             database.use_database(
                 "INSERT INTO educations (associated_user_id, tuition_name, tuition_logo_url, position_description, dates) VALUES (?, ?, ?, ?, ?)",
                 (
@@ -113,8 +112,6 @@ def userPage():
             
     experiences = database.get_experiences(session["id"])
     educations = database.get_educations(session["id"])
-    for x in educations:
-        print(x.id)
     user = database.get_user(session["id"])
 
         
