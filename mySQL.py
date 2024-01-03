@@ -34,8 +34,11 @@ class dataSQL:
             );
                                   
             CREATE TABLE IF NOT EXISTS posts (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                owner_id INTEGER
+                "id"	INTEGER NOT NULL UNIQUE,
+                "owner_id"	INTEGER NOT NULL,
+                "title"	TEXT NOT NULL,
+                "content"	TEXT NOT NULL,
+                PRIMARY KEY("id" AUTOINCREMENT)
             );
                                   
             CREATE TABLE IF NOT EXISTS "experiences" (
