@@ -24,8 +24,8 @@
                     </div>
 
                     <div class="flex-1">
-                        <a href="/lobby" class="flex items-center btn btn-ghost">
-                            <span class="self-center text-xl font-semibold whitespace-nowrap">#lobby</span>
+                        <a href="/verify" class="flex items-center btn btn-ghost">
+                            <span class="self-center text-xl font-semibold whitespace-nowrap">#verify</span>
                         </a>
                     </div>
 
@@ -66,10 +66,36 @@
 
                 </div>
               
-                <div class="flex flex-col">
+                <div class="flex flex-col mt-4 gap-2">
 
-                    <p class="text2xl">You Need to Verified!</p>
-                    <p>You don't need to have your email verified!</p>
+                    <p class="text-4xl">You Need to be Verified!</p>
+                    <p>Dear User, 
+
+                        It Appears your account is not verified in our system. Due to this, you aren't allowed to access the content or perform certain actions.
+
+                        Please input your email in this text input and a code will be sent to you. 
+                    </p>
+                    <p class="mt-4">Input Email</p>
+                    <form method="post">
+                        <div class="flex flex-row gap-4">
+                            <input type="email" name="email" placeholder="email@domain.com" class="input input-bordered input-primary w-full max-w-xs" required/>
+                            <button class="btn btn-primary btn-square btn-ghost">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 448 512" fill="oklch(var(--p))"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
+                            </button>
+
+                        </div>
+                    </form>
+
+                    <p class="mt-4">Input Code Here</p>
+                    <form method="post">
+                        <div class="flex flex-row gap-4">
+                            <input type="text" name="code" placeholder="..." class="input input-bordered input-primary w-full max-w-xs" required/>
+                            <button class="btn btn-primary btn-square btn-ghost">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 448 512" fill="oklch(var(--p))"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
+                            </button>
+
+                        </div>
+                    </form>
                 </div>
 
             </div> 

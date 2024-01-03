@@ -5,14 +5,14 @@ import ssl
 from email.message import EmailMessage
 from secret import APP_PASSWORD
 
-def send_email(recEmail):
+def send_email(recEmail, code):
     
     sender = "distantdeveloper.official@gmail.com"
     #reciever = ""
     password = APP_PASSWORD
 
     subject = "Verified Email; Distant Developer"
-    body = "Your code is"
+    body = "Your code: " + code
 
     em = EmailMessage()
     em["From"] = sender
@@ -25,3 +25,7 @@ def send_email(recEmail):
     with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
         smtp.login(sender, password)
         smtp.sendmail(sender, recEmail, em.as_string())
+
+
+def generateCode(id, email):
+    return f'{id}{email}'

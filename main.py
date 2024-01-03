@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import mySQL
 from secret import CLIENT_ID, CLIENT_SECRET
 from routes.authentication import *
+import SMTP
 
 app = Flask(__name__)
 app.secret_key = "SECRET_KEY"
@@ -140,8 +141,44 @@ def jobPostings():
 def businessTemplate():
     return render_template("businessTemplate.html")
 
-@app.route("/verify")
+@app.route("/verify", methods=['GET', 'POST'])
 def verify():
+    user = database.get_user(session["id"])
+
+    if request.method == 'POST':
+        if email := request.form.get("email"):
+
+            if user.is_verified: #if email already verified...then no need to change it.
+                return redirect("lobby")
+
+
+            database.use_database(
+                f"UPDATE users SET email = ? WHERE id = ?;", 
+                (   
+                    email,
+                    session["id"]
+                ),
+            )
+        
+            SMTP.send_email(email, SMTP.generateCode(session["id"],email))
+
+            return redirect("verify")
+            
+        elif code := request.form.get("code"):
+            #email already given
+            id = SMTP.generateCode( str(session["id"]) , user.email)
+            if id == code:
+                database.use_database(
+                    f"UPDATE users SET is_verified = ? WHERE id = ?;", 
+                    (   
+                        1,
+                        session["id"]
+                    ),
+                )
+
+                return redirect("lobby")
+
+
     return render_template("verify.html")
 
 if __name__ == "__main__":

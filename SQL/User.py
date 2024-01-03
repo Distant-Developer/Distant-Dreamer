@@ -2,11 +2,12 @@ import re
 
 
 class User:
-    def __init__(self, id, token, username, email, is_staff=False, linkedin_url=None, github_url=None, description=None):
+    def __init__(self, id, token, username, email, is_staff=0, is_verified=0, linkedin_url=None, github_url=None, description=None):
         self.id = id
         self.token = token
         self.username = username
         self.email = email
+        self.is_verified = self.int_to_bool(is_verified)
         self.is_staff = self.int_to_bool(is_staff)
         self.linkedin_url = linkedin_url
         self.github_url = github_url
@@ -25,6 +26,8 @@ class User:
         return self.github_url != None
     
     def remove_scripts(self, input_string):
+        if input_string == "" or input_string == None:
+            return
         # Define the pattern for matching <script> ... </script>
         script_pattern = re.compile(r'<script\b[^>]*>.*?</script>', re.DOTALL)
 

@@ -18,12 +18,15 @@ class dataSQL:
         self.create_tables()
 
     def create_tables(self):
+        #0 -> DEFAULT; FALSE
+        #1 -> NOT DEFAULT; TRUE
         self.cursor.executescript('''
             CREATE TABLE IF NOT EXISTS users (
                 "id"	INTEGER PRIMARY KEY AUTOINCREMENT,
                 "token"	TEXT UNIQUE,
                 "username"	TEXT DEFAULT NULL,
                 "email"	INTEGER,
+                "is_verified" INTEGER NOT NULL DEFAULT 0,
                 "is_staff"	INTEGER NOT NULL DEFAULT 0,
                 "linkedin_url" TEXT DEFAULT NULL,
                 "github_url" TEXT DEFAULT NULL,
