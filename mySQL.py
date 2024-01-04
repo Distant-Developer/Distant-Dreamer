@@ -238,4 +238,16 @@ class dataSQL:
         print("Tables in the database:")
         for table in table_names:
             print(table[0])
+        
+        return table_names
+    
+    def get_all_data(self, table):
 
+        self.connection = self.connect()
+
+        res = self.connection.execute("SELECT name FROM ?;", (table))
+        returned_value = res.fetchall()
+
+
+        self.close()
+        

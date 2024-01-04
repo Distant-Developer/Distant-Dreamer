@@ -216,6 +216,15 @@ def createPost():
             return redirect("lobby")
         
     return render_template("createPost.html", title="", content="...", user=database.get_user(session["id"]))
+
+@app.route("/staff")
+def staffPage():
+    tables = database.get_tables()
+
+    data = database.get_all_data(tables[0])
+    
+    return render_template("staffPage.html", tables=tables)
+
 if __name__ == "__main__":
 
     app.register_blueprint(authentication)
