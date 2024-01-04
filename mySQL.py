@@ -1,5 +1,6 @@
 from datetime import datetime
 import sqlite3
+from SQL.Activity import Activity
 from SQL.Experience import Experience
 from SQL.Post import Post
 from SQL.User import User
@@ -206,6 +207,15 @@ class dataSQL:
         )
         #print(user_raw)
         posts = [Post(*row) for row in raw]
+
+        return posts
+    
+    def get_all_activity(self):
+        raw = self.use_database(
+            "SELECT * from activity", easySelect=False
+        )
+        #print(user_raw)
+        posts = [Activity(*row) for row in raw]
 
         return posts
 
