@@ -196,10 +196,26 @@ def verify():
 @app.route("/createPost", methods=['GET', 'POST'])
 def createPost():
     if request.method == 'POST':
-        print("TEST")
-        return render_template("createPost.html", title=request.form.get("title", None), bef_content=request.form.get("content", None), content=convert_markdown_to_html(request.form.get("content", None)))
+        action = request.form.get("action")
+        print(action)
+        if action == "Preview":
+            return render_template("createPost.html", title=request.form.get("title", None), bef_content=request.form.get("content", None), content=convert_markdown_to_html(request.form.get("content", None)), user=database.get_user(session["id"]))
     
-    return render_template("createPost.html", title="", content="...")
+        elif action == "Post":
+            database.use_database(
+                "INSERT INTO posts (owner_id, title, content) VALUES (?, ?, ?)",
+                (
+                    session["id"], 
+                    request.form.get("title"),
+                    request.form.get("content")
+                ),
+            )
+
+            database.record_to_activity(session["id"], "posts")
+            
+            return redirect("lobby")
+        
+    return render_template("createPost.html", title="", content="...", user=database.get_user(session["id"]))
 if __name__ == "__main__":
 
     app.register_blueprint(authentication)

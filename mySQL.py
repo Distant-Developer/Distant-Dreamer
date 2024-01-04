@@ -1,3 +1,4 @@
+from datetime import datetime
 import sqlite3
 from SQL.Experience import Experience
 from SQL.User import User
@@ -70,6 +71,14 @@ class dataSQL:
                 "description"	TEXT,
                 "website"	TEXT,
                 "github_link"	TEXT,
+                PRIMARY KEY("id" AUTOINCREMENT)
+            );
+                                  
+            CREATE TABLE IF NOT EXISTS "activity" (
+                "id"	INTEGER NOT NULL UNIQUE,
+                "associated_id"	INTEGER NOT NULL,
+                "type"	TEXT NOT NULL,
+                "date"	TEXT NOT NULL,
                 PRIMARY KEY("id" AUTOINCREMENT)
             );
             ''')
@@ -151,7 +160,16 @@ class dataSQL:
             returned_value = res.fetchall()
 
         self.close()
+
         return returned_value
+    
+    def record_to_activity(self, id, type):
+        self.use_database(
+            'INSERT INTO activity (associated_id, type, date) VALUES (?, ?, ?)',
+            (
+                id, type, datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            ),
+        )
     
     def get_experiences(self, users_id):
         list = self.use_database(

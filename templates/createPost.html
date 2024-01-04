@@ -67,8 +67,8 @@
 
                 </div>
               
-                <div class="flex flex-col grow w-full mt-4">
-                    <div class="flex flex-1 flex-col border mt-4 p-10 gap-2">
+                <div class="flex flex-row grow  mt-4">
+                    <div class="flex flex-1 flex-col mt-4 p-10 gap-2">
                 
                         <p class=" text-2xl">Editor</p>
                 
@@ -76,55 +76,51 @@
 
                             <form method="post" class="card-body">     
                                     
-                                <label for="message" class="block text-2xl mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-                                    <input type="text" name="title" value="{{title}}" id="titleInput" placeholder="Type here" class="input text-base block p-2.5 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                                <label for="message" class="block text-2xl text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                                    <input type="text" name="title" maxlength="60" value="{{title}}" id="titleInput" placeholder="Type here" class="mb-2 text-base block p-2.5 w-full bg-primary-content-900 bg-primary-focus-50 rounded-lg border border-gray-300 text-base-content" />
                                 
-
-                                
-                
                                 <!--<input name="content" type="text" id="contentInput" value="{{bef_content}}" placeholder="Content" class="input input-ghost w-full max-w-xs text-base p-0" />-->
 
 
-                                <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your message</label>
-                                <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
-                                
-
-                                <div class="w-96">
-                                    <div class="relative w-full min-w-[200px]">
-                                      <textarea
-                                        class="peer h-full min-h-[100px] w-full resize-none rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"
-                                        placeholder=" "></textarea>
-                                      <label
-                                        class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                                        Message
-                                      </label>
-                                    </div>
-                                  </div>
+                                <label for="message" class="block text-sm font-medium text-gray-900 dark:text-white">Your message (HTML) </label>
+                                <textarea id="message" name="content" rows="4" maxlength="200" class="mb-2 p-2.5 block w-full text-sm bg-primary-neutral bg-primary-focus-50 rounded-lg border border-gray-300 text-base-content" placeholder="Write your thoughts here...">{{bef_content}}</textarea>
                                   
                 
-                                <button class="btn btn-primary">Preview</button>
+                                <input type="hidden" name="action" value="Preview"/>
+                                <button tabindex="0" class="btn btn-primary">Preview</button>
                             </form> 
                         </div>
                 
                     </div>
                 
-                    <div class="flex flex-1 flex-col border mt-4 gap-2">
+                    <div class="flex flex-1 flex-col mt-4 p-10 gap-2">
                 
-                        <p class="self-center text-2xl mt-4">Editor</p>
-                        <p class="self-center text-base italic">(.md file)</p>
+                        <p class="text-2xl">Preview</p>
                 
-                        <div class="self-center card w-96 bg-base-300 shadow-xl mt-4 mb-4">
-                            <div class="card-body">
+                        <div class="self-center card w-full bg-base-300 shadow-xl ">
+                            <form method="post" class="card-body">
+                              <div class="flex flex-row gap-2 ">
+                                <div class="avatar">
+                                  <div class="w-8 rounded"><img src="https://avatars.githubusercontent.com/u/{{session.token}}?v=4" alt="Tailwind-CSS-Avatar-component" /></div>
+                                </div>
+                                <p class="self-center">{{user.username}}</p>
+                              </div>
+
                                 <h2 id="displayedTitle" class="card-title text-2xl">{{title}}</h2>
-                
+                                <input type="hidden" name="title" value="{{title}}">
 
-                                
-
-                                <article class="prose lg:prose-xl">
+                                <article  class="prose lg:prose-xl">
                                     {{content | safe}}
                                 </article>
 
-                            </div>
+                                <input type="hidden" name="content" value="{{content}}">
+
+                                <input type="hidden" name="action" value="Post"/>
+                                <button tabindex="0" class="btn btn-primary">Post</button>
+                                
+                              </form>
+
+                            
                         </div>
                 
                     </div>
