@@ -72,14 +72,37 @@
                         {% for table in tables %}
                         <form method="post">
                             <input type="hidden" name="table" value="{{table[0]}}">
-                            <div tabindex="0" role="button" class="btn btn-primary m-1">
+                            <button tabindex="0" role="button" class="btn btn-primary m-1">
                                 {{table[0]}}
-                            </div>
+                            </button>
                         </form>
                         {% endfor %}
                     </div>
 
                     Data
+
+                    <div class="overflow-x-auto">
+                      <table class="table table-zebra">
+                        <!-- head -->
+                        <thead>
+                          <tr>
+                            {% for name in column_names %}
+                            <th>{{name}}</th>
+                            {% endfor %}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <!-- row 1 -->
+                          {% for item in data %}
+                          <tr>
+                            {% for x in item %}
+                            <th>{{x}}</th>
+                            {% endfor %}
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
                 </div>
 
 

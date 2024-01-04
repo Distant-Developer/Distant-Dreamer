@@ -217,13 +217,16 @@ def createPost():
         
     return render_template("createPost.html", title="", content="...", user=database.get_user(session["id"]))
 
-@app.route("/staff")
+@app.route("/staff", methods=['GET','POST'])
 def staffPage():
     tables = database.get_tables()
 
-    data = database.get_all_data(tables[0])
+    table = request.form.get("table", tables[0][0])
+
+
+    column_names, data = database.get_all_data(table)
     
-    return render_template("staffPage.html", tables=tables)
+    return render_template("staffPage.html", tables=tables, column_names=column_names, data=data)
 
 if __name__ == "__main__":
 

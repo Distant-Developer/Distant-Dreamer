@@ -235,19 +235,18 @@ class dataSQL:
         table_names = self.use_database(
             "SELECT name FROM sqlite_schema WHERE type ='table' AND name NOT LIKE 'sqlite_%';", () ,easySelect=False
         )
-        print("Tables in the database:")
-        for table in table_names:
-            print(table[0])
         
         return table_names
     
-    def get_all_data(self, table):
+    def get_all_data(self, table="users"):
 
         self.connection = self.connect()
 
-        res = self.connection.execute("SELECT name FROM ?;", (table))
+        res = self.connection.execute(f"SELECT * FROM {table}")
+        column_names = [description[0] for description in res.description]
         returned_value = res.fetchall()
 
-
         self.close()
+
+        return column_names, returned_value
         
