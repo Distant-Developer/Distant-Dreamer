@@ -227,3 +227,15 @@ class dataSQL:
 
         if item == 0: return False 
         else: return True
+
+
+    #This is Staff Related Stuff
+    
+    def get_tables(self):
+        table_names = self.use_database(
+            "SELECT name FROM sqlite_schema WHERE type ='table' AND name NOT LIKE 'sqlite_%';", () ,easySelect=False
+        )
+        print("Tables in the database:")
+        for table in table_names:
+            print(table[0])
+
