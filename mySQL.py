@@ -165,6 +165,8 @@ class dataSQL:
         return returned_value
     
     def record_to_activity(self, id, type):
+        #id -> USER ID; The Item Who Executed It
+        #type -> Post; Account Creation; Etc.
         self.use_database(
             'INSERT INTO activity (associated_id, type, date) VALUES (?, ?, ?)',
             (
@@ -198,7 +200,7 @@ class dataSQL:
 
         return user[0]
     
-    def get_post(self, users_id):
+    def get_post_by_user_id(self, users_id):
         raw = self.use_database(
             "SELECT * from posts where owner_id = ?", (users_id,), easySelect=False
         )
@@ -206,6 +208,7 @@ class dataSQL:
         posts = [Post(*row) for row in raw]
 
         return posts
+
 
     def is_staff(self, users_id):
         item = self.use_database(
