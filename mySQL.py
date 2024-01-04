@@ -1,6 +1,7 @@
 from datetime import datetime
 import sqlite3
 from SQL.Experience import Experience
+from SQL.Post import Post
 from SQL.User import User
 from SQL.Education import Education
 
@@ -197,6 +198,14 @@ class dataSQL:
 
         return user[0]
     
+    def get_post(self, users_id):
+        raw = self.use_database(
+            "SELECT * from posts where owner_id = ?", (users_id,), easySelect=False
+        )
+        #print(user_raw)
+        posts = [Post(*row) for row in raw]
+
+        return posts
 
     def is_staff(self, users_id):
         item = self.use_database(
