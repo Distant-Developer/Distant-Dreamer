@@ -25,7 +25,7 @@
 
                     <div class="flex-1">
                         <a href="/lobby" class="flex items-center btn btn-ghost">
-                            <span class="self-center text-xl font-semibold whitespace-nowrap">#lobby</span>
+                            <span class="self-center text-xl font-semibold whitespace-nowrap">#create</span>
                         </a>
                     </div>
 
@@ -65,46 +65,45 @@
                     </div>
 
                 </div>
-              
-                <div class="flex flex-col gap-2 mt-4">
-                    Tables
-                    <div class="flex flex-row gap-2">
-                        {% for table in tables %}
-                        <form method="post">
-                            <input type="hidden" name="table" value="{{table[0]}}">
-                            <button tabindex="0" role="button" class="btn btn-primary m-1">
-                                {{table[0]}}
-                            </button>
-                        </form>
-                        {% endfor %}
-                    </div>
 
-                    Data (Count: {{count[0]}})
 
-                    <div class="overflow-x-auto">
-                      <table class="table table-zebra">
-                        <!-- head -->
-                        <thead>
-                          <tr>
-                            {% for name in column_names %}
-                            <th>{{name}}</th>
-                            {% endfor %}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <!-- row 1 -->
-                          {% for item in data %}
-                          <tr>
-                            {% for x in item %}
-                            <th>{{x}}</th>
-                            {% endfor %}
-                          </tr>
-                          {% endfor %}
-                        </tbody>
-                      </table>
+                <div class="flex flex-col">
+                  Let's get started registering your business onto our platform.
+                  <div class="flex flex-row gap-2 mt-4">
+
+                    
+  
+                    <div class="flex flex-col flex-1 grow">
+                      <div class="card w-full bg-base-300 p-4">
+                        <div class="card-body p-4">
+
+                          <span class="label-text m-0">Name of Organization</span>
+                          <input type="text" name="name" placeholder="" class="input input-sm input-bordered w-full h-8 m-0" required/>
+
+                          <span class="label-text m-0">Website</span>
+                          <input type="url" placeholder="https:/...com" class="input input-sm input-bordered w-full h-8 m-0" required/>
+
+                          <span class="label-text m-0">Industry</span>
+                          <input type="text" placeholder="Type here" class="input input-sm input-bordered w-full h-8 m-0" required/>
+
+                          <span class="label-text m-0">Organization Size</span>
+                          <input type="number" placeholder="Type here" class="input input-sm input-bordered w-full h-8 m-0" required/>
+                        
+                        </div>
+                        
+                      </div>
                     </div>
+  
+                    <div class="flex flex-col flex-1 grow">
+                      <div class="card w-full bg-neutral">
+                        print hello world
+                      </div>
+                    </div>
+  
+                  </div>
+
                 </div>
-
+              
 
 
             </div> 

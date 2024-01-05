@@ -246,7 +246,9 @@ class dataSQL:
         column_names = [description[0] for description in res.description]
         returned_value = res.fetchall()
 
+        count = self.connection.execute(f"SELECT COUNT(*) FROM {table}").fetchone()
+
         self.close()
 
-        return column_names, returned_value
+        return column_names, returned_value, count
         

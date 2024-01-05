@@ -224,9 +224,14 @@ def staffPage():
     table = request.form.get("table", tables[0][0])
 
 
-    column_names, data = database.get_all_data(table)
+    column_names, data, count = database.get_all_data(table)
     
-    return render_template("staffPage.html", tables=tables, column_names=column_names, data=data)
+    return render_template("staffPage.html", tables=tables, column_names=column_names, data=data, count=count)
+
+@app.route("/register_busienss", methods=['GET','POST'])
+def createBusiness():
+    
+    return render_template("createOrg.html")
 
 if __name__ == "__main__":
 
