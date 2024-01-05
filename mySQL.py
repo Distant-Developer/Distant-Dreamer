@@ -68,11 +68,12 @@ class dataSQL:
             CREATE TABLE IF NOT EXISTS "organizations" (
                 "id"	INTEGER NOT NULL UNIQUE,
                 "owner_id"	INTEGER NOT NULL,
-                "type"	TEXT NOT NULL,
                 "name"	TEXT NOT NULL,
-                "description"	TEXT,
+                "industry"	TEXT NOT NULL,
+                "tagline"	TEXT,
                 "website"	TEXT,
                 "github_link"	TEXT,
+                "size" TEXT,
                 PRIMARY KEY("id" AUTOINCREMENT)
             );
                                   
