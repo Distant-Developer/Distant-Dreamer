@@ -230,6 +230,29 @@ def staffPage():
 
 @app.route("/new_business", methods=['GET','POST'])
 def createBusiness():
+    if request.method == 'POST':
+        name = request.form.get("name")
+        tagline = request.form.get("tagline")
+        website = request.form.get("website")
+        industry = request.form.get("industry")
+        size = request.form.get("size")
+
+
+        database.use_database(
+            "INSERT INTO organizations (owner_id, name, industry, tagline, website, size) VALUES (?, ?, ?, ?, ?, ?)",
+            (
+                session["id"], 
+                name,
+                industry,
+                tagline,
+                website,
+                size
+            ),
+        )
+
+        return redirect("lobby")
+        
+
     return render_template("createOrg.html")
 
 if __name__ == "__main__":

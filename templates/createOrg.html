@@ -73,33 +73,33 @@
                 
                     <div class="flex flex-col flex-1 grow">
                       <div class="card w-full bg-base-300 p-4">
-                        <div class="card-body p-4">
+                        <form method="post" class="card-body p-4">
                 
                           <div>
                             <span class="label-text m-0">Organization Name</span>
-                            <input id="name" type="text" placeholder="" class="input input-sm input-bordered w-full h-8 m-0" required maxlength="30"/>
+                            <input id="name" name="name" type="text" placeholder="" class="input input-sm input-bordered w-full h-8 m-0" required maxlength="30"/>
                           </div>
 
                           <div class="w-full">
                             <span class="label-text m-0">Tagline</span>
-                            <input id="tagline" type="text" placeholder="" class="input input-sm input-bordered w-full h-8 m-0" maxlength="100"/>
+                            <input name="tagline" id="tagline" type="text" placeholder="" class="input input-sm input-bordered w-full h-8 m-0" maxlength="100"/>
                             <p id="limit_tagline" class="label-text m-0 text-right">0/100</p>
                           </div>
 
                 
                           <div>
                             <span class="label-text m-0">Website</span>
-                            <input id="website" type="url" placeholder="https:/...com" class="input input-sm input-bordered w-full h-8 m-0" required />
+                            <input name="website" id="website" type="url" placeholder="https:/...com" class="input input-sm input-bordered w-full h-8 m-0" required />
                           </div>
                 
                           <div>
                             <span class="label-text m-0">Industry</span>
-                            <input id="industry" type="text" placeholder="Type here" class="input input-sm input-bordered w-full h-8 m-0" required />
+                            <input name="industry" id="industry" type="text" placeholder="Type here" class="input input-sm input-bordered w-full h-8 m-0" required />
                           </div>
                 
                           <div>
                             <span class="label-text m-0">Organization Size</span>
-                            <select id="orgSize" placeholder="Type here" class="input input-sm border w-full h-8 m-0 pl-2" required>
+                            <select name="size" id="orgSize" placeholder="Type here" class="input input-sm border w-full h-8 m-0 pl-2" required>
                               <option hidden selected>Click Me!</option>
                               <option value="0-10">0-10</option>
                               <option value="10-100">10-100</option>
@@ -107,8 +107,14 @@
                               <option value="1000+">1000+</option>
                             </select>
                           </div>
+
+                          <div>
+                            <button class="btn btn-primary">
+                              Submit
+                            </button>
+                          </div>
                 
-                        </div>
+                        </form>
                 
                       </div>
                     </div>
@@ -118,7 +124,7 @@
                         <div class="card-body p-2">
                           <div class="flex flex-col gap-1">
                             <div class="avatar">
-                              <div class="w-20 rounded"><img src="https://avatars.githubusercontent.com/u/{{session.token}}?v=4"
+                              <div class="w-20 rounded-lg"><img src="https://avatars.githubusercontent.com/u/{{session.token}}?v=4"
                                   alt="Tailwind-CSS-Avatar-component" /></div>
                             </div>
                             <h2 id="cardTitle" class="card-title">Organization Name</h2>
