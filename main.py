@@ -228,9 +228,8 @@ def staffPage():
     
     return render_template("staffPage.html", tables=tables, column_names=column_names, data=data, count=count)
 
-@app.route("/register_busienss", methods=['GET','POST'])
+@app.route("/new_business", methods=['GET','POST'])
 def createBusiness():
-    
     return render_template("createOrg.html")
 
 if __name__ == "__main__":
