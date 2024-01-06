@@ -5,7 +5,7 @@ from secret import CLIENT_ID, CLIENT_SECRET
 from routes.authentication import *
 import SMTP
 
-app = Flask(__name__)
+app = Flask(__name__,static_folder='static')
 app.secret_key = "SECRET_KEY"
 app.config["GITHUB_CLIENT_ID"] = CLIENT_ID
 app.config["GITHUB_CLIENT_SECRET"] = CLIENT_SECRET
