@@ -1,9 +1,9 @@
-from flask import Blueprint, current_app, request, url_for, session, redirect, make_response
+from flask import Blueprint, current_app, jsonify, request, url_for, session, redirect, make_response
 from authlib.integrations.flask_client import OAuth
 from authlib.common.errors import AuthlibBaseError
-from mySQL import dataSQL
+from mySQL import database
 from secret import *
-from main import database
+from Client import ClientSession
 
 authentication = Blueprint("authentication", __name__)
 oauth = OAuth(current_app)
@@ -47,9 +47,18 @@ def authorize():
         (profile["id"],)
     )[0]
 
-    session["token"] =  str(profile["id"])
-    session["username"] = str(profile["login"])
-    session["id"] = id
+    #session["token"] =  str(profile["id"])
+    #session["username"] = str(profile["login"])
+
+    #session["id"] = id
+    #session["acct_type"] = "user" #user or business
+
+    session["client"] = ClientSession(
+                                    token=str(profile["id"]),
+                                    username=str(profile["login"]),
+                                    id=id,
+                                    acct_type="user"
+                                    ).serialize() 
 
     
     return redirect("lobby")

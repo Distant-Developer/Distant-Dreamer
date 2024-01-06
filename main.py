@@ -1,6 +1,6 @@
 import re
 from flask import Flask, render_template, request
-import mySQL
+from mySQL import dataSQL
 from secret import CLIENT_ID, CLIENT_SECRET
 from routes.authentication import *
 import SMTP
@@ -10,7 +10,7 @@ app.secret_key = "SECRET_KEY"
 app.config["GITHUB_CLIENT_ID"] = CLIENT_ID
 app.config["GITHUB_CLIENT_SECRET"] = CLIENT_SECRET
 
-database = mySQL.dataSQL("database.db")
+
 
 def check_session(session):
     return "token" in session and "username" in session and "id" in session
@@ -39,7 +39,7 @@ def index():
 def lobby():
     sessionExists = check_session(session)
     
-    return render_template("lobby.html", session=session)
+    return render_template("lobby.html", session=session["client"])
 
 @app.route("/me", methods=['GET', 'POST'])
 def mePage():

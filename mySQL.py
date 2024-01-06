@@ -262,3 +262,4 @@ class dataSQL:
 
         return column_names, returned_value, count
         
+database = dataSQL("database.db")

@@ -13,6 +13,19 @@ class User:
         self.github_url = github_url
         self.description = self.remove_scripts(description)
 
+    def to_dict(self):
+            return {
+                "id": self.id,
+                "token": self.token,
+                "username": self.username,
+                "email": self.email,
+                "is_verified": self.is_verified,
+                "is_staff": self.is_staff,
+                "linkedin_url": self.linkedin_url,
+                "github_url": self.github_url,
+                "description": self.description,
+            }
+    
     def int_to_bool(self, input):
         if input == 0: 
             return False 
