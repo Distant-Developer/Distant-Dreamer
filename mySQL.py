@@ -222,10 +222,19 @@ class dataSQL:
 
         return posts
     
-    def get_organizations(self):
-        raw = self.use_database(
-            "SELECT * from organizations", (), easySelect=False
-        )
+    def get_organizations(self, id=None, owner_id=None):
+        if target := id:
+            raw = self.use_database(
+                "SELECT * from organizations WHERE id = ?", (target), easySelect=False
+            )
+        elif target := owner_id:
+            raw = self.use_database(
+                "SELECT * from organizations WHERE owner_id = ?", (int(target),), easySelect=False
+            )
+        else:
+            raw = self.use_database(
+                "SELECT * from organizations", (), easySelect=False
+            )
         return [Organization(*row) for row in raw]
 
 
@@ -261,5 +270,7 @@ class dataSQL:
         self.close()
 
         return column_names, returned_value, count
+    
+    
         
 database = dataSQL("database.db")

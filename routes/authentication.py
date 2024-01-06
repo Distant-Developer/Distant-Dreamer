@@ -47,11 +47,11 @@ def authorize():
         (profile["id"],)
     )[0]
 
-    #session["token"] =  str(profile["id"])
-    #session["username"] = str(profile["login"])
+    session["token"] =  str(profile["id"])
+    session["username"] = str(profile["login"])
 
-    #session["id"] = id
-    #session["acct_type"] = "user" #user or business
+    session["id"] = id
+    session["acct_type"] = "user" #user or business
 
     session["client"] = ClientSession(
                                     token=str(profile["id"]),
@@ -59,6 +59,7 @@ def authorize():
                                     id=id,
                                     acct_type="user"
                                     ).serialize() 
-
     
     return redirect("lobby")
+
+

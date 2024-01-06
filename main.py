@@ -1,6 +1,6 @@
 import re
 from flask import Flask, render_template, request
-from mySQL import dataSQL
+from mySQL import database
 from secret import CLIENT_ID, CLIENT_SECRET
 from routes.authentication import *
 import SMTP
@@ -38,8 +38,13 @@ def index():
 @app.route("/lobby")
 def lobby():
     sessionExists = check_session(session)
-    
-    return render_template("lobby.html", session=session["client"])
+
+    print(session["client"])
+
+    user = database.get_user(session["client"]["id"])
+    bussinessAccounts = database.get_organizations(id=None, owner_id=session["id"])
+
+    return render_template("lobby.html", session=session["client"], user=user, bussinessAccounts=bussinessAccounts)
 
 @app.route("/me", methods=['GET', 'POST'])
 def mePage():

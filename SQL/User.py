@@ -1,5 +1,5 @@
 import re
-
+from SQL.Organization import Organization
 
 class User:
     def __init__(self, id, token, username, email, is_staff=0, is_verified=0, linkedin_url=None, github_url=None, description=None):
@@ -13,6 +13,8 @@ class User:
         self.github_url = github_url
         self.description = self.remove_scripts(description)
 
+
+
     def to_dict(self):
             return {
                 "id": self.id,
@@ -25,6 +27,7 @@ class User:
                 "github_url": self.github_url,
                 "description": self.description,
             }
+    
     
     def int_to_bool(self, input):
         if input == 0: 
