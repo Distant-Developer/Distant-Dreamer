@@ -4,7 +4,6 @@ from authlib.common.errors import AuthlibBaseError
 from mySQL import dataSQL
 from secret import *
 from main import database
-from discord import *
 
 authentication = Blueprint("authentication", __name__)
 oauth = OAuth(current_app)
