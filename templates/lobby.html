@@ -36,38 +36,6 @@
               </div>
             </div>
           </div>
-          </div>
-
-
-          <script>
-            document.addEventListener('DOMContentLoaded', function () {
-              // Get the radio buttons and html element
-              const themeRadios = document.querySelectorAll('input[name="theme-dropdown"]');
-              const htmlElement = document.documentElement;
-        
-              // Load the theme from localStorage if available
-              const savedTheme = localStorage.getItem('userTheme');
-              if (savedTheme) {
-                htmlElement.setAttribute('data-theme', savedTheme);
-                // Check the corresponding radio button
-                const selectedRadio = document.querySelector(`input[value="${savedTheme}"]`);
-                if (selectedRadio) {
-                  selectedRadio.checked = true;
-                }
-              }
-        
-              // Add event listener to each radio button
-              themeRadios.forEach(function (radio) {
-                radio.addEventListener('change', function () {
-                  // Save the selected theme to localStorage
-                  const selectedTheme = this.value;
-                  localStorage.setItem('userTheme', selectedTheme);
-        
-                  // Set the data-theme attribute of the html element
-                  htmlElement.setAttribute('data-theme', selectedTheme);
-                });
-              });
-            });
-          </script>
+          
           {%endblock%}
          
