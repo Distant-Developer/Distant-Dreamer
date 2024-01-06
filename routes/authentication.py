@@ -3,7 +3,6 @@ from authlib.integrations.flask_client import OAuth
 from authlib.common.errors import AuthlibBaseError
 from mySQL import database
 from secret import *
-from Client import ClientSession
 
 authentication = Blueprint("authentication", __name__)
 oauth = OAuth(current_app)
@@ -52,13 +51,6 @@ def authorize():
 
     session["id"] = id
     session["acct_type"] = "user" #user or business
-
-    session["client"] = ClientSession(
-                                    token=str(profile["id"]),
-                                    username=str(profile["login"]),
-                                    id=id,
-                                    acct_type="user"
-                                    ).serialize() 
     
     return redirect("lobby")
 

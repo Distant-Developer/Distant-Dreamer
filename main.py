@@ -44,7 +44,7 @@ def lobby():
     user = database.get_user(session["client"]["id"])
     bussinessAccounts = database.get_organizations(id=None, owner_id=session["id"])
 
-    return render_template("lobby.html", session=session["client"], user=user, bussinessAccounts=bussinessAccounts)
+    return render_template("lobby.html", session=user, bussinessAccounts=bussinessAccounts)
 
 @app.route("/me", methods=['GET', 'POST'])
 def mePage():
@@ -137,7 +137,7 @@ def mePage():
     user = database.get_user(session["id"])
 
         
-    return render_template("mePage.html", session=session, experiences=experiences, user=user, educations=educations)
+    return render_template("me.html", experiences=experiences, user=user, educations=educations)
 
 @app.route("/user")
 def userPage():
@@ -146,12 +146,12 @@ def userPage():
     educations = database.get_educations(id)
     user = database.get_user(id)
 
-    return render_template("userPage.html", experiences=experiences, user=user, educations=educations)
+    return render_template("user.html", experiences=experiences, user=user, educations=educations)
 
 
 @app.route("/jobs")
 def jobPostings():
-    return render_template("jobPosting.html")
+    return render_template("jobs.html")
 
 @app.route("/business") #this is for accessing a single business site 
 def businessTemplate():
@@ -198,7 +198,7 @@ def verify():
     return render_template("verify.html")
 
 
-@app.route("/createPost", methods=['GET', 'POST'])
+@app.route("/post/create", methods=['GET', 'POST'])
 def createPost():
     if request.method == 'POST':
         action = request.form.get("action")
@@ -233,7 +233,7 @@ def staffPage():
     
     return render_template("staffPage.html", tables=tables, column_names=column_names, data=data, count=count)
 
-@app.route("/new_business", methods=['GET','POST'])
+@app.route("/org/new", methods=['GET','POST'])
 def createBusiness():
     if request.method == 'POST':
         name = request.form.get("name")
@@ -262,7 +262,7 @@ def createBusiness():
     return render_template("createOrg.html")
 
 
-@app.route("/business/list")
+@app.route("/org/list")
 def businessList():
     organizations = database.get_organizations()
 

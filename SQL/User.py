@@ -13,8 +13,6 @@ class User:
         self.github_url = github_url
         self.description = self.remove_scripts(description)
 
-
-
     def to_dict(self):
             return {
                 "id": self.id,
