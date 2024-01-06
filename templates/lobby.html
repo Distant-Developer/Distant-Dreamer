@@ -3,53 +3,41 @@
 {% block lobbyButton %}
 <div class="flex-1">
   <a href="/lobby" class="flex items-center btn btn-ghost">
-      <span class="self-center text-xl font-semibold whitespace-nowrap">#test</span>
+      <span class="self-center text-xl font-semibold whitespace-nowrap">#lobby</span>
   </a>
 </div>
 {% endblock %}
 
 {% block title %}Lobby{% endblock %}
 {%block content%}
-
-                          
-                
-              
-              
-                <div class="flex flex-row gap-4">
-
-                  <div class="flex flex-none flex-col group">
-
-                    <div class="card w-48 bg-base-100 shadow-xl rounded border" style="border-color: oklch(var(--s));">
-
-                      <figure class="w-32 rounded avatar self-center pt-8">
-                            <div class="btn-ghost">
-                              <img class="w-32 rounded" src="https://avatars.githubusercontent.com/u/{{session.token}}?v=4" alt="Tailwind-CSS-Avatar-component" />
-                            </div>
-                      </figure>
-                      <div class="card-body pt-0">
-                        <h2 class="card-title"> {{session.username}} </h2>
-                        <!--<p>If a dog chews shoes whose shoes does he choose?</p>-->
-                      </div>
+           
+          <div class="flex flex-row gap-4">
+            <div class="flex flex-none flex-col group">
+              <div class="card w-48 bg-base-100 shadow-xl rounded border" style="border-color: oklch(var(--s));">
+                  <figure class="w-32 rounded avatar self-center pt-8">
+                    <div class="btn-ghost">
+                        <img class="w-32 rounded" src="https://avatars.githubusercontent.com/u/{{session.token}}?v=4" alt="Tailwind-CSS-Avatar-component" />
+                    </div>
+                  </figure>
+                  <div class="card-body pt-0">
+                    <h2 class="card-title"> {{session.username}} </h2>
+                    <!--<p>If a dog chews shoes whose shoes does he choose?</p>-->
+                  </div>
+              </div>
+            </div>
+            <div class="flex grow flex-col group">
+              <div class="card bg-base-100 shadow-xl rounded border w-full" style="border-color: oklch(var(--s));">
+                  <div class="flex flex-row pl-4 group">
+                    <img src="https://raw.githubusercontent.com/Distant-Developer/Distant-Dreamer/main/static/img/logo.svg" class="h-14 self-center" style="aspect-ratio: 1/1;" alt="Flowbite Logo" />
+                    <div class="card-body">
+                        <h2 class="card-title">Activity</h2>
                     </div>
                   </div>
+              </div>
+            </div>
+          </div>
+          </div>
 
-                  <div class="flex grow flex-col group">
-                    <div class="card bg-base-100 shadow-xl rounded border w-full" style="border-color: oklch(var(--s));">
-                      <div class="flex flex-row pl-4 group">
-                        <img src="https://raw.githubusercontent.com/Distant-Developer/Distant-Dreamer/main/static/img/logo.svg" class="h-14 self-center" style="aspect-ratio: 1/1;" alt="Flowbite Logo" />
-                      
-                        <div class="card-body">
-                          <h2 class="card-title">Activity</h2>
-                          
-                        </div>
-                      </div>
-                    </div>
-                    
-                  </div>
-
-                </div>
-
-            </div> 
 
           <script>
             document.addEventListener('DOMContentLoaded', function () {
