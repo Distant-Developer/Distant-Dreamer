@@ -2,6 +2,7 @@ from datetime import datetime
 import sqlite3
 from SQL.Activity import Activity
 from SQL.Experience import Experience
+from SQL.Organization import Organization
 from SQL.Post import Post
 from SQL.User import User
 from SQL.Education import Education
@@ -74,6 +75,7 @@ class dataSQL:
                 "website"	TEXT,
                 "github_link"	TEXT,
                 "size" TEXT,
+                "logo_url" TEXT NOT NULL,
                 PRIMARY KEY("id" AUTOINCREMENT)
             );
                                   
@@ -219,6 +221,13 @@ class dataSQL:
         posts = [Activity(*row) for row in raw]
 
         return posts
+    
+    def get_organizations(self):
+        raw = self.use_database(
+            "SELECT * from organizations", (), easySelect=False
+        )
+        return [Organization(*row) for row in raw]
+
 
 
     def is_staff(self, users_id):

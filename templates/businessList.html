@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html data-theme="default">
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/night-owl.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    </head>
+    <body>
+        <div class="drawer">
+            <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+            <div class="drawer-content" style="padding-left: 20%; padding-right: 20%;">
+
+                          
+                <div class="navbar bg-base-100 gap-2">
+
+                    <div class="flex-none">
+                        <label for="my-drawer" class="btn btn-square btn-ghost drawer-button"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                        </label>
+                    </div>
+
+                    <div class="flex-1">
+                        <a href="/lobby" class="flex items-center btn btn-ghost">
+                            <span class="self-center text-xl font-semibold whitespace-nowrap">#business-list</span>
+                        </a>
+                    </div>
+
+
+
+                    <div class = "flex-none">
+                        <div class="dropdown dropdown-end">
+                            <div tabindex="0" role="button" class="btn btn-ghost m-1">
+                              Theme
+                              <svg width="12px" height="12px" class="h-2 w-2 fill-current opacity-60 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg>
+                            </div>
+                            <ul tabindex="0" class="dropdown-content z-[1] p-2 shadow-2xl bg-base-300 rounded-box w-52">
+                                <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Default" value="default"/></li>
+                              <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Night" value="night"/></li>
+                              <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Retro" value="retro"/></li>
+                              <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Cyberpunk" value="cyberpunk"/></li>
+                              <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Valentine" value="valentine"/></li>
+                              <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Aqua" value="aqua"/></li>
+                            </ul>
+                          </div>
+                    </div>
+
+                    <div class="flex-none">
+                      <div class="dropdown dropdown-end">
+                          <div tabindex="0" role="button" class="avatar btn btn-ghost btn-square">
+                            <div class="w-10 rounded"><img src="https://avatars.githubusercontent.com/u/{{session.token}}?v=4" alt="Tailwind-CSS-Avatar-component" /></div>
+                          </div>
+                          <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 border" style="border-color: oklch(var(--s));">
+                            <li><a>
+                              <svg xmlns="http://www.w3.org/2000/svg" class="fill-current"  height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
+                              Profile</a></li>
+                            <li><a>
+                              <svg xmlns="http://www.w3.org/2000/svg" class="fill-current" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z"/></svg>
+                              Settings</a></li>
+                          </ul>
+                      </div>
+                    </div>
+
+                </div>
+
+
+                <div class="flex flex-row flex-wrap gap-3 self-center justify-center justify-items-center mt-4">
+                    {% for org in organizations %}
+                    <div class="w-full card bg-base-300 p-4 border">
+                        <div class="card-body p-2">
+                          <div class="flex flex-col gap-1">
+
+                            <div class = "flex flex-row gap-4">
+
+                                <div class = "flex flex-col">
+                                    <div class="avatar">
+                                        <div class="w-30 rounded-lg"><img src="{{org.logo_url}}"
+                                            alt="Tailwind-CSS-Avatar-component" /></div>
+                                    </div>
+                                
+                                    <a id="website_link" class="mt-2" href="{{org.website}}">
+                                        <button class="btn min-w-32 btn-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"  viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M432 64H208c-8.8 0-16 7.2-16 16V96H128V80c0-44.2 35.8-80 80-80H432c44.2 0 80 35.8 80 80V304c0 44.2-35.8 80-80 80H416V320h16c8.8 0 16-7.2 16-16V80c0-8.8-7.2-16-16-16zM0 192c0-35.3 28.7-64 64-64H320c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V192zm64 32c0 17.7 14.3 32 32 32H288c17.7 0 32-14.3 32-32s-14.3-32-32-32H96c-17.7 0-32 14.3-32 32z"/></svg>
+                                        Website
+                                        </button>
+                                    </a>
+
+                                </div>
+
+                                
+
+                                <div class = "flex flex-col">
+                                    <p id="cardTitle" class="card-title text-3xl">{{org.name}}</p>
+                                    <p id="tagline_preview" class="text-base">{{org.tagline}}</p>
+
+                                    <div class="flex flex-row items-center gap-2 mt-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-current" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M480 48c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48V96H224V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V96H112V24c0-13.3-10.7-24-24-24S64 10.7 64 24V96H48C21.5 96 0 117.5 0 144v96V464c0 26.5 21.5 48 48 48H304h32 96H592c26.5 0 48-21.5 48-48V240c0-26.5-21.5-48-48-48H480V48zm96 320v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM240 416H208c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zM128 400c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM560 256c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32zM256 176v32c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM112 160c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32zM256 304c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM112 320H80c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zm304-48v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM400 64c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V80c0-8.8 7.2-16 16-16h32zm16 112v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16z"/></svg>
+                                        <p id="industry_preview" class="text-base">{{org.industry}}</p>
+                                      </div>
+                                      
+                                      <div class="flex flex-row items-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-current" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM609.3 512H471.4c5.4-9.4 8.6-20.3 8.6-32v-8c0-60.7-27.1-115.2-69.8-151.8c2.4-.1 4.7-.2 7.1-.2h61.4C567.8 320 640 392.2 640 481.3c0 17-13.8 30.7-30.7 30.7zM432 256c-31 0-59-12.6-79.3-32.9C372.4 196.5 384 163.6 384 128c0-26.8-6.6-52.1-18.3-74.3C384.3 40.1 407.2 32 432 32c61.9 0 112 50.1 112 112s-50.1 112-112 112z"/></svg>
+                                        <p id="orgSize_preview" class="text-base">{{org.size}}</p>
+                                      </div>
+
+                                </div>
+
+                            </div>
+
+
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+                </div>
+                
+              
+
+
+            </div> 
+            <div class="drawer-side">
+              <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+              <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+                <a href="https://flowbite.com/" class="flex items-center" style="display: flex; justify-content: center; align-items: center; flex-direction: row;">
+
+                    <img src="https://raw.githubusercontent.com/Distant-Developer/Distant-Dreamer/main/static/img/logo.svg" class="h-6 me-3 sm:h-7" alt="Flowbite Logo" />
+                    <span class="self-center text-xl font-semibold whitespace-nowrap">Distant Developer</span>
+
+                 </a>
+
+                <div class="divider hover:font-bold divider-primary"> Main </div>
+                <li><a class="font-medium text-base">#lobby</a></li>
+                <li><a class="font-medium text-base">#projects</a></li>
+                <li><a class="font-medium text-base">#companies-hiring</a></li>
+
+                <div class="divider hover:font-bold divider-secondary"> Me </div>
+                <li><a class="font-medium text-base">#me</a></li>
+
+                <div class="divider hover:font-bold divider-secondary"> Organizations </div>
+                <li><a class="font-medium text-base">#create</a></li>
+                <!--<li><a class="font-medium text-base">#business</a></li>-->
+                <li><a class="font-medium text-base">#list</a></li>
+                
+              </ul>
+            </div>
+          </div>
+
+          <script>
+            document.addEventListener('DOMContentLoaded', function () {
+              // Get the radio buttons and html element
+              const themeRadios = document.querySelectorAll('input[name="theme-dropdown"]');
+              const htmlElement = document.documentElement;
+        
+              // Load the theme from localStorage if available
+              const savedTheme = localStorage.getItem('userTheme');
+              if (savedTheme) {
+                htmlElement.setAttribute('data-theme', savedTheme);
+                // Check the corresponding radio button
+                const selectedRadio = document.querySelector(`input[value="${savedTheme}"]`);
+                if (selectedRadio) {
+                  selectedRadio.checked = true;
+                }
+              }
+        
+              // Add event listener to each radio button
+              themeRadios.forEach(function (radio) {
+                radio.addEventListener('change', function () {
+                  // Save the selected theme to localStorage
+                  const selectedTheme = this.value;
+                  localStorage.setItem('userTheme', selectedTheme);
+        
+                  // Set the data-theme attribute of the html element
+                  htmlElement.setAttribute('data-theme', selectedTheme);
+                });
+              });
+            });
+          </script>
+         
+
+    </body>
+</html>

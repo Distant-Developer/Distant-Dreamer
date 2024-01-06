@@ -239,14 +239,15 @@ def createBusiness():
 
 
         database.use_database(
-            "INSERT INTO organizations (owner_id, name, industry, tagline, website, size) VALUES (?, ?, ?, ?, ?, ?)",
+            "INSERT INTO organizations (owner_id, name, industry, tagline, website, size, logo_url) VALUES (?, ?, ?, ?, ?, ?, ?)",
             (
                 session["id"], 
                 name,
                 industry,
                 tagline,
                 website,
-                size
+                size,
+                "https://raw.githubusercontent.com/Distant-Developer/Distant-Dreamer/df49365f163fa4b1e9ffd9f68678fecf8ad0efcf/static/img/defaultImage.svg"
             ),
         )
 
@@ -254,6 +255,13 @@ def createBusiness():
         
 
     return render_template("createOrg.html")
+
+
+@app.route("/business/list")
+def businessList():
+    organizations = database.get_organizations()
+
+    return render_template("businessList.html", organizations=organizations)
 
 if __name__ == "__main__":
 
