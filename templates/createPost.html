@@ -13,38 +13,66 @@
               
 
 
-                    <div class="flex flex-1 flex-row shrink w-300 mt-4 gap-2 items-center justify-center">
-                        <div class="self-center basis-1/2">
-                
-                        <div class="self-center card w-full bg-base-300 shadow-xl ">
+<div class="flex flex-1 flex-col shrink mt-4 gap-2 w-full items-center justify-center gap-4">
 
-                            <form method="post" class="card-body p-4 w-full">    
-
-                            <div class="flex flex-row w-full items-center gap-2">
-                                <div class="avatar">
-                                    <div class="w-8 rounded-xl" style="aspect-ratio: 1/1;">
-                                        <img src="{{user.logo_url}}" alt="Album"/>
-                                    </div>
-                                </div>
-                                <p>{{user.username}}</p>
-                            </div>
-                                    
-                                <input type="text" name="title" maxlength="60" value="{{title}}" id="titleInput" placeholder="Type here" class="input mb-2 p-0 py-4 text-xl bg-base-300 border-0 border-none"/>
-
-
-                                <textarea id="message" name="content" rows="4" maxlength="200" class="textarea mb-2 p-0 py-1 text-base bg-base-300 border-0 border-none" placeholder="Write your thoughts here...">{{bef_content}}</textarea>
-                                  
-                
-                                <input type="hidden" name="action" value="Preview"/>
-                                <div class="flex flex-row w-full items-end justify-end">
-                                  <button class="btn btn-primary">Preview</button>
-                                </div>
-                            </form> 
+    <div id="preview_box" class="flex w-1/2 items-center justify-center">
+        <div class="self-center card w-full bg-base-300 shadow-xl">
+            <div class="flex flex-col card-body p-4">
+                <div class="flex flex-row items-center gap-2">
+                    <div class="avatar">
+                        <div class="w-8 rounded-xl" style="aspect-ratio: 1/1;">
+                            <img src="{{user.logo_url}}" alt="Album"/>
                         </div>
-
-                      </div>
-                
                     </div>
+                    <p>{{user.username}}</p>
+                </div>
+                <p class="text-xl p-0  w-auto" id="title_preview"></p>
+                <p class="p-0 text-base w-auto" id="title_content"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex w-1/2 items-center justify-center">
+        <div class="self-center card w-full bg-base-300 shadow-xl">
+            <form method="post" class="card-body p-4">
+                <div class="flex flex-row items-center gap-2">
+                    <div class="avatar">
+                        <div class="w-8 rounded-xl" style="aspect-ratio: 1/1;">
+                            <img src="{{user.logo_url}}" alt="Album"/>
+                        </div>
+                    </div>
+                    <p>{{user.username}}</p>
+                </div>
+                <input type="text" name="title" id="title_editor" maxlength="60" value="{{title}}" placeholder="Type here" class="input p-0 py-4 text-xl bg-base-300 border-0 border-none"/>
+                <textarea name="content" id="content_editor" rows="4" maxlength="200" class="textarea mb-2 p-0 py-1 text-base bg-base-300 border-0 border-none" placeholder="Write your thoughts here...">{{bef_content}}</textarea>
+                
+                <input type="hidden" name="action" value="Post"/>
+                <div class="flex flex-row w-full items-end justify-end">
+                    <button class="btn btn-primary">Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("preview_box").style.display = "none";
+
+    document.addEventListener("input", function() {
+        var title = document.querySelector("#title_editor").value;
+        var content = document.querySelector("#content_editor").value;
+        if (title || content) {
+            document.querySelector("#title_preview").textContent=title;  
+            document.querySelector("#title_content").textContent=content;
+            document.getElementById("preview_box").style.display = "block";
+        } else {
+            document.getElementById("preview_box").style.display = "none";
+        }
+        
+    });
+                
+
+</script>
 
 
 {%endblock%}
