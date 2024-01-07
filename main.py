@@ -35,12 +35,24 @@ def convert_markdown_to_html(raw_text):
 def index():
     return render_template("mainPage.html")
 
-@app.route("/lobby")
+@app.route("/lobby", methods=['GET','POST'])
 def lobby():
-    sessionExists = check_session(session)
+    if request.method == 'POST':
+        database.use_database(
+            "INSERT INTO comments (owner_id, post_owner_id, content) VALUES (?, ?, ?)",
+            (
+                session["id"],
+                request.form.get("post_owner_id"),
+                request.form.get("content"),
+            )
+        )
+
+        return redirect("lobby")
+    
+    #sessionExists = check_session(session)
 
     user = database.get_user(session["id"])
-    bussinessAccounts = database.get_organizations(id=None, owner_id=session["id"])
+
 
     return render_template("lobby.html", user=user, posts = database.get_all_posts())
 
@@ -195,11 +207,8 @@ def verify():
 def createPost():
     if request.method == 'POST':
         action = request.form.get("action")
-        print(action)
-        if action == "Preview":
-            return render_template("createPost.html", title=request.form.get("title", None), bef_content=request.form.get("content", None), content=convert_markdown_to_html(request.form.get("content", None)), user=database.get_user(session["id"]))
-    
-        elif action == "Post":
+
+        if action == "Post":
             database.use_database(
                 "INSERT INTO posts (owner_id, title, content) VALUES (?, ?, ?)",
                 (

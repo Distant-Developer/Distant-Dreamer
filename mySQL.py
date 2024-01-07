@@ -1,6 +1,7 @@
 from datetime import datetime
 import sqlite3
 from SQL.Activity import Activity
+from SQL.Comment import Comment
 from SQL.Experience import Experience
 from SQL.Organization import Organization
 from SQL.Post import Post
@@ -85,6 +86,14 @@ class dataSQL:
                 "owner_id"	INTEGER NOT NULL,
                 "type"	TEXT NOT NULL,
                 "date"	TEXT NOT NULL,
+                PRIMARY KEY("id" AUTOINCREMENT)
+            );
+                                  
+            CREATE TABLE IF NOT EXISTS "comments" (
+                "id"	INTEGER NOT NULL UNIQUE,
+                "owner_id"	INTEGER NOT NULL,
+                "post_owner_id"	INTEGER NOT NULL,
+                "content"	TEXT NOT NULL,
                 PRIMARY KEY("id" AUTOINCREMENT)
             );
             ''')
@@ -252,8 +261,12 @@ class dataSQL:
                 "SELECT * from organizations", (), easySelect=False
             )
         return [Organization(*row) for row in raw]
-
-
+    
+    def get_comments(self):
+        raw = self.use_database(
+            "SELECT * from comments", (), easySelect=False
+        )
+        return [Comment(*row) for row in raw]
 
     def is_staff(self, users_id):
         item = self.use_database(

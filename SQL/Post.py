@@ -18,3 +18,10 @@ class Post(abstractSQL):
 
         return [User(*row) for row in raw][0]
 
+    def get_comments(self):
+        from SQL.Comment import Comment
+        raw = self.use_database(
+            f"SELECT * FROM comments where post_owner_id = {self.id}", (), easySelect=False
+        )
+
+        return [Comment(*row) for row in raw] #there can be several
