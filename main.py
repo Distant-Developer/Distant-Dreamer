@@ -42,7 +42,7 @@ def lobby():
     user = database.get_user(session["id"])
     bussinessAccounts = database.get_organizations(id=None, owner_id=session["id"])
 
-    return render_template("lobby.html", session=user, bussinessAccounts=bussinessAccounts, posts = database.get_all_posts())
+    return render_template("lobby.html", user=user, posts = database.get_all_posts())
 
 @app.route("/me", methods=['GET', 'POST'])
 def mePage():
@@ -255,14 +255,17 @@ def createBusiness():
         return redirect("/lobby")
         
 
-    return render_template("createOrg.html")
+    user = database.get_user(session["id"])
+
+    return render_template("createOrg.html", user=user)
 
 
 @app.route("/org/list")
 def businessList():
     organizations = database.get_organizations()
+    user = database.get_user(session["id"])
 
-    return render_template("orgList.html", organizations=organizations)
+    return render_template("orgList.html", organizations=organizations, user=user)
 
 if __name__ == "__main__":
 

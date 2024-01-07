@@ -45,7 +45,7 @@
                   <div class="flex-none">
                      <div class="dropdown dropdown-end">
                         <div tabindex="0" role="button" class="avatar btn btn-ghost btn-square">
-                           <div class="w-10 rounded"><img src="https://avatars.githubusercontent.com/u/{{session.token}}?v=4" alt="Tailwind-CSS-Avatar-component" /></div>
+                           <div class="w-10 rounded"><img src="https://avatars.githubusercontent.com/u/{{user.token}}?v=4" alt="Tailwind-CSS-Avatar-component" /></div>
                         </div>
                         <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 border" style="border-color: oklch(var(--s));">
                            <li>
@@ -57,7 +57,7 @@
                                  Profile
                               </a>
                            </li>
-                           {%for business in bussinessAccounts %}
+                           {%for business in user.get_organizations() %}
                            <li>
                               <a>
                                  <svg xmlns="http://www.w3.org/2000/svg" class="fill-current" height="16" width="16" viewBox="0 0 512 512">

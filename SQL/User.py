@@ -1,7 +1,6 @@
 import re
 from SQL.Education import Education
 from SQL.Experience import Experience
-from SQL.Organization import Organization
 from SQL.abstractSQL import abstractSQL
 
 class User(abstractSQL):
@@ -42,6 +41,14 @@ class User(abstractSQL):
             "SELECT * from posts where owner_id = ?", (self.id,), easySelect=False
         )
         return [Post(*row) for row in raw]
+    
+    def get_organizations(self):
+        raw = self.use_database(
+            "SELECT * from organizations where owner_id = ?", (self.id,), easySelect=False
+        )
+        from SQL.Organization import Organization
+        
+        return [Organization(*row) for row in raw]
 
     
 
