@@ -267,6 +267,25 @@ def businessList():
 
     return render_template("orgList.html", organizations=organizations, user=user)
 
+@app.route("/org/admin")
+def org_Admin():
+    user = database.get_user(session["id"])
+
+    id = request.args.get("id", None)
+
+    try: 
+        org = database.get_organizations(id=id)[0]
+        if org.owner_id == user.id:
+            pass 
+        else:
+            org = user.get_organizations()[0]
+            return redirect(f"/org/admin?id={org.id}")
+    except:
+        org = user.get_organizations()[0]
+        return redirect(f"/org/admin?id={org.id}")
+
+    return render_template("adminOrg.html", user=user, org=org)
+
 if __name__ == "__main__":
 
     app.register_blueprint(authentication)

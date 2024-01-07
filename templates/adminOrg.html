@@ -11,6 +11,14 @@
 {% block title %}Org Creation{% endblock %}
 {%block content%}
 
+<div class="flex flex-col mt-4 pl-2 pr-2">
+    <select class="select select-bordered w-full max-w-xs">
+        <option disabled selected>{{user.get_organizations()[0].name}}</option>
+        {% for org in user.get_organizations() %}
+        <option id="o_id" name="o_id" value="{{org.id}}">{{org.name}}</option>
+        {% endfor %}
+      </select>
+</div>
 
 
 {%endblock%}

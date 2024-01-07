@@ -165,3 +165,6 @@ database.db
 
 #Secret.py
 secret.py
+
+#Vs Code
+.vscode
