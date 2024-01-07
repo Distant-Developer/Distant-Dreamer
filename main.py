@@ -223,10 +223,9 @@ def staffPage():
 
     table = request.form.get("table", tables[0][0])
 
-
     column_names, data, count = database.get_all_data(table)
     
-    return render_template("staffPage.html", tables=tables, column_names=column_names, data=data, count=count)
+    return render_template("staff.html", tables=tables, column_names=column_names, data=data, count=count)
 
 @app.route("/org/new", methods=['GET','POST'])
 def createBusiness():
@@ -263,7 +262,7 @@ def createBusiness():
 def businessList():
     organizations = database.get_organizations()
 
-    return render_template("businessList.html", organizations=organizations)
+    return render_template("orgList.html", organizations=organizations)
 
 if __name__ == "__main__":
 

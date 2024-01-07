@@ -8,11 +8,7 @@ class Post(abstractSQL):
         self.title = title
         self.content = content
 
-        print(self.dbfile)
-
         self.owner_user = self.get_owner()
-
-        
     
     def get_owner(self):
         from SQL.User import User
