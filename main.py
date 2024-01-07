@@ -276,14 +276,13 @@ def org_Admin():
     try: 
         org = database.get_organizations(id=id)[0]
         if org.owner_id == user.id:
-            pass 
+            pass
         else:
             org = user.get_organizations()[0]
-            return redirect(f"/org/admin?id={org.id}")
     except:
         org = user.get_organizations()[0]
-        return redirect(f"/org/admin?id={org.id}")
 
+    print(org.name)
     return render_template("adminOrg.html", user=user, org=org)
 
 if __name__ == "__main__":

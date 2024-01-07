@@ -11,14 +11,36 @@
 {% block title %}Org Creation{% endblock %}
 {%block content%}
 
-<div class="flex flex-col mt-4 pl-2 pr-2">
-    <select class="select select-bordered w-full max-w-xs">
+<div id="master" class="flex flex-col mt-4 pl-2 pr-2 gap-2">
+    <div class="flex flex-row items-center gap-4">
+        <div class="avatar">
+            <div class="w-16 rounded-lg"><img src="{{org.logo_url}}"
+                alt="Tailwind-CSS-Avatar-component" /></div>
+          </div>
+        <p class="text-2xl">{{org.name}}</p>
+    </div>
+
+    <select id="organization_master" class="select select-bordered w-full max-w-xs">
+
         <option disabled selected>{{user.get_organizations()[0].name}}</option>
         {% for org in user.get_organizations() %}
         <option id="o_id" name="o_id" value="{{org.id}}">{{org.name}}</option>
         {% endfor %}
       </select>
+
+      <div class="flex flex-row">
+
+      </div>
 </div>
 
+<script>
+var orgSizeSelect = document.getElementById("master");
 
+// Adding an event listener for the "change" event
+orgSizeSelect.addEventListener("change", function() {
+    var org = document.querySelector("#organization_master").value;
+    console.log(org);
+    window.location.replace("/org/admin?id="+org)
+});
+</script>
 {%endblock%}
