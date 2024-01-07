@@ -8,7 +8,7 @@ from SQL.User import User
 from SQL.Education import Education
 
 class dataSQL:
-    def __init__(self, dbfile):
+    def __init__(self, dbfile = "database.db"):
         """
         Initialize a DatabaseManager with the specified SQLite database file.
 
@@ -34,7 +34,8 @@ class dataSQL:
                 "is_staff"	INTEGER NOT NULL DEFAULT 0,
                 "linkedin_url" TEXT DEFAULT NULL,
                 "github_url" TEXT DEFAULT NULL,
-                "description" TEXT DEFAULT NULL
+                "description" TEXT DEFAULT NULL,
+                "logo_url" TEXT NOT NULL
             );
                                   
             CREATE TABLE IF NOT EXISTS posts (
@@ -47,7 +48,7 @@ class dataSQL:
                                   
             CREATE TABLE IF NOT EXISTS "experiences" (
                 "id"	INTEGER,
-                "associated_user_id"	INTEGER NOT NULL,
+                "owner_id"	INTEGER NOT NULL,
                 "company_name"	TEXT NOT NULL,
                 "company_logo_url"	TEXT NOT NULL,
                 "position_title"	TEXT NOT NULL,
@@ -58,7 +59,7 @@ class dataSQL:
                                   
             CREATE TABLE IF NOT EXISTS "educations" (
                 "id"	INTEGER,
-                "associated_user_id"	INTEGER NOT NULL,
+                "owner_id"	INTEGER NOT NULL,
                 "tuition_name"	TEXT NOT NULL,
                 "tuition_logo_url"	TEXT NOT NULL,
                 "position_description"	TEXT,
@@ -81,7 +82,7 @@ class dataSQL:
                                   
             CREATE TABLE IF NOT EXISTS "activity" (
                 "id"	INTEGER NOT NULL UNIQUE,
-                "associated_id"	INTEGER NOT NULL,
+                "owner_id"	INTEGER NOT NULL,
                 "type"	TEXT NOT NULL,
                 "date"	TEXT NOT NULL,
                 PRIMARY KEY("id" AUTOINCREMENT)
@@ -169,10 +170,10 @@ class dataSQL:
         return returned_value
     
     def record_to_activity(self, id, type):
-        #id -> USER ID; The Item Who Executed It
+        #id -> ID of item; USER ID (or BUSINESS ID) is connected to it
         #type -> Post; Account Creation; Etc.
         self.use_database(
-            'INSERT INTO activity (associated_id, type, date) VALUES (?, ?, ?)',
+            'INSERT INTO activity (owner_id, type, date) VALUES (?, ?, ?)',
             (
                 id, type, datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             ),
@@ -180,7 +181,7 @@ class dataSQL:
     
     def get_experiences(self, users_id):
         list = self.use_database(
-            "SELECT * from experiences where associated_user_id = ?", (users_id,), easySelect=False
+            "SELECT * from experiences where owner_id = ?", (users_id,), easySelect=False
         )
 
         experience_list = [Experience(*row) for row in list]
@@ -209,18 +210,33 @@ class dataSQL:
             "SELECT * from posts where owner_id = ?", (users_id,), easySelect=False
         )
         #print(user_raw)
-        posts = [Post(*row) for row in raw]
+        return [Post(*row) for row in raw]
 
-        return posts
+    def get_all_posts(self):
+        raw = self.use_database(
+            "SELECT * from posts", (), easySelect=False
+        )
+        #print(user_raw)
+        return [Post(*row) for row in raw]
+
     
     def get_all_activity(self):
         raw = self.use_database(
-            "SELECT * from activity", easySelect=False
+            "SELECT * from activity;", (),  easySelect=False
         )
-        #print(user_raw)
-        posts = [Activity(*row) for row in raw]
+        return tuple(Activity(*row) for row in raw)
 
-        return posts
+    
+    def owner_of(self, activity:Activity):
+        #activity -> Activity class
+        raw = self.use_database(
+            f"SELECT * FROM {activity.type} WHERE id = {activity.id} AND owner_id = {activity.owner_id}",
+            (),
+            easySelect=False
+        )
+
+        return tuple(Activity.tableType(*row) for row in raw)[0]
+
     
     def get_organizations(self, id=None, owner_id=None):
         if target := id:

@@ -25,16 +25,29 @@
                   </div>
               </div>
             </div>
+            {% for post in posts %}
             <div class="flex grow flex-col group">
-              <div class="card bg-base-100 shadow-xl rounded border w-full" style="border-color: oklch(var(--s));">
-                  <div class="flex flex-row pl-4 group">
-                    <img src="https://raw.githubusercontent.com/Distant-Developer/Distant-Dreamer/main/static/img/logo.svg" class="h-14 self-center" style="aspect-ratio: 1/1;" alt="Flowbite Logo" />
-                    <div class="card-body">
-                        <h2 class="card-title">Activity</h2>
+              
+              <div class="self-center card w-full bg-base-300 shadow-xl ">
+                <form method="post" class="card-body">
+                  <div class="flex flex-row gap-2 ">
+                    <div class="avatar">
+                      <div class="w-8 rounded"><img src="https://avatars.githubusercontent.com/u/{{session.token}}?v=4" alt="Tailwind-CSS-Avatar-component" /></div>
                     </div>
+                    <p class="self-center">{{post.owner_user.username}}</p>
                   </div>
-              </div>
+
+                    <h2 id="displayedTitle" class="card-title text-2xl">{{post.title}}</h2>
+
+                    <article  class="prose lg:prose-xl">
+                        {{post.content | safe}}
+                    </article>
+                    
+                  </form>
             </div>
+
+            </div>
+            {% endfor %}
           </div>
           
           {%endblock%}

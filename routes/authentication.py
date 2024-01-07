@@ -29,24 +29,26 @@ def authorize():
         "user", token=GITHUB.authorize_access_token()
     )
     profile = resp.json()
+    git_token = str(profile["id"])
 
     if not database.user_exists(profile["id"]): 
         database.use_database(
-            "INSERT INTO users (token, username, email, github_url) VALUES (?, ?, ?, ?)",
+            "INSERT INTO users (token, username, email, github_url, logo_url) VALUES (?, ?, ?, ?, ?)",
             (
-                profile["id"], 
+                git_token, 
                 profile["login"],
                 profile["email"],
-                profile["html_url"]
+                profile["html_url"],
+                f"https://avatars.githubusercontent.com/u/{git_token}?v=4"
             ),
         )
     
     id = database.use_database(
         "SELECT id FROM users WHERE token = ?",
-        (profile["id"],)
+        (git_token,)
     )[0]
 
-    session["token"] =  str(profile["id"])
+    session["token"] =  git_token
     session["username"] = str(profile["login"])
 
     session["id"] = id

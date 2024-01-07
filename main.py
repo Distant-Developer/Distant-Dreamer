@@ -39,12 +39,14 @@ def index():
 def lobby():
     sessionExists = check_session(session)
 
-    print(session["client"])
-
-    user = database.get_user(session["client"]["id"])
+    user = database.get_user(session["id"])
     bussinessAccounts = database.get_organizations(id=None, owner_id=session["id"])
 
-    return render_template("lobby.html", session=user, bussinessAccounts=bussinessAccounts)
+
+    x = database.get_all_activity()
+    print(x)
+
+    return render_template("lobby.html", session=user, bussinessAccounts=bussinessAccounts, posts = database.get_all_posts())
 
 @app.route("/me", methods=['GET', 'POST'])
 def mePage():
@@ -216,9 +218,11 @@ def createPost():
                 ),
             )
 
-            database.record_to_activity(session["id"], "posts")
+            recentPost = database.get_post_by_user_id(session["id"])[-1]
+
+            database.record_to_activity(recentPost.id, "posts")
             
-            return redirect("lobby")
+            return redirect("/lobby")
         
     return render_template("createPost.html", title="", content="...", user=database.get_user(session["id"]))
 
@@ -255,6 +259,8 @@ def createBusiness():
                 "https://raw.githubusercontent.com/Distant-Developer/Distant-Dreamer/df49365f163fa4b1e9ffd9f68678fecf8ad0efcf/static/img/defaultImage.svg"
             ),
         )
+
+        #database.record_to_activity(session["id"], "organizations")
 
         return redirect("lobby")
         

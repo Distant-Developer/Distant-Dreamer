@@ -2,7 +2,7 @@ import re
 from SQL.Organization import Organization
 
 class User:
-    def __init__(self, id, token, username, email, is_staff=0, is_verified=0, linkedin_url=None, github_url=None, description=None):
+    def __init__(self, id, token, username, email, is_staff=0, is_verified=0, linkedin_url=None, github_url=None, description=None, logo_url=None):
         self.id = id
         self.token = token
         self.username = username
@@ -12,6 +12,7 @@ class User:
         self.linkedin_url = linkedin_url
         self.github_url = github_url
         self.description = self.remove_scripts(description)
+        self.logo_url = logo_url
 
     def to_dict(self):
             return {
