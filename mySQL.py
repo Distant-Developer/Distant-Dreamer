@@ -190,7 +190,7 @@ class dataSQL:
     
     def get_educations(self, users_id):
         list = self.use_database(
-            "SELECT * from educations where associated_user_id = ?", (users_id,), easySelect=False
+            "SELECT * from educations where owner_id = ?", (users_id,), easySelect=False
         )
 
         experience_list = [Education(*row) for row in list]

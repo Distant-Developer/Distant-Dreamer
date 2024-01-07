@@ -1,8 +1,12 @@
 import re
+from SQL.Education import Education
+from SQL.Experience import Experience
 from SQL.Organization import Organization
+from SQL.abstractSQL import abstractSQL
 
-class User:
+class User(abstractSQL):
     def __init__(self, id, token, username, email, is_staff=0, is_verified=0, linkedin_url=None, github_url=None, description=None, logo_url=None):
+        super().__init__()
         self.id = id
         self.token = token
         self.username = username
@@ -13,6 +17,25 @@ class User:
         self.github_url = github_url
         self.description = self.remove_scripts(description)
         self.logo_url = logo_url
+
+        self.education = self.get_educations()
+        self.experience = self.get_experiences()
+    
+    def get_experiences(self):
+        list = self.use_database(
+            "SELECT * from experiences where owner_id = ?", (self.id,), easySelect=False
+        )
+
+        return [Experience(*row) for row in list]
+    
+    def get_educations(self):
+        list = self.use_database(
+            "SELECT * from educations where owner_id = ?", (self.id,), easySelect=False
+        )
+
+        return [Education(*row) for row in list]
+
+    
 
     def to_dict(self):
             return {

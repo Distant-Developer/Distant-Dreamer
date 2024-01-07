@@ -42,10 +42,6 @@ def lobby():
     user = database.get_user(session["id"])
     bussinessAccounts = database.get_organizations(id=None, owner_id=session["id"])
 
-
-    x = database.get_all_activity()
-    print(x)
-
     return render_template("lobby.html", session=user, bussinessAccounts=bussinessAccounts, posts = database.get_all_posts())
 
 @app.route("/me", methods=['GET', 'POST'])
@@ -133,22 +129,17 @@ def mePage():
         
         return redirect(url_for('mePage'))
 
-            
-    experiences = database.get_experiences(session["id"])
-    educations = database.get_educations(session["id"])
     user = database.get_user(session["id"])
 
         
-    return render_template("me.html", experiences=experiences, user=user, educations=educations)
+    return render_template("me.html", experiences=user.experience, user=user, educations=user.education)
 
 @app.route("/user")
 def userPage():
     id = request.args.get("id")
-    experiences = database.get_experiences(id)
-    educations = database.get_educations(id)
     user = database.get_user(id)
 
-    return render_template("user.html", experiences=experiences, user=user, educations=educations)
+    return render_template("user.html", experiences=user.experience, user=user, educations=user.education)
 
 
 @app.route("/jobs")
@@ -200,7 +191,7 @@ def verify():
     return render_template("verify.html")
 
 
-@app.route("/post/create", methods=['GET', 'POST'])
+@app.route("/post/new", methods=['GET', 'POST'])
 def createPost():
     if request.method == 'POST':
         action = request.form.get("action")
