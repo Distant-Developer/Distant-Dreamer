@@ -2,13 +2,13 @@
 
 {% block lobbyButton %}
 <div class="flex-1">
-  <a href="/lobby" class="flex items-center btn btn-ghost">
-      <span class="self-center text-xl font-semibold whitespace-nowrap">#lobby</span>
+  <a href="/post?id={{post.id}}" class="flex items-center btn btn-ghost">
+      <span class="self-center text-xl font-semibold whitespace-nowrap">#post-{{post.id}}</span>
   </a>
 </div>
 {% endblock %}
 
-{% block title %}Lobby{% endblock %}
+{% block title %}Post-{{post.id}}{% endblock %}
 {%block content%}
            
 <style>
@@ -16,24 +16,10 @@
     outline: none;
 }
 </style>
-          <div class="flex flex-row gap-4 mt-4 mb-4 ">
-            <div class="flex flex-none flex-col group">
-              <div class="card w-48 bg-base-100 shadow-xl rounded border" style="border-color: oklch(var(--s));">
-                  <figure class="w-32 rounded avatar self-center pt-8">
-                    <div class="btn-ghost">
-                        <img class="w-32 rounded" src="https://avatars.githubusercontent.com/u/{{session.token}}?v=4" alt="Tailwind-CSS-Avatar-component" />
-                    </div>
-                  </figure>
-                  <div class="card-body pt-0">
-                    <h2 class="card-title"> {{session.username}} </h2>
-                    <!--<p>If a dog chews shoes whose shoes does he choose?</p>-->
-                  </div>
-              </div>
-            </div>
 
+          <div class="flex flex-row gap-4 mt-4 mb-4 ">
             
             <div class="flex grow flex-1 flex-col group w-full gap-4">
-              {% for post in posts %}
               <div class="self-center card w-full bg-base-300 shadow-xl ">
                 <div class="card-body">
                   
@@ -63,7 +49,7 @@
                       </button>
                     </form>
 
-                    {% for comment in post.get_three_comments()[0] %}
+                    {% for comment in post.get_comments() %}
                     <div class="flex flex-row gap-2 items-center">
                       <div class="avatar tooltip" data-tip="{{comment.get_owner().username}}">
                         <div class="w-7 h-7 rounded"><img src="{{comment.get_owner().logo_url}}" alt="Tailwind-CSS-Avatar-component" /></div>
@@ -71,22 +57,12 @@
                       <p>{{comment.content}}</p>
                     </div>
                     {% endfor %}
-
-                    {% if post.get_three_comments()[1] %}
-                    <div>
-                      <a href="/post?id={{post.id}}">
-                        <button class="btn btn-sm btn-primary">See More Comments</button>
-                      </a>
-                      
-                    </div>
-                    {% endif %}
                     
                   </div>
             </div>
-            {% endfor %}
             </div>
             
           </div>
           
-          {%endblock%}
+{%endblock%}
          

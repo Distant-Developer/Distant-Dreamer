@@ -25,3 +25,13 @@ class Post(abstractSQL):
         )
 
         return [Comment(*row) for row in raw] #there can be several
+    
+    def get_three_comments(self):
+        from SQL.Comment import Comment
+        raw = self.use_database(
+            f"SELECT * FROM comments where post_owner_id = {self.id}", (), easySelect=False
+        )
+
+        comments = [Comment(*row) for row in raw]
+        return comments[:3], len(comments) > 3
+    

@@ -226,6 +226,17 @@ def createPost():
         
     return render_template("createPost.html", title="", content="...", user=database.get_user(session["id"]))
 
+@app.route("/post", methods=['GET', 'POST'])
+def detailedPost():
+    user = database.get_user(session["id"])
+
+    id = request.args.get("id", None)
+
+    post = database.get_post_by_id(id=id)
+
+    return render_template("detailedPost.html", post=post, user=user)
+    
+
 @app.route("/staff", methods=['GET','POST'])
 def staffPage():
     tables = database.get_tables()

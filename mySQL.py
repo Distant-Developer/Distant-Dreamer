@@ -214,6 +214,12 @@ class dataSQL:
 
         return user[0]
     
+    def get_post_by_id(self, id):
+        raw = self.use_database(
+            "SELECT * from posts where id = ?", (id,), easySelect=False
+        )
+        return [Post(*row) for row in raw][0] #only one
+    
     def get_post_by_user_id(self, users_id):
         raw = self.use_database(
             "SELECT * from posts where owner_id = ?", (users_id,), easySelect=False
