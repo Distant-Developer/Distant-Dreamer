@@ -26,8 +26,9 @@
               </div>
             </div>
 
-            {% for post in posts %}
-            <div class="flex grow flex-1 flex-col group w-full">
+            
+            <div class="flex grow flex-1 flex-col group w-full gap-4">
+              {% for post in posts %}
               <div class="self-center card w-full bg-base-300 shadow-xl ">
                 <div class="card-body">
                   
@@ -46,9 +47,9 @@
                     
                   </div>
             </div>
-
-            </div>
             {% endfor %}
+            </div>
+            
           </div>
           
           {%endblock%}
