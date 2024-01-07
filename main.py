@@ -253,7 +253,7 @@ def createBusiness():
 
         #database.record_to_activity(session["id"], "organizations")
 
-        return redirect("lobby")
+        return redirect("/lobby")
         
 
     return render_template("createOrg.html")

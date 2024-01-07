@@ -1,4 +1,7 @@
-class Organization:
+from SQL.abstractSQL import abstractSQL
+
+
+class Organization(abstractSQL):
     def __init__(self, id, owner_id, name, industry, tagline=None, website=None, github_link=None, size=None, logo_url=None):
         self.id = id
         self.owner_id = owner_id
@@ -22,3 +25,11 @@ class Organization:
             "size": self.size,
             "logo_url": self.logo_url,
         }
+    
+    def get_owner(self):
+        from SQL.User import User
+        raw = self.use_database(
+            f"SELECT * FROM users where ID = {self.owner_id}", (), easySelect=False
+        )
+
+        return [User(*row) for row in raw][0]
