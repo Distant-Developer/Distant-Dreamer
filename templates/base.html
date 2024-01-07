@@ -57,7 +57,7 @@
                                  Profile
                               </a>
                            </li>
-                           {%for business in user.get_organizations() %}
+                              {%for business in user.get_organizations() %}
                            <li>
                               <a>
                                  <svg xmlns="http://www.w3.org/2000/svg" class="fill-current" height="16" width="16" viewBox="0 0 512 512">
@@ -67,7 +67,7 @@
                                  Switch to {{business.name}}
                               </a>
                            </li>
-                           {% endfor %}
+                           {% endfor %} 
                         </ul>
                      </div>
                   </div>
@@ -99,6 +99,9 @@
                <div class="divider hover:font-bold divider-secondary"> Organizations </div>
                <li><a href="/org/new" class="font-medium text-base">#create</a></li>
                <li><a href="/org/list" class="font-medium text-base">#list</a></li>
+               {% if user.has_organization() == True %}
+               <li><a href="/org/admin" class="font-medium text-base">#admin</a></li>
+               {% endif %}
             </ul>
          </div>
       </div>

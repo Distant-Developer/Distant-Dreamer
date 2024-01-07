@@ -47,8 +47,21 @@ class User(abstractSQL):
             "SELECT * from organizations where owner_id = ?", (self.id,), easySelect=False
         )
         from SQL.Organization import Organization
-        
+
         return [Organization(*row) for row in raw]
+    
+    def has_organization(self):
+        self.connection = self.connect()
+        self.cursor = self.connection.cursor()
+
+
+        self.cursor.execute("SELECT COUNT(*) FROM organizations WHERE owner_id = ?", (self.id,))
+        count = self.cursor.fetchone()[0]
+
+        self.close()
+        state: bool = count >= 1
+
+        return state
 
     
 
