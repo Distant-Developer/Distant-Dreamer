@@ -11,63 +11,40 @@
 {% block title %}Post Creation{% endblock %}
 {%block content%}
               
-                <div class="flex flex-row grow  mt-4">
-                    <div class="flex flex-1 flex-col mt-4 p-10 gap-2">
-                
-                        <p class=" text-2xl">Editor</p>
+
+
+                    <div class="flex flex-1 flex-row shrink w-300 mt-4 gap-2 items-center justify-center">
+                        <div class="self-center basis-1/2">
                 
                         <div class="self-center card w-full bg-base-300 shadow-xl ">
 
-                            <form method="post" class="card-body">     
+                            <form method="post" class="card-body p-4 w-full">    
+
+                            <div class="flex flex-row w-full items-center gap-2">
+                                <div class="avatar">
+                                    <div class="w-8 rounded-xl" style="aspect-ratio: 1/1;">
+                                        <img src="{{user.logo_url}}" alt="Album"/>
+                                    </div>
+                                </div>
+                                <p>{{user.username}}</p>
+                            </div>
                                     
-                                <label for="message" class="block text-2xl text-sm font-medium text-gray-900 dark:text-white">Title</label>
-                                    <input type="text" name="title" maxlength="60" value="{{title}}" id="titleInput" placeholder="Type here" class="mb-2 text-base block p-2.5 w-full bg-primary-content-900 bg-primary-focus-50 rounded-lg border border-gray-300 text-base-content" />
-                                
-                                <!--<input name="content" type="text" id="contentInput" value="{{bef_content}}" placeholder="Content" class="input input-ghost w-full max-w-xs text-base p-0" />-->
+                                <input type="text" name="title" maxlength="60" value="{{title}}" id="titleInput" placeholder="Type here" class="input mb-2 p-0 py-4 text-xl bg-base-300 border-0 border-none"/>
 
 
-                                <label for="message" class="block text-sm font-medium text-gray-900 dark:text-white">Your message (HTML) </label>
-                                <textarea id="message" name="content" rows="4" maxlength="200" class="mb-2 p-2.5 block w-full text-sm bg-primary-neutral bg-primary-focus-50 rounded-lg border border-gray-300 text-base-content" placeholder="Write your thoughts here...">{{bef_content}}</textarea>
+                                <textarea id="message" name="content" rows="4" maxlength="200" class="textarea mb-2 p-0 py-1 text-base bg-base-300 border-0 border-none" placeholder="Write your thoughts here...">{{bef_content}}</textarea>
                                   
                 
                                 <input type="hidden" name="action" value="Preview"/>
-                                <button tabindex="0" class="btn btn-primary">Preview</button>
+                                <div class="flex flex-row w-full items-end justify-end">
+                                  <button class="btn btn-primary">Preview</button>
+                                </div>
                             </form> 
                         </div>
+
+                      </div>
                 
                     </div>
-                
-                    <div class="flex flex-1 flex-col mt-4 p-10 gap-2">
-                
-                        <p class="text-2xl">Preview</p>
-                
-                        <div class="self-center card w-full bg-base-300 shadow-xl ">
-                            <form method="post" class="card-body">
-                              <div class="flex flex-row gap-2 ">
-                                <div class="avatar">
-                                  <div class="w-8 rounded"><img src="{{user.logo_url}}" alt="Tailwind-CSS-Avatar-component" /></div>
-                                </div>
-                                <p class="self-center">{{user.username}}</p>
-                              </div>
 
-                                <h2 id="displayedTitle" class="card-title text-2xl">{{title}}</h2>
-                                <input type="hidden" name="title" value="{{title}}">
-
-                                <article  class="prose lg:prose-xl">
-                                    {{content | safe}}
-                                </article>
-
-                                <input type="hidden" name="content" value="{{content}}">
-
-                                <input type="hidden" name="action" value="Post"/>
-                                <button tabindex="0" class="btn btn-primary">Post</button>
-                                
-                              </form>
-
-                            
-                        </div>
-                
-                    </div>
-                </div>
 
 {%endblock%}
