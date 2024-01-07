@@ -1,5 +1,4 @@
 from SQL.abstractSQL import abstractSQL
-from SQL.User import User
 
 class Post(abstractSQL):
     def __init__(self, id, owner_id, title, content):
@@ -16,6 +15,7 @@ class Post(abstractSQL):
         
     
     def get_owner(self):
+        from SQL.User import User
         raw = self.use_database(
             f"SELECT * FROM users where ID = {self.owner_id}", (), easySelect=False
         )

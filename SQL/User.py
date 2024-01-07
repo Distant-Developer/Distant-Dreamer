@@ -20,6 +20,7 @@ class User(abstractSQL):
 
         self.education = self.get_educations()
         self.experience = self.get_experiences()
+
     
     def get_experiences(self):
         list = self.use_database(
@@ -34,6 +35,13 @@ class User(abstractSQL):
         )
 
         return [Education(*row) for row in list]
+    
+    def get_posts(self):
+        from SQL.Post import Post
+        raw = self.use_database(
+            "SELECT * from posts where owner_id = ?", (self.id,), easySelect=False
+        )
+        return [Post(*row) for row in raw]
 
     
 
