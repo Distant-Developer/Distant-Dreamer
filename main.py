@@ -228,6 +228,19 @@ def createPost():
 
 @app.route("/post", methods=['GET', 'POST'])
 def detailedPost():
+    if request.method == 'POST':
+        post_id = request.form.get("post_owner_id")
+        database.use_database(
+            "INSERT INTO comments (owner_id, post_owner_id, content) VALUES (?, ?, ?)",
+            (
+                session["id"],
+                request.form.get("post_owner_id"),
+                request.form.get("content"),
+            )
+        )
+
+        return redirect("post?id="+post_id)
+
     user = database.get_user(session["id"])
 
     id = request.args.get("id", None)
