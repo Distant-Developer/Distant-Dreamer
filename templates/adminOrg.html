@@ -10,6 +10,11 @@
 
 {% block title %}Org Creation{% endblock %}
 {%block content%}
+<style>
+  textarea:focus, input:focus{
+    outline: none;
+}
+</style>
 
 <div id="master" class="flex flex-col mt-4 pl-2 pr-2 gap-2">
     <select id="organization_master" class="select select-bordered w-full max-w-xs">
@@ -28,9 +33,14 @@
                   alt="Tailwind-CSS-Avatar-component" /></div>
             </div>
             <form method="post">
-                <input type="text" placeholder="{{org.name}}" name="org_name" value="{{org.name}}" class="card-title input bg-base-200 rounded-none border-0 h-auto w-auto max-w-xs p-0" />
+                <input type="text" placeholder="{{org.name}}" name="org_name" value="{{org.name}}" class="card-title input bg-base-300 border-0 h-auto min-w-xs max-w-xs p-0 rounded-lg" />
             </form>
-            <p id="tagline_preview" class="text-base">{{org.tagline}}</p>
+
+            <form method="post">
+              <input type="text" placeholder="{{org.tagline}}" name="org_tagline" value="{{org.tagline}}" class="text-base input bg-base-300 border-0 h-auto min-w-xs max-w-xs p-0 rounded-lg" />
+            </form>
+
+            <!--<p id="tagline_preview" class="text-base">{{org.tagline}}</p>-->
             <div>
               <div class="flex flex-row items-center gap-2 mt-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-current" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M480 48c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48V96H224V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V96H112V24c0-13.3-10.7-24-24-24S64 10.7 64 24V96H48C21.5 96 0 117.5 0 144v96V464c0 26.5 21.5 48 48 48H304h32 96H592c26.5 0 48-21.5 48-48V240c0-26.5-21.5-48-48-48H480V48zm96 320v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM240 416H208c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zM128 400c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM560 256c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32zM256 176v32c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM112 160c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32zM256 304c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM112 320H80c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zm304-48v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM400 64c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V80c0-8.8 7.2-16 16-16h32zm16 112v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16z"/></svg>
