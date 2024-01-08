@@ -1,3 +1,4 @@
+import json
 import re
 from flask import Flask, render_template, request
 from mySQL import database
@@ -37,6 +38,7 @@ def index():
 
 @app.route("/lobby", methods=['GET','POST'])
 def lobby():
+    
     if request.method == 'POST':
         database.use_database(
             "INSERT INTO comments (owner_id, post_owner_id, content) VALUES (?, ?, ?)",
@@ -52,8 +54,7 @@ def lobby():
     #sessionExists = check_session(session)
 
     user = database.get_user(session["id"])
-
-
+    
     return render_template("lobby.html", user=user, posts = database.get_all_posts())
 
 @app.route("/me", methods=['GET', 'POST'])
@@ -164,6 +165,7 @@ def businessTemplate():
 
 @app.route("/verify", methods=['GET', 'POST'])
 def verify():
+
     user = database.get_user(session["id"])
 
     if request.method == 'POST':
@@ -200,7 +202,7 @@ def verify():
                 return redirect("lobby")
 
 
-    return render_template("verify.html")
+    return render_template("verify.html", user=user)
 
 
 @app.route("/post/new", methods=['GET', 'POST'])

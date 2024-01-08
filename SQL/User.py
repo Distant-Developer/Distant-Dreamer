@@ -1,17 +1,18 @@
+import json
 import re
 from SQL.Education import Education
 from SQL.Experience import Experience
 from SQL.abstractSQL import abstractSQL
 
 class User(abstractSQL):
-    def __init__(self, id, token, username, email, is_staff=0, is_verified=0, linkedin_url=None, github_url=None, description=None, logo_url=None):
+    def __init__(self, id, token, username, email, is_verified, is_staff, linkedin_url=None, github_url=None, description=None, logo_url=None):
         super().__init__()
         self.id = id
         self.token = token
         self.username = username
         self.email = email
-        self.is_verified = self.int_to_bool(is_verified)
         self.is_staff = self.int_to_bool(is_staff)
+        self.is_verified = self.int_to_bool(is_verified)
         self.linkedin_url = linkedin_url
         self.github_url = github_url
         self.description = self.remove_scripts(description)
@@ -20,7 +21,6 @@ class User(abstractSQL):
         self.education = self.get_educations()
         self.experience = self.get_experiences()
 
-    
     def get_experiences(self):
         list = self.use_database(
             "SELECT * from experiences where owner_id = ?", (self.id,), easySelect=False
@@ -82,7 +82,7 @@ class User(abstractSQL):
     def int_to_bool(self, input):
         if input == 0: 
             return False 
-        else: 
+        elif input == 1:
             return True
     
     def Linkedin_isNotEmpty(self):
@@ -101,3 +101,7 @@ class User(abstractSQL):
         result_string = re.sub(script_pattern, '', input_string)
 
         return result_string
+    
+    def is_not_verified(self):
+        not_verified = not self.is_verified
+        return not_verified 
