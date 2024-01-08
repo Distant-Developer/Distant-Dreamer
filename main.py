@@ -270,6 +270,7 @@ def createBusiness():
         website = request.form.get("website")
         industry = request.form.get("industry")
         size = request.form.get("size")
+        logo = request.form.get("logo_url")
 
 
         database.use_database(
@@ -281,7 +282,7 @@ def createBusiness():
                 tagline,
                 website,
                 size,
-                "https://raw.githubusercontent.com/Distant-Developer/Distant-Dreamer/df49365f163fa4b1e9ffd9f68678fecf8ad0efcf/static/img/defaultImage.svg"
+                logo
             ),
         )
 

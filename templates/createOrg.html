@@ -25,10 +25,15 @@
                             <input id="name" name="name" type="text" placeholder="" class="input input-sm input-bordered bg-base-200 w-full h-8 m-0" required maxlength="30"/>
                           </div>
 
-                          <div class="w-full">
+                          <div>
+                            <span class="label-text m-0">Organization Logo Url</span>
+                            <input id="logo_url" name="logo_url" type="url" placeholder="" class="input input-sm input-bordered bg-base-200 w-full h-8 m-0" required maxlength="500"/>
+                          </div>
+
+                          <div class="w-full relative">
                             <span class="label-text m-0">Tagline</span>
                             <input name="tagline" id="tagline" type="text" placeholder="" class="input input-sm input-bordered bg-base-200 w-full h-8 m-0" maxlength="100"/>
-                            <p id="limit_tagline" class="label-text m-0 text-right">0/100</p>
+                            <p id="limit_tagline" class="label-text m-0 text-right absolute right-0">0/100</p>
                           </div>
                 
                           <div>
@@ -68,11 +73,11 @@
                         <div class="card-body p-2">
                           <div class="flex flex-col gap-1">
                             <div class="avatar">
-                              <div class="w-20 rounded-lg"><img src="https://avatars.githubusercontent.com/u/{{session.token}}?v=4"
+                              <div class="w-20 rounded-lg"><img id="logo" src="https://avatars.githubusercontent.com/u/{{session.token}}?v=4"
                                   alt="Tailwind-CSS-Avatar-component" /></div>
                             </div>
                             <h2 id="cardTitle" class="card-title">Organization Name</h2>
-                            <p id="tagline_preview" class="text-base">Tagline</p>
+                            <p id="tagline_preview" class="text-base no-wrap">Tagline</p>
                             <div>
                               <div class="flex flex-row items-center gap-2 mt-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-current" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M480 48c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48V96H224V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V96H112V24c0-13.3-10.7-24-24-24S64 10.7 64 24V96H48C21.5 96 0 117.5 0 144v96V464c0 26.5 21.5 48 48 48H304h32 96H592c26.5 0 48-21.5 48-48V240c0-26.5-21.5-48-48-48H480V48zm96 320v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM240 416H208c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zM128 400c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM560 256c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32zM256 176v32c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM112 160c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32zM256 304c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM112 320H80c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zm304-48v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM400 64c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V80c0-8.8 7.2-16 16-16h32zm16 112v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16z"/></svg>
@@ -85,6 +90,7 @@
                               </div>
                             </div>
 
+
                             <div id="website_button" class="mt-2">
                               <a id="website_link" href="http://www.google.com/">
                               <button class="btn btn-primary">
@@ -92,8 +98,10 @@
                                 Website
                               </button>
                             </a>
-
                             </div>
+  
+
+
 
                           </div>
                         </div>
@@ -109,6 +117,9 @@
 
           <script>
 
+            document.getElementById("github_button").style.display="none";
+            document.getElementById("website_button").style.display="none";
+
             // Select all input fields in the first column
             var inputFields = document.querySelectorAll('.flex-1 input');
 
@@ -117,6 +128,7 @@
               inputField.addEventListener('input', function() {
                 // Get values from the first column
                 var orgName = document.querySelector('#name').value;
+                var orgLogo = document.querySelector('#logo_url').value;
                 var website = document.querySelector('#website').value;
                 var industry = document.querySelector('#industry').value;
                 var tagline = document.querySelector('#tagline').value;
@@ -125,11 +137,21 @@
 
 
                 document.querySelector('#cardTitle').textContent = defaultTo(orgName, "Organization Name");
+                if (orgLogo) {
+                  document.getElementById("logo").src=orgLogo;
+                } else {
+                  document.getElementById("logo").src="https://avatars.githubusercontent.com/u/{{session.token}}?v=4";
+                }
                 document.querySelector('#industry_preview').textContent = defaultTo(industry, "Industry");
                 document.querySelector('#limit_tagline').textContent=tagsize+"/100";
                 document.querySelector('#tagline_preview').textContent=defaultTo(tagline, "Tagline");
-                document.getElementById("website_button").style.display=defaultTo(website_link,"none","block");
-                document.getElementById("website_link").href=website_link;
+
+                if (website_link.includes("https://")) {
+                  document.getElementById("website_button").style.display=defaultTo(website_link,"none","block");
+                  document.getElementById("website_link").href=website_link;
+                } else {
+                  document.getElementById("website_button").style.display="none";
+                }
                 
                 
 
