@@ -55,7 +55,7 @@ def lobby():
 
     user = database.get_user(session["id"])
     
-    return render_template("lobby.html", user=user, posts = database.get_all_posts())
+    return render_template("lobby.html", user=user, posts = database.get_all_posts()[::-1])
 
 @app.route("/me", methods=['GET', 'POST'])
 def mePage():
