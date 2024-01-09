@@ -11,19 +11,21 @@
 {% block title %}Org Creation{% endblock %}
 {%block content%}
 <style>
-  textarea:focus, input:focus{
+  textarea:focus, input:focus, select:focus, textarea:focus{
     outline: none;
 }
 </style>
 
-<div id="master" class="flex flex-col mt-4 pl-2 pr-2 gap-2">
-    <select id="organization_master" class="select select-bordered w-full max-w-xs">
+<div id="master" class="flex flex-col mt-4 mb-8 pl-2 pr-2 gap-2">
+    <select id="organization_master" class="select select-primary w-full max-w-xs">
 
         <option disabled selected>{{org.name}}</option>
         {% for org in user.get_organizations() %}
         <option id="o_id" name="o_id" value="{{org.id}}">{{org.name}}</option>
         {% endfor %}
       </select>
+
+      <div class="divider">Preview</div>
 
       <div class="card w-full bg-base-300 p-4 border">
         <div class="card-body p-2">
@@ -65,11 +67,96 @@
 
           </div>
         </div>
+      </div>
 
+      <div class="divider"> Admin Tools </div>
+      <select id="admin_select" class="select select-primary w-full mb-2 max-w-xs">
+        <option disabled selected>Admin (Select One)</option>
+        <option value="adminJobs">Job Board Postings</option>
+        <option value="adminSettings">Settings</option>
+      </select>
+
+      <div id="adminJobs" class="w-full">
+        <div class="card w-full bg-base-300 p-4 border w-full">
+          <div class="flex flex-col card-body p-2 gap-4 w-full">
+            <div class="card-title">Admin Job Board</div>
+
+            <div>
+              <button class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 352h8.2c32.3-39.1 81.1-64 135.8-64c5.4 0 10.7 .2 16 .7V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM320 352H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H360.2C335.1 449.6 320 410.5 320 368c0-5.4 .2-10.7 .7-16l-.7 0zm320 16a144 144 0 1 0 -288 0 144 144 0 1 0 288 0zM496 288c8.8 0 16 7.2 16 16v48h32c8.8 0 16 7.2 16 16s-7.2 16-16 16H496c-8.8 0-16-7.2-16-16V304c0-8.8 7.2-16 16-16z"/></svg>
+                Create Job Posting
+              </button>
+            </div>
+
+            <div class="divider"></div>
+            
+            <div class="flex flex-row max-sm:flex-wrap gap-4">
+              <div class="shrink basis-6/12 max-sm:w-full max-sm:basis-full border border-secondary rounded-lg p-4 bg-base-200 group">
+                
+                <div class="flex flex-row w-full">
+
+                  <div class="prose flex flex-col w-full">
+                    <h2 class="w-auto m-0">Job Position Title</h2>
+                    <p>Description About Position</p>
+                  </div>
+                  
+                  <div class="flex flex-col flex-none hidden group-hover:block">
+                    <button class="btn btn-primary">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M32 32H480c17.7 0 32 14.3 32 32V96c0 17.7-14.3 32-32 32H32C14.3 128 0 113.7 0 96V64C0 46.3 14.3 32 32 32zm0 128H480V416c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V160zm128 80c0 8.8 7.2 16 16 16H336c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16z"/></svg>
+                      Archive
+                    </button>
+                  </div>
+
+              </div>
+
+                
+              </div>
+              <div class="shrink prose basis-6/12 max-sm:w-full max-sm:basis-full border border-secondary rounded-lg p-4 bg-base-200">
+                <h2>Job Position Title</h2>
+                <p>Description About Position</p>
+              </div>
+            </div>
+
+
+
+
+          </div>
+        </div>
+      </div>
+
+      <div id="adminSettings">
+        <div class="card w-full bg-base-300 p-4 border">
+          <div class="flex flex-col card-body p-2 gap-4">
+            <div class="card-title">Admin Settings</div>
+
+            <div>
+              
+              <button class="btn btn-primary" onclick="deleteBus.showModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="oklch(var(--pc))" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M119.4 44.1c23.3-3.9 46.8-1.9 68.6 5.3l49.8 77.5-75.4 75.4c-1.5 1.5-2.4 3.6-2.3 5.8s1 4.2 2.6 5.7l112 104c2.9 2.7 7.4 2.9 10.5 .3s3.8-7 1.7-10.4l-60.4-98.1 90.7-75.6c2.6-2.1 3.5-5.7 2.4-8.8L296.8 61.8c28.5-16.7 62.4-23.2 95.7-17.6C461.5 55.6 512 115.2 512 185.1v5.8c0 41.5-17.2 81.2-47.6 109.5L283.7 469.1c-7.5 7-17.4 10.9-27.7 10.9s-20.2-3.9-27.7-10.9L47.6 300.4C17.2 272.1 0 232.4 0 190.9v-5.8c0-69.9 50.5-129.5 119.4-141z"/></svg>
+                Delete Organization
+              </button>
+              <dialog id="deleteBus" class="modal">
+                <form method="post" class="modal-box">
+                  <h3 class="font-bold text-lg">Delete Organization</h3>
+                  <p class="py-4">Type in the following code: </p>
+                  <input type="hidden" name="action" value="deletion">
+                  <input type="text" name="id" class="input input-primary">
+
+                  <div class="modal-action">
+                      <button class="btn">Submit</button>
+                  </div>
+                </form>
+
+              </dialog>
+
+            </div>
+          </div>
+        </div>
       </div>
 </div>
 
 <script>
+
 var orgSizeSelect = document.getElementById("organization_master");
 
 // Adding an event listener for the "change" event
@@ -78,5 +165,18 @@ orgSizeSelect.addEventListener("change", function() {
     console.log(org);
     window.location.replace("/org/admin?id="+org)
 });
+
+document.getElementById("admin_select").addEventListener("change", function() {
+  hideAll();
+  var option = document.querySelector("#admin_select").value;
+  document.getElementById(option).style.display="block";
+});
+
+function hideAll() {
+  document.getElementById("adminJobs").style.display="none";
+  document.getElementById("adminSettings").style.display="none";
+}
+
+hideAll();
 </script>
 {%endblock%}
