@@ -64,6 +64,7 @@ class abstractSQL:
         Returns:
         - result: The result of the query execution. If it's a SELECT query, it returns the first row as a tuple; otherwise, it returns None.
         """
+        
         self.connection = self.connect()
 
         res = self.connection.execute(query, values)
@@ -76,3 +77,19 @@ class abstractSQL:
         self.close()
 
         return returned_value
+    
+    def get_organizations(self, id=None, owner_id=None):
+        from SQL.Organization import Organization
+        if target := id:
+            raw = self.use_database(
+                "SELECT * from organizations WHERE id = ?", (int(target),), easySelect=False
+            )
+        elif target := owner_id:
+            raw = self.use_database(
+                "SELECT * from organizations WHERE owner_id = ?", (int(target),), easySelect=False
+            )
+        else:
+            raw = self.use_database(
+                "SELECT * from organizations", (), easySelect=False
+            )
+        return [Organization(*row) for row in raw]

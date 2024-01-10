@@ -3,6 +3,7 @@ from SQL.abstractSQL import abstractSQL
 
 class Organization(abstractSQL):
     def __init__(self, id, owner_id, name, industry, tagline=None, website=None, github_link=None, size=None, logo_url=None):
+        super().__init__("database.db")
         self.id = id
         self.owner_id = owner_id
         self.name = name
@@ -12,6 +13,13 @@ class Organization(abstractSQL):
         self.github_link = github_link
         self.size = size
         self.logo_url = logo_url
+
+    
+    def updateName(self, input):
+        self.use_database(
+            f"UPDATE organizations SET name = ? WHERE ID = ?;", (input, int(self.id),), easySelect=False
+        )
+        return self.get_organizations(id=self.id)
 
     def to_dict(self):
         return {

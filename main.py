@@ -305,13 +305,7 @@ def businessList():
 
 @app.route("/org/admin", methods=['GET','POST'])
 def org_Admin():
-    try:
-        print(request.form.get("org_name"))
-    except:
-        pass
-
     user = database.get_user(session["id"])
-
     id = request.args.get("id", None)
 
     try: 
@@ -322,6 +316,12 @@ def org_Admin():
             org = user.get_organizations()[0]
     except:
         org = user.get_organizations()[0]
+
+
+    if org_name := request.form.get("org_name"):
+        print(org.to_dict())
+        org.updateName(org_name)
+        return redirect("/org/admin?id="+str(org.id))
 
     return render_template("adminOrg.html", user=user, org=org)
 
