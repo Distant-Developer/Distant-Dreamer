@@ -79,18 +79,81 @@
       <div id="adminJobs" class="w-full">
         <div class="card w-full bg-base-300 p-4 border w-full">
           <div class="flex flex-col card-body p-2 gap-4 w-full">
-            <div class="card-title">Admin Job Board</div>
+            <div id="jobTitle" class="card-title">Admin Job Board</div>
 
             <div>
-              <button class="btn btn-primary">
+              <button class="btn btn-primary" onclick="changeJobPostView()">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 352h8.2c32.3-39.1 81.1-64 135.8-64c5.4 0 10.7 .2 16 .7V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM320 352H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H360.2C335.1 449.6 320 410.5 320 368c0-5.4 .2-10.7 .7-16l-.7 0zm320 16a144 144 0 1 0 -288 0 144 144 0 1 0 288 0zM496 288c8.8 0 16 7.2 16 16v48h32c8.8 0 16 7.2 16 16s-7.2 16-16 16H496c-8.8 0-16-7.2-16-16V304c0-8.8 7.2-16 16-16z"/></svg>
-                Create Job Posting
+                <p id="jobButtonText">Create Job Posting</p>
               </button>
             </div>
+            
+
 
             <div class="divider"></div>
+            <div id="createJobPost" class="flex flex-1 flex-col shrink mt-4 gap-2 w-full items-center justify-center gap-4">
+              <div class="flex w-8/12 items-center justify-center">
+                  <div class="self-center card w-full bg-base-200 shadow-xl">
+                      <form method="post" class="card-body p-4">
+                          <div class="flex flex-row items-center gap-2">
+                              <div class="avatar">
+                                  <div class="w-8 rounded-xl" style="aspect-ratio: 1/1;">
+                                      <img id="editor_avatar_logo" src="{{org.logo_url}}" alt="Album"/>
+                                  </div>
+                              </div>
+                              <p>{{org.name}}</p>
+                          </div>
+                          <div class="flex flex-row w-full items-center gap-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 opacity-50" fill="oklch(var(--s))" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
+                            <input type="text" name="title" id="title_editor" maxlength="60" value="Name of Position" placeholder="Name of Position Goes Here" class="input input-secondary p-0 pl-2 border-0 rounded-none py-4 placeholder-bg-neutral text-xl bg-base-200" required/>
+                          </div>
+                          
+                          <div class="flex flex-row w-full gap-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 opacity-50" fill="oklch(var(--s))" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
+                            
+                            <textarea name="content" id="content_editor" rows="4" class="textarea textarea-secondary w-full border-0 mb-2 p-0 py-1 pl-2 h-48 text-base bg-base-200 rounded-none placeholder-bg-neutral" placeholder="You can use markdown language here" required>### About the Job
+describe the position... FUCK 
+
+### Experience
+write down required experience...
+
+### Why Join Us?
+Why should people join you? </textarea>
+</div>
+                          
+                        <div class="flex flex-row w-full items-center gap-4"> 
+                          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 opacity-50" fill="oklch(var(--s))" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
+                          <input type="url" name="url" id="url" placeholder="Url for Applications Here" class="input input-secondary border-0 rounded-none p-0 py-4 pl-2 placeholder-bg-neutral text-base bg-base-200" required/>
+                        </div>
+
+                          <div class="flex flex-row w-full items-end justify-end">
+                              <button class="btn btn-primary">Post</button>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+
+              <div id="preview_box" class="flex w-8/12 items-center justify-center">
+                <div class="self-center card w-full bg-base-200 shadow-xl">
+                    <div class="flex flex-col card-body p-4">
+                        <div class="flex flex-row items-center gap-2">
+                            <div class="avatar">
+                                <div class="w-8 rounded-xl" style="aspect-ratio: 1/1;">
+                                    <img src="{{org.logo_url}}" alt="Album"/>
+                                </div>
+                            </div>
+                            <p>{{org.name}}</p>
+                        </div>
+                        <p class="text-2xl text-bold p-0  w-auto" id="title_preview"></p>
+                        <div class="divider">Position Details</div>
+                        <p class="p-0 text-base w-auto prose" id="title_content"></p>
+                    </div>
+                </div>
+            </div>
+
+            </div>
             
-            <div class="flex flex-row max-sm:flex-wrap gap-4">
+            <div id="formerPosts" class="flex flex-row max-sm:flex-wrap gap-4">
               <div class="shrink basis-6/12 max-sm:w-full max-sm:basis-full border border-secondary rounded-lg p-4 bg-base-200 group">
                 
                 <div class="flex flex-row w-full">
@@ -101,11 +164,25 @@
                   </div>
                   
                   <div class="flex flex-col flex-none hidden group-hover:block">
-                    <button class="btn btn-primary">
+                    <button class="btn btn-primary" onclick="delete_id_1.showModal()">
                       <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M32 32H480c17.7 0 32 14.3 32 32V96c0 17.7-14.3 32-32 32H32C14.3 128 0 113.7 0 96V64C0 46.3 14.3 32 32 32zm0 128H480V416c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V160zm128 80c0 8.8 7.2 16 16 16H336c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16z"/></svg>
                       Archive
                     </button>
                   </div>
+
+                  <dialog id="delete_id_1" class="modal">
+                    <div class="modal-box">
+                      <h3 class="font-bold text-lg">Archiving Job Post...</h3>
+                      <p class="py-4">Click "Confirm" to archive the job post.</p>
+                      <div class="modal-action">
+                        <form method="dialog">
+                          <!-- if there is a button in form, it will close the modal -->
+                          <button class="btn">Confirm</button>
+                        </form>
+                      </div>
+                    </div>
+                  </dialog>
+
 
               </div>
 
@@ -176,6 +253,50 @@ function hideAll() {
   document.getElementById("adminJobs").style.display="none";
   document.getElementById("adminSettings").style.display="none";
 }
+
+document.getElementById("createJobPost").style.display="none";
+
+function changeJobPostView(){
+  var content = document.getElementById("jobButtonText").innerHTML;
+
+  if (content == "Create Job Posting") {
+    document.getElementById("jobButtonText").innerHTML = "View Job Postings";
+    document.getElementById("createJobPost").style.display="flex";
+    document.getElementById("formerPosts").style.display="none";
+    document.getElementById("jobTitle").innerHTML = "Admin Job Board (Creating)";
+  } else if (content == "View Job Postings") {
+    document.getElementById("jobButtonText").innerHTML = "Create Job Posting";
+    document.getElementById("createJobPost").style.display="none";
+    document.getElementById("formerPosts").style.display="flex";
+    document.getElementById("jobTitle").innerHTML = "Admin Job Board (Viewing)";
+  }
+}
+
+function convert(input) {
+  const clean = DOMPurify.sanitize(input);
+  var converter = new showdown.Converter();
+  return converter.makeHtml(clean);
+}
+
+document.getElementById("preview_box").style.display = "none";
+
+document.addEventListener("input", function() {
+    var title = document.querySelector("#title_editor").value;
+    var content = document.querySelector("#content_editor").value;
+    if (title || content) {
+        document.querySelector("#title_preview").textContent=title;  
+
+
+        var Description = document.getElementById("title_content");
+        Description.innerHTML=convert(content);
+
+        document.getElementById("preview_box").style.display = "block";
+    } else {
+        document.getElementById("preview_box").style.display = "none";
+    }
+    
+});
+
 
 hideAll();
 </script>
