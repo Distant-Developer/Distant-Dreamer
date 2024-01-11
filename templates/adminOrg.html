@@ -32,7 +32,7 @@ textarea:focus, input:focus, select:focus{
         <div class="card-body p-2">
           <div class="flex flex-col gap-1">
             <div class="avatar">
-              <div class="w-20 rounded-lg"><img src="https://avatars.githubusercontent.com/u/{{session.token}}?v=4"
+              <div class="w-20 rounded-lg"><img src="{{org.logo_url}}"
                   alt="Tailwind-CSS-Avatar-component" /></div>
             </div>
             <form method="post">
@@ -47,13 +47,21 @@ textarea:focus, input:focus, select:focus{
             <div>
               <form method="post" class="flex flex-row items-center gap-2 mt-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="fill-base-content h-5 w-5 fill-current" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M480 48c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48V96H224V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V96H112V24c0-13.3-10.7-24-24-24S64 10.7 64 24V96H48C21.5 96 0 117.5 0 144v96V464c0 26.5 21.5 48 48 48H304h32 96H592c26.5 0 48-21.5 48-48V240c0-26.5-21.5-48-48-48H480V48zm96 320v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM240 416H208c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zM128 400c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM560 256c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32zM256 176v32c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM112 160c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32zM256 304c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM112 320H80c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zm304-48v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM400 64c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V80c0-8.8 7.2-16 16-16h32zm16 112v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16z"/></svg>
-                <input type="text" id="industry_preview" value="{{org.industry}}" class="text-base input bg-base-300 border-0 h-auto min-w-xs max-w-xs p-0 rounded-lg"/>
+                <input type="text" id="industry_preview" name="industry" value="{{org.industry}}" class="text-base input bg-base-300 border-0 h-auto min-w-xs max-w-xs p-0 rounded-lg"/>
               </form>
               
-              <div class="flex flex-row items-center gap-2">
+              <form method="post" class="flex flex-row items-center gap-2 mt-1" id="orgForm" onchange="submitForm()">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-current" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM609.3 512H471.4c5.4-9.4 8.6-20.3 8.6-32v-8c0-60.7-27.1-115.2-69.8-151.8c2.4-.1 4.7-.2 7.1-.2h61.4C567.8 320 640 392.2 640 481.3c0 17-13.8 30.7-30.7 30.7zM432 256c-31 0-59-12.6-79.3-32.9C372.4 196.5 384 163.6 384 128c0-26.8-6.6-52.1-18.3-74.3C384.3 40.1 407.2 32 432 32c61.9 0 112 50.1 112 112s-50.1 112-112 112z"/></svg>
-                <p id="orgSize_preview" class="text-base">{{org.size}}</p>
-              </div>
+                <!--<p id="orgSize_preview" class="text-base">{{org.size}}</p>-->
+                <select name="size" id="orgSize" placeholder="Type here" class="input input-sm bg-base-300 text-base h-auto m-0 pl-0" required>
+                  <option hidden selected>{{org.size}}</option>
+                  <option value="0-10">0-10</option>
+                  <option value="10-100">10-100</option>
+                  <option value="100-1000">100-1000</option>
+                  <option value="1000+">1000+</option>
+                </select>
+
+              </form>
             </div>
 
             <div id="website_button" class="mt-2">
@@ -207,38 +215,37 @@ Why should people join you? </textarea>
 
           </div>
         </div>
-      </div>
+      
 
-      <div id="adminSettings">
-        <div class="card w-full bg-base-300 p-4 border">
-          <div class="flex flex-col card-body p-2 gap-4">
-            <div class="card-title">Admin Settings</div>
+      <!--flex flex-1 flex-col shrink mt-4 gap-2 w-full items-center justify-center gap-4-->
+      <div id="adminSettings" class="card w-full bg-base-300 p-4 mt-0 border">
+        <div class="flex flex-col card-body p-2 gap-4">
+          <div class="card-title">Admin Settings</div>
 
-            <div>
-              
-              <button class="btn btn-primary" onclick="deleteBus.showModal()">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="oklch(var(--pc))" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M119.4 44.1c23.3-3.9 46.8-1.9 68.6 5.3l49.8 77.5-75.4 75.4c-1.5 1.5-2.4 3.6-2.3 5.8s1 4.2 2.6 5.7l112 104c2.9 2.7 7.4 2.9 10.5 .3s3.8-7 1.7-10.4l-60.4-98.1 90.7-75.6c2.6-2.1 3.5-5.7 2.4-8.8L296.8 61.8c28.5-16.7 62.4-23.2 95.7-17.6C461.5 55.6 512 115.2 512 185.1v5.8c0 41.5-17.2 81.2-47.6 109.5L283.7 469.1c-7.5 7-17.4 10.9-27.7 10.9s-20.2-3.9-27.7-10.9L47.6 300.4C17.2 272.1 0 232.4 0 190.9v-5.8c0-69.9 50.5-129.5 119.4-141z"/></svg>
-                Delete Organization
-              </button>
-              <dialog id="deleteBus" class="modal">
-                <form method="post" class="modal-box">
-                  <h3 class="font-bold text-lg">Delete Organization</h3>
-                  <p class="py-4">Type in the following code: </p>
-                  <input type="hidden" name="action" value="deletion">
-                  <input type="text" name="id" class="input input-primary">
+          <div>
+            
+            <button class="btn btn-primary" onclick="deleteBus.showModal()">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="oklch(var(--pc))" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M119.4 44.1c23.3-3.9 46.8-1.9 68.6 5.3l49.8 77.5-75.4 75.4c-1.5 1.5-2.4 3.6-2.3 5.8s1 4.2 2.6 5.7l112 104c2.9 2.7 7.4 2.9 10.5 .3s3.8-7 1.7-10.4l-60.4-98.1 90.7-75.6c2.6-2.1 3.5-5.7 2.4-8.8L296.8 61.8c28.5-16.7 62.4-23.2 95.7-17.6C461.5 55.6 512 115.2 512 185.1v5.8c0 41.5-17.2 81.2-47.6 109.5L283.7 469.1c-7.5 7-17.4 10.9-27.7 10.9s-20.2-3.9-27.7-10.9L47.6 300.4C17.2 272.1 0 232.4 0 190.9v-5.8c0-69.9 50.5-129.5 119.4-141z"/></svg>
+              Delete Organization
+            </button>
+            <dialog id="deleteBus" class="modal">
+              <form method="post" class="modal-box">
+                <h3 class="font-bold text-lg">Delete Organization</h3>
+                <p class="py-4">Type in the following code: </p>
+                <input type="hidden" name="action" value="deletion">
+                <input type="text" name="id" class="input input-primary">
 
-                  <div class="modal-action">
-                      <button class="btn">Submit</button>
-                  </div>
-                </form>
+                <div class="modal-action">
+                    <button class="btn">Submit</button>
+                </div>
+              </form>
 
-              </dialog>
+            </dialog>
 
-            </div>
           </div>
         </div>
       </div>
-</div>
+    </div>
 
 <script>
 
@@ -327,6 +334,8 @@ function isValidHttpUrl(string) {
 
   return url.protocol === "http:" || url.protocol === "https:";
 }
+
+function submitForm() {document.getElementById("orgForm").submit();}
 
 
 hideAll();

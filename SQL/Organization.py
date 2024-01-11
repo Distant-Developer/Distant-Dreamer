@@ -21,6 +21,12 @@ class Organization(abstractSQL):
         )
         return self.get_organizations(id=self.id)
 
+    def updateDetails(self, item, newData):
+        self.use_database(
+            f"UPDATE organizations SET {item} = ? WHERE ID = ?;", (newData, int(self.id),), easySelect=False
+        )
+        return self.get_organizations(id=self.id)
+
     def to_dict(self):
         return {
             "id": self.id,

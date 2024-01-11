@@ -317,13 +317,19 @@ def org_Admin():
     except:
         org = user.get_organizations()[0]
 
-
+    if request.method != 'POST':
+        return render_template("adminOrg.html", user=user, org=org)
+    
     if org_name := request.form.get("org_name"):
-        print(org.to_dict())
         org.updateName(org_name)
-        return redirect("/org/admin?id="+str(org.id))
-
-    return render_template("adminOrg.html", user=user, org=org)
+    elif newtagline := request.form.get("org_tagline"):
+        org.updateDetails("tagline", newtagline)
+    elif x := request.form.get("industry"):
+        org.updateDetails("industry", x)
+    elif x := request.form.get("size"):
+        org.updateDetails("size", x)
+    
+    return redirect("/org/admin?id="+str(org.id))  
 
 if __name__ == "__main__":
 
