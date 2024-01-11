@@ -157,7 +157,7 @@ def userPage():
 
 @app.route("/jobs")
 def jobPostings():
-    return render_template("jobs.html")
+    return render_template("jobs.html", user= database.get_user(session["id"]))
 
 @app.route("/business") #this is for accessing a single business site 
 def businessTemplate():
