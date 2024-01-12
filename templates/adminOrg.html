@@ -179,7 +179,11 @@ Why should people join you? </textarea>
 
                   <div class="prose flex flex-col w-full">
                     <h2 class="w-auto m-0">{{job.position_title}}</h2>
-                    <p>{{job.position_content[0:50]}}</p>
+                    {% if job.archived %}
+                    <p>ARCHIVED</p>
+                    {% else %} 
+                    <p>ACTIVE</p>
+                    {% endif %}
                   </div>
                   
                   <div class="flex flex-col flex-none hidden group-hover:block">
@@ -187,6 +191,12 @@ Why should people join you? </textarea>
                       <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M32 32H480c17.7 0 32 14.3 32 32V96c0 17.7-14.3 32-32 32H32C14.3 128 0 113.7 0 96V64C0 46.3 14.3 32 32 32zm0 128H480V416c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V160zm128 80c0 8.8 7.2 16 16 16H336c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16z"/></svg>
                       Archive
                     </button>
+                    <a href="/jobs?id={{job.id}}">
+                      <button class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M32 32H480c17.7 0 32 14.3 32 32V96c0 17.7-14.3 32-32 32H32C14.3 128 0 113.7 0 96V64C0 46.3 14.3 32 32 32zm0 128H480V416c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V160zm128 80c0 8.8 7.2 16 16 16H336c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16z"/></svg>
+                        View
+                      </button>
+                    </a>
                   </div>
 
                   <dialog id="delete_id_{{job.id}}" class="modal">
@@ -195,7 +205,10 @@ Why should people join you? </textarea>
                       <p class="py-4">Click "Confirm" to archive the job post.</p>
                       <div class="modal-action">
                         <form method="dialog">
-                          <!-- if there is a button in form, it will close the modal -->
+                          <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                        </form>
+                        <form method="post">
+                          <input type="hidden" name="archive" value="{{job.id}}">
                           <button class="btn">Confirm</button>
                         </form>
                       </div>

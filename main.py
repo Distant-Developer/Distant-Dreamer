@@ -154,9 +154,15 @@ def userPage():
     return render_template("user.html", experiences=user.experience, user=user, educations=user.education)
 
 @app.route("/jobs")
-def jobPostings():
+def jobPostings(priorityjob=None):
+    #priorityJob means it will show up first. Can be used to see archived jobs
+    
+    if id := request.args.get("id", None):
+        priorityjob = database.get_jobpost(id=id)
+
     jobs = database.get_job_posts()
-    return render_template("jobs.html", user= database.get_user(session["id"]), jobs=jobs)
+
+    return render_template("jobs.html", user= database.get_user(session["id"]), jobs=jobs, priorityjob = priorityjob)
 
 @app.route("/business") #this is for accessing a single business site 
 def businessTemplate():
@@ -337,6 +343,10 @@ def org_Admin():
                 request.form.get("url"),
             ),
         )
+    elif id := int(request.form.get("archive")):
+        print(id)
+        job = database.get_jobpost(id)
+        job.archive()
     
     return redirect("/org/admin?id="+str(org.id))  
 

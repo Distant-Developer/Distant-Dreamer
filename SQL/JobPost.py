@@ -19,6 +19,14 @@ class JobPost(abstractSQL):
             return False 
         elif input == 1:
             return True
+    
+    def archive(self):
+        self.use_database(
+            f"UPDATE jobPost SET archived = 1 WHERE id = ?;", 
+            (   
+                self.id,
+            ),
+        )
         
     def get_owner(self):
         from SQL.Organization import Organization
