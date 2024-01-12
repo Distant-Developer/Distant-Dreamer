@@ -346,7 +346,7 @@ def jobDetails():
     id = request.args.get("id")
     job = database.get_jobpost(id)
 
-    return {"ID":job.id, "OWNER_ID":job.owner_id, "POSITION_TITLE":job.position_title, "POSITION_CONTENT": job.position_content, "URL_APP":job.app_url}
+    return {"ID":job.id, "OWNER_ID":job.owner_id, "POSITION_TITLE":job.position_title, "POSITION_CONTENT": job.position_content, "URL_APP":job.app_url, "ARCHIVED": job.archived}
 
 @app.route("/developer/org")
 def orgDetails():

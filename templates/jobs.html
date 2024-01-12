@@ -52,7 +52,6 @@
                     </div>
                 </div>
 
-
                 <div class = "flex flex-row gap-2 pt-4" style="align-items: center;">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-current" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M480 48c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48V96H224V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V96H112V24c0-13.3-10.7-24-24-24S64 10.7 64 24V96H48C21.5 96 0 117.5 0 144v96V464c0 26.5 21.5 48 48 48H304h32 96H592c26.5 0 48-21.5 48-48V240c0-26.5-21.5-48-48-48H480V48zm96 320v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM240 416H208c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zM128 400c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM560 256c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32zM256 176v32c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM112 160c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32zM256 304c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM112 320H80c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zm304-48v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM400 64c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V80c0-8.8 7.2-16 16-16h32zm16 112v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16z"/></svg>
                     <p id="main_Industry" class="text-base">{{jobs[0].get_owner().industry}}</p>
@@ -63,14 +62,19 @@
                     <p id="main_Size" class="text-base">{{jobs[0].get_owner().size}}</p>
                 </div>
 
+                {% if jobs[0].archived %}
+                <div id="archived_badge" class="badge badge-neutral mt-2">Archived</div>
+                {% endif %}
+
 
                 <div class="divider"></div>
                 <p id="main_Jobcontent" class="p-0 text-base w-auto prose" id="title_content">{{jobs[0].position_content}}</p>
                 
+                {% if jobs[0].archived != True %}
                 <div class="flex flex-row w-full items-start justify-start mt-2">
                     <a id="applybutton" href="url" class="btn btn-secondary">Apply Here</a>
-                  </div>
-
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -84,12 +88,13 @@ function convert(input) {
 }
 
 class JobData {
-    constructor(id, ownerID, positionContent, positionTitle, urlApp) {
+    constructor(id, ownerID, positionContent, positionTitle, urlApp, archived) {
         this.ID = id;
         this.OWNER_ID = ownerID;
         this.POSITION_CONTENT = positionContent;
         this.POSITION_TITLE = positionTitle;
         this.URL_APP = urlApp;
+        this.ARCHIVED = archived;
     }
 }
 
@@ -106,7 +111,7 @@ return fetch(apiUrl)
     })
     .then(data => {
     // Create an instance of the JobData class with the retrieved data
-    return new JobData(data.ID, data.OWNER_ID, data.POSITION_CONTENT, data.POSITION_TITLE, data.URL_APP);
+    return new JobData(data.ID, data.OWNER_ID, data.POSITION_CONTENT, data.POSITION_TITLE, data.URL_APP, data.ARCHIVED);
     });
 }
 
@@ -119,6 +124,15 @@ function changePositionScreen(jobIdToFetch) {
         document.getElementById("main_JobTitle").innerHTML = jobData.POSITION_TITLE;
         document.getElementById("main_Jobcontent").innerHTML = convert(jobData.POSITION_CONTENT);
         document.getElementById("applybutton").href = jobData.URL_APP;
+
+        console.log(jobData.ARCHIVED);
+        if (jobData.ARCHIVED) {
+            document.getElementById("archived_badge").style.display="block";
+            document.getElementById("applybutton").style.display="none";
+        } else {
+            document.getElementById("archived_badge").style.display="none";
+            document.getElementById("applybutton").style.display="flex";
+        }
 
         return fetchOrgDataById(jobData.OWNER_ID);
     })
