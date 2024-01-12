@@ -85,10 +85,7 @@
                     </div>
                     <div class="flex flex-col gap-2 grow">
                       <div class="divider hover:font-bold divider-primary"> About Me </div>
-                      <article class="prose">
-                        
-                        {{user.description | safe }}
-                      </article>
+                      <article id="useraboutme" class="prose"></article>
                       <button class="btn" onclick="modal_about_me.showModal()">Edit About Me</button>
                       <dialog id="modal_about_me" class="modal">
                         <div class="modal-box modal-middle">
@@ -333,4 +330,18 @@
                     </div>
                   </div>
                 </div>
+
+                <script>
+                  function convert(input) {
+                    const clean = DOMPurify.sanitize(input);
+                    var converter = new showdown.Converter();
+                    return converter.makeHtml(clean);
+                  }
+
+                  var x = document.getElementById("useraboutme");
+                  var content = convert(`{{user.description | safe}}`);
+
+                  x.innerHTML = content
+
+                </script>
 {% endblock %}

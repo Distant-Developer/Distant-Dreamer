@@ -2,13 +2,13 @@
 
 {% block lobbyButton %}
 <div class="flex-1">
-  <a href="/user?id={{user.id}}" class="flex items-center btn btn-ghost">
-      <span class="self-center text-xl font-semibold whitespace-nowrap">#{{user.username}}</span>
+  <a href="/user?id={{targetuser.id}}" class="flex items-center btn btn-ghost">
+      <span class="self-center text-xl font-semibold whitespace-nowrap">#{{targetuser.username}}</span>
   </a>
 </div>
 {% endblock %}
 
-{% block title %}{{user.username}}'s Page{% endblock %}
+{% block title %}{{targetuser.username}}'s Page{% endblock %}
 
 {%block content%}
             <!-- CONTENT OF WEBSITE -->
@@ -17,22 +17,22 @@
                 <div class="grow-0 flex flex-col gap-2">
                   <div class="avatar">
                       <div class="w-72 rounded-full">
-                        <img src="{{user.logo_url}}" />
+                        <img src="{{targetuser.logo_url}}" />
                       </div>
                   </div>
                       
-                    <span class="text-2xl font-semibold whitespace-nowrap">{{user.username}}</span>
+                    <span class="text-2xl font-semibold whitespace-nowrap">{{targetuser.username}}</span>
 
-                    {% if user.is_staff %}
+                    {% if targetuser.is_staff %}
                     <div class="badge badge-info gap-2">
                       <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-4 h-4 stroke-current" viewBox="0 0 448 512"><path d="M224 0c17.7 0 32 14.3 32 32V48h16c17.7 0 32 14.3 32 32s-14.3 32-32 32H256v48H408c22.1 0 40 17.9 40 40c0 5.3-1 10.5-3.1 15.4L368 400H80L3.1 215.4C1 210.5 0 205.3 0 200c0-22.1 17.9-40 40-40H192V112H176c-17.7 0-32-14.3-32-32s14.3-32 32-32h16V32c0-17.7 14.3-32 32-32zM38.6 473.4L80 432H368l41.4 41.4c4.2 4.2 6.6 10 6.6 16c0 12.5-10.1 22.6-22.6 22.6H54.6C42.1 512 32 501.9 32 489.4c0-6 2.4-11.8 6.6-16z"/></svg>
                       Staff
                     </div>
                     {% endif %}
 
-                    {% if user.Linkedin_isNotEmpty() %}
+                    {% if targetuser.Linkedin_isNotEmpty() %}
                     <button class="flex flex-row items-center gap-2 ml-0">
-                      <a href="{{user.linkedin_url}}">
+                      <a href="{{targetuser.linkedin_url}}">
                         <div class="btn btn-ghost p-0">
                           <svg xmlns="http://www.w3.org/2000/svg" class="fill-current" height="24" width="24" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
                           <span class="self-center text-lg font-semibold whitespace-nowrap" style="color:oklch(var(--s));">Linkedin</span>
@@ -41,9 +41,9 @@
                     </button>
                     {% endif %}
 
-                    {% if user.Github_isNotEmpty() %}
+                    {% if targetuser.Github_isNotEmpty() %}
                     <div class="flex flex-row items-center gap-2">
-                      <a href="{{user.github_url}}">
+                      <a href="{{targetuser.github_url}}">
 
                       
                       <button class="btn p-0 btn-ghost">
@@ -59,9 +59,7 @@
                 </div>
                 <div class="flex flex-col gap-2 grow">
                   <div class="divider hover:font-bold divider-primary"> About Me </div>
-                  <article class="prose">
-                    {{user.description | safe }}
-                  </article>
+                  <article id="useraboutme" class="prose"></article>
 
 
                   <div class="divider hover:font-bold divider-primary"> Experience </div>
@@ -115,5 +113,19 @@
               </div>
             </div>
           
+
+            <script>
+              function convert(input) {
+                const clean = DOMPurify.sanitize(input);
+                var converter = new showdown.Converter();
+                return converter.makeHtml(clean);
+              }
+
+              var x = document.getElementById("useraboutme");
+              var content = convert(`{{targetuser.description | safe}}`);
+
+              x.innerHTML = content
+
+            </script>
 
 {%endblock%}

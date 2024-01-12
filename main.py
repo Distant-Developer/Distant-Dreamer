@@ -149,9 +149,11 @@ def mePage():
 @app.route("/user")
 def userPage():
     id = request.args.get("id")
-    user = database.get_user(id)
+    targetuser = database.get_user(id)
 
-    return render_template("user.html", experiences=user.experience, user=user, educations=user.education)
+    me = database.get_user(session["id"])
+
+    return render_template("user.html", user=me, experiences=targetuser.experience, targetuser=targetuser, educations=targetuser.education)
 
 @app.route("/jobs")
 def jobPostings(priorityjob=None):
@@ -257,15 +259,15 @@ def detailedPost():
     return render_template("detailedPost.html", post=post, user=user)
     
 
-@app.route("/staff", methods=['GET','POST'])
+@app.route("/staff/sql", methods=['GET','POST'])
 def staffPage():
-    tables = database.get_tables()
-
-    table = request.form.get("table", tables[0][0])
-
-    column_names, data, count = database.get_all_data(table)
+    user = database.get_user(session["id"])
+    if not user.is_staff: redirect("lobby") #Get him out!
     
-    return render_template("staff.html", tables=tables, column_names=column_names, data=data, count=count)
+    tables = database.get_tables()
+    table = request.form.get("table", tables[0][0])
+    column_names, data, count = database.get_all_data(table)
+    return render_template("staff.html", user=user, tables=tables, column_names=column_names, data=data, count=count)
 
 @app.route("/org/new", methods=['GET','POST'])
 def createBusiness():

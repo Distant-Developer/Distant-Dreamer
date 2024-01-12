@@ -27,13 +27,16 @@
 
                     Data (Count: {{count[0]}})
 
+                    <label for="filterInput">Filter</label>
+                    <input type="text" id="filterInput" placeholder="Type to filter" class="input input-primary input-sm p-2">
+
+
                     <div class="overflow-x-auto">
                       <table class="table table-zebra">
-                        <!-- head -->
                         <thead>
                           <tr>
                             {% for name in column_names %}
-                            <th>{{name}}</th>
+                            <th id="{{name}}">{{name}}</th>
                             {% endfor %}
                           </tr>
                         </thead>
@@ -42,7 +45,7 @@
                           {% for item in data %}
                           <tr>
                             {% for x in item %}
-                            <th>{{x}}</th>
+                            <th id="{{x}}"><input value="{{x}}" class="input input-xs w-auto input-ghost p-0" ></th>
                             {% endfor %}
                           </tr>
                           {% endfor %}
@@ -50,4 +53,40 @@
                       </table>
                     </div>
                 </div>
+
+                <script>
+                  document.addEventListener('DOMContentLoaded', function () {
+                    const inputElement = document.getElementById('filterInput');
+                    const table = document.querySelector('.table-zebra');
+                    const rows = table.querySelectorAll('tbody tr');
+                
+                    inputElement.addEventListener('input', function () {
+                      const filterText = inputElement.value.toLowerCase();
+                
+                      rows.forEach(function (row) {
+                        const cells = row.querySelectorAll('th');
+                        let found = false;
+                
+                        cells.forEach(function (cell, index) {
+                          if (index === 0) {
+                            // Skip the first cell (assuming it's the default filter column)
+                            return;
+                          }
+                
+                          const cellText = cell.textContent.toLowerCase();
+                          if (cellText.includes(filterText)) {
+                            found = true;
+                          }
+                        });
+                
+                        if (found) {
+                          row.style.display = '';
+                        } else {
+                          row.style.display = 'none';
+                        }
+                      });
+                    });
+                  });
+                </script>
+                
 {%endblock%}
