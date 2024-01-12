@@ -22,36 +22,177 @@
             <p>Description About Position</p>
           </div>-->
 
-        <div class="basis-1/4">
-            <button class="prose flex flex-col w-full btn-ghost p-4">
-                <h2 class="m-0">Job Position Title</h2>
-                <p>Description About Position</p>
+        <div id="positions" class="basis-1/3">
+            {% for job in jobs %}
+            <button id="{{job.id}}" onclick="changePositionScreen({{job.id}})" class="flex flex-row w-full h-auto btn-ghost p-4 items-center gap-4">
+                <svg xmlns="http://www.w3.org/2000/svg" id="eye_{{job.id}}" class="w-8 h-8" fill="oklch(var(--p))" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg>
+                
+                <div class="flex flex-col items-start w-full h-auto prose">
+                    <h2 class="m-0">{{job.position_title}}</h2>
+                    <p>At {{job.get_owner().name}}</p>
+                </div>
+
             </button>
+            {% endfor %}
         </div>
 
         <div class="divider divider-horizontal m-0 p-0"></div>
 
-        <div class="basis-3/4">
-            <div class = "p-4 grow">
-                <p class = "text-2xl">NAME OF POSITION</p>
-                <p class = "text-sm">NAME OF COMPANY</p>
+        <div class="basis-2/3">
+            <div class = "p-4 flex flex-col grow">
+                <div class="flex flex-row gap-2">
+                    <div class="avatar">
+                        <div class="w-14 h-14 rounded-lg" style="aspect-ratio: 1/1;"><img id="main_Avatar" src="{{jobs[0].get_owner().logo_url}}"
+                            alt="Tailwind-CSS-Avatar-component" /></div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <p id="main_JobTitle" class = "text-3xl font-medium">{{jobs[0].position_title}}</p>
+                        <p id="main_CName" class = "text-base">{{jobs[0].get_owner().name}}</p>
+                    </div>
+                </div>
+
 
                 <div class = "flex flex-row gap-2 pt-4" style="align-items: center;">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-current" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M57.7 193l9.4 16.4c8.3 14.5 21.9 25.2 38 29.8L163 255.7c17.2 4.9 29 20.6 29 38.5v39.9c0 11 6.2 21 16 25.9s16 14.9 16 25.9v39c0 15.6 14.9 26.9 29.9 22.6c16.1-4.6 28.6-17.5 32.7-33.8l2.8-11.2c4.2-16.9 15.2-31.4 30.3-40l8.1-4.6c15-8.5 24.2-24.5 24.2-41.7v-8.3c0-12.7-5.1-24.9-14.1-33.9l-3.9-3.9c-9-9-21.2-14.1-33.9-14.1H257c-11.1 0-22.1-2.9-31.8-8.4l-34.5-19.7c-4.3-2.5-7.6-6.5-9.2-11.2c-3.2-9.6 1.1-20 10.2-24.5l5.9-3c6.6-3.3 14.3-3.9 21.3-1.5l23.2 7.7c8.2 2.7 17.2-.4 21.9-7.5c4.7-7 4.2-16.3-1.2-22.8l-13.6-16.3c-10-12-9.9-29.5 .3-41.3l15.7-18.3c8.8-10.3 10.2-25 3.5-36.7l-2.4-4.2c-3.5-.2-6.9-.3-10.4-.3C163.1 48 84.4 108.9 57.7 193zM464 256c0-36.8-9.6-71.4-26.4-101.5L412 164.8c-15.7 6.3-23.8 23.8-18.5 39.8l16.9 50.7c3.5 10.4 12 18.3 22.6 20.9l29.1 7.3c1.2-9 1.8-18.2 1.8-27.5zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/></svg>
-                    <p class="self-center align-middle">Location of Company</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-current" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M480 48c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48V96H224V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V96H112V24c0-13.3-10.7-24-24-24S64 10.7 64 24V96H48C21.5 96 0 117.5 0 144v96V464c0 26.5 21.5 48 48 48H304h32 96H592c26.5 0 48-21.5 48-48V240c0-26.5-21.5-48-48-48H480V48zm96 320v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM240 416H208c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zM128 400c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM560 256c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32zM256 176v32c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM112 160c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32zM256 304c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM112 320H80c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zm304-48v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM400 64c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V80c0-8.8 7.2-16 16-16h32zm16 112v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16z"/></svg>
+                    <p id="main_Industry" class="text-base">{{jobs[0].get_owner().industry}}</p>
                 </div>
 
                 <div class = "flex flex-row gap-2" style="align-items: center;">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-current" height="16" width="16" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M64 32C46.3 32 32 46.3 32 64V304v48 80c0 26.5 21.5 48 48 48H496c26.5 0 48-21.5 48-48V304 152.2c0-18.2-19.4-29.7-35.4-21.1L352 215.4V152.2c0-18.2-19.4-29.7-35.4-21.1L160 215.4V64c0-17.7-14.3-32-32-32H64z"/></svg>
-                    <p class="self-center align-middle">Industry</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-current" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM609.3 512H471.4c5.4-9.4 8.6-20.3 8.6-32v-8c0-60.7-27.1-115.2-69.8-151.8c2.4-.1 4.7-.2 7.1-.2h61.4C567.8 320 640 392.2 640 481.3c0 17-13.8 30.7-30.7 30.7zM432 256c-31 0-59-12.6-79.3-32.9C372.4 196.5 384 163.6 384 128c0-26.8-6.6-52.1-18.3-74.3C384.3 40.1 407.2 32 432 32c61.9 0 112 50.1 112 112s-50.1 112-112 112z"/></svg>
+                    <p id="main_Size" class="text-base">{{jobs[0].get_owner().size}}</p>
                 </div>
 
-                <p class = "text-sm pt-8">DESCRIPTION OF COMPANY <br>
-                and stuff here </p>
+
+                <div class="divider"></div>
+                <p id="main_Jobcontent" class="p-0 text-base w-auto prose" id="title_content">{{jobs[0].position_content}}</p>
+                
+                <div class="flex flex-row w-full items-start justify-start mt-2">
+                    <a id="applybutton" href="url" class="btn btn-secondary">Apply Here</a>
+                  </div>
 
             </div>
         </div>
     </div>
 </div>
+
+<script>
+function convert(input) {
+  const clean = DOMPurify.sanitize(input);
+  var converter = new showdown.Converter();
+  return converter.makeHtml(clean);
+}
+
+class JobData {
+    constructor(id, ownerID, positionContent, positionTitle, urlApp) {
+        this.ID = id;
+        this.OWNER_ID = ownerID;
+        this.POSITION_CONTENT = positionContent;
+        this.POSITION_TITLE = positionTitle;
+        this.URL_APP = urlApp;
+    }
+}
+
+// Function to retrieve data based on ID
+function fetchDataById(id) {
+const apiUrl = `http://127.0.0.1:5000/developer/job?id=${id}`;
+
+return fetch(apiUrl)
+    .then(response => {
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+    })
+    .then(data => {
+    // Create an instance of the JobData class with the retrieved data
+    return new JobData(data.ID, data.OWNER_ID, data.POSITION_CONTENT, data.POSITION_TITLE, data.URL_APP);
+    });
+}
+
+function changePositionScreen(jobIdToFetch) {
+    hideEye();
+    addBounceAnimation("eye_"+jobIdToFetch);
+    fetchDataById(jobIdToFetch)
+    .then(jobData => {
+
+        document.getElementById("main_JobTitle").innerHTML = jobData.POSITION_TITLE;
+        document.getElementById("main_Jobcontent").innerHTML = convert(jobData.POSITION_CONTENT);
+        document.getElementById("applybutton").href = jobData.URL_APP;
+
+        return fetchOrgDataById(jobData.OWNER_ID);
+    })
+    .catch(error => console.error('Error:', error))  
+    .then(orgData => {
+
+      // Access specific properties
+      document.getElementById("main_CName").innerHTML = orgData.name;
+      document.getElementById("main_Industry").innerHTML=orgData.industry;
+      document.getElementById("main_Avatar").src=orgData.logoUrl;
+      document.getElementById("main_Size").innerHTML=orgData.size;
+      //console.log("Tagline:", orgData.tagline);
+
+      document.getElementById('eye_'+jobIdToFetch).style.display="block";
+
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function fetchOrgDataById(id) {
+    const apiUrl = `http://127.0.0.1:5000/developer/org?id=${id}`;
+
+    return fetch(apiUrl)
+        .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+        })
+        .then(data => {
+        // Create an object to structure the data
+        const orgData = {
+            githubLink: data.github_link,
+            id: data.id,
+            industry: data.industry,
+            logoUrl: data.logo_url,
+            name: data.name,
+            ownerId: data.owner_id,
+            size: data.size,
+            tagline: data.tagline,
+            website: data.website
+        };
+
+        return orgData;
+        });
+}
+
+function hideEye() {
+    var positionsDiv = document.getElementById('positions');
+
+    // Get all SVG elements inside the positionsDiv
+    var svgElements = positionsDiv.querySelectorAll('svg');
+
+    // Hide each SVG element
+    svgElements.forEach(function (svg) {
+        svg.style.display = 'none';
+    });
+}
+
+function addBounceAnimation(id) {
+    // Get the button element
+    var button = document.querySelector("#"+id);
+
+    // Add the 'bounce' class to trigger the animation
+    button.classList.add('animate-bounce');
+
+    // Remove the 'bounce' class after the animation duration
+    setTimeout(function () {
+        button.classList.remove('animate-bounce');
+    }, 500);
+}
+
+var positionsElement = document.getElementById('positions'); if (positionsElement) { var firstButton = positionsElement.querySelector('button'); if (firstButton) { changePositionScreen(firstButton.id); } else { console.error("No button found inside 'positions' element."); } } else { console.error("Element with id 'positions' not found."); }
+
+</script>
 
 {% endblock %}

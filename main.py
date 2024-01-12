@@ -12,7 +12,6 @@ app.config["GITHUB_CLIENT_ID"] = CLIENT_ID
 app.config["GITHUB_CLIENT_SECRET"] = CLIENT_SECRET
 
 
-
 def check_session(session):
     return "token" in session and "username" in session and "id" in session
 
@@ -154,10 +153,10 @@ def userPage():
 
     return render_template("user.html", experiences=user.experience, user=user, educations=user.education)
 
-
 @app.route("/jobs")
 def jobPostings():
-    return render_template("jobs.html", user= database.get_user(session["id"]))
+    jobs = database.get_job_posts()
+    return render_template("jobs.html", user= database.get_user(session["id"]), jobs=jobs)
 
 @app.route("/business") #this is for accessing a single business site 
 def businessTemplate():
@@ -328,8 +327,34 @@ def org_Admin():
         org.updateDetails("industry", x)
     elif x := request.form.get("size"):
         org.updateDetails("size", x)
+    elif "postJobBoard" == request.form.get("action"):
+        database.use_database(
+            "INSERT INTO jobPost (owner_id, position_title, position_content, app_url) VALUES (?, ?, ?, ?)",
+            (
+                org.id,
+                request.form.get("title"),
+                request.form.get("content"),
+                request.form.get("url"),
+            ),
+        )
     
     return redirect("/org/admin?id="+str(org.id))  
+
+
+@app.route("/developer/job")
+def jobDetails():
+    id = request.args.get("id")
+    job = database.get_jobpost(id)
+
+    return {"ID":job.id, "OWNER_ID":job.owner_id, "POSITION_TITLE":job.position_title, "POSITION_CONTENT": job.position_content, "URL_APP":job.app_url}
+
+@app.route("/developer/org")
+def orgDetails():
+    id = request.args.get("id")
+    org = database.get_organizations(id=id)[0]
+
+    return org.to_dict()
+
 
 if __name__ == "__main__":
 

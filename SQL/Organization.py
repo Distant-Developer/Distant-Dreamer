@@ -15,6 +15,13 @@ class Organization(abstractSQL):
         self.logo_url = logo_url
 
     
+    def getPosts(self):
+        from SQL.JobPost import JobPost
+        raw = self.use_database(
+            "SELECT * from jobPost WHERE owner_id = ?", (self.id,), easySelect=False
+        )
+        return [JobPost(*row) for row in raw]
+    
     def updateName(self, input):
         self.use_database(
             f"UPDATE organizations SET name = ? WHERE ID = ?;", (input, int(self.id),), easySelect=False
@@ -37,7 +44,7 @@ class Organization(abstractSQL):
             "website": self.website,
             "github_link": self.github_link,
             "size": self.size,
-            "logo_url": self.logo_url,
+            "logo_url": self.logo_url
         }
     
     def get_owner(self):

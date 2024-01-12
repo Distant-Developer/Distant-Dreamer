@@ -7,6 +7,7 @@ from SQL.Organization import Organization
 from SQL.Post import Post
 from SQL.User import User
 from SQL.Education import Education
+from SQL.JobPost import JobPost
 
 class dataSQL:
     def __init__(self, dbfile = "database.db"):
@@ -79,6 +80,16 @@ class dataSQL:
                 "size" TEXT,
                 "logo_url" TEXT NOT NULL,
                 PRIMARY KEY("id" AUTOINCREMENT)
+            );
+                                  
+            CREATE TABLE IF NOT EXISTS "jobPost" (
+                "id"	INTEGER NOT NULL UNIQUE,
+                "owner_id"	INTEGER NOT NULL,
+                "position_title"	TEXT NOT NULL,
+                "position_content"	TEXT NOT NULL,
+                "app_url"	TEXT NOT NULL,
+                "archived"	INTEGER NOT NULL DEFAULT 0,
+                PRIMARY KEY("id")
             );
                                   
             CREATE TABLE IF NOT EXISTS "activity" (
@@ -233,6 +244,7 @@ class dataSQL:
         )
         #print(user_raw)
         return [Post(*row) for row in raw]
+    
 
     
     def get_all_activity(self):
@@ -282,6 +294,18 @@ class dataSQL:
         if item == 0: return False 
         else: return True
 
+    def get_job_posts(self):
+        raw = self.use_database(
+            "SELECT * from jobPost", (), easySelect=False
+        )
+        return [JobPost(*row) for row in raw]
+    
+    def get_jobpost(self, id):
+        raw = self.use_database(
+            "SELECT * from jobPost WHERE ID = ?", (id,), easySelect=False
+        )
+        #print(user_raw)
+        return [JobPost(*row) for row in raw][0]
 
     #This is Staff Related Stuff
     
