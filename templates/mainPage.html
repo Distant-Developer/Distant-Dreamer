@@ -1,89 +1,131 @@
 <!DOCTYPE html>
-<html data-theme="night">
-    <head>
-        <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet" type="text/css" />
-        <script src="https://cdn.tailwindcss.com"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/night-owl.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-
-    </head>
-    <style>
-        .flex-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
-            width: 100%;
-            margin: 0;
-        }
-
-        .flex-row-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: row;
-            height: 100vh;
-            width: 100%;
-            padding: 20px;
-        }
-    </style>
-    <body>
-
-        <div class="flex-container">
-
-            <div style="font-size: 3.5em;">
-                Distant Developer
+<html data-theme="default">
+   <head>
+      <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet" type="text/css" />
+      <script src="https://cdn.tailwindcss.com"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+      <title>Distant Developer</title>
+      <link rel="icon" type="image/x-icon" href="static\img\logo.svg">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/night-owl.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
+      <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>
+   </head>
+   <body style="padding-left: 20%; padding-right: 20%;">
+      <div class="navbar bg-base-100 gap-2">
+         <div class="flex-1">
+            <a href="/" class="flex btn btn-ghost items-center" style="display: flex; justify-content: center; align-items: center; flex-direction: row;">
+                <img src="https://raw.githubusercontent.com/Distant-Developer/Distant-Dreamer/main/static/img/logo.svg" class="h-6 me-3 sm:h-7"/>
+                <span class="self-center text-xl font-semibold whitespace-nowrap">Distant Developer</span>
+            </a>
+         </div>
+         <div class = "flex-none">
+            <div class="dropdown dropdown-end">
+               <div tabindex="0" role="button" class="btn btn-ghost m-1">
+                  Theme
+                  <svg width="12px" height="12px" class="h-2 w-2 fill-current opacity-60 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048">
+                     <path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
+                  </svg>
+               </div>
+               <ul tabindex="0" class="dropdown-content z-[1] p-2 shadow-2xl bg-base-300 rounded-box w-52">
+                  <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Default" value="default"/></li>
+                  <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Night" value="night"/></li>
+                  <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Retro" value="retro"/></li>
+                  <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Cyberpunk" value="cyberpunk"/></li>
+                  <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Lemonade" value="lemonade"/></li>
+                  <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Aqua" value="aqua"/></li>
+                  <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Light" value="light"/></li>
+               </ul>
             </div>
-
-            <div style="font-size: 2em; margin-bottom: 1rem;">
-                Social Networking for Developers
+         </div>
+         <div class="divider divider-horizontal p-2"></div>
+         <div class="flex-none">
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost m-1">
+                   Sign In / Sign Up
+                   <svg width="12px" height="12px" class="h-2 w-2 fill-current opacity-60 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048">
+                      <path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
+                   </svg>
+                </div>
+                <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-300 rounded-box w-52">
+                   <li><a class="flex flex-row">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="oklch(var(--bc))" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+                    Via Github
+                    </a></li>
+                   <li><a class="flex flex-row">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="oklch(var(--bc))" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg>
+                    Via Email</a></li>
+                </ul>
+             </div>
+         </div>
+         <div class="flex-none">
+            <div class="dropdown dropdown-end">
+               <!--<div tabindex="0" role="button" class="avatar btn btn-ghost btn-square">
+                  <div class="w-10 rounded"><img src="https://avatars.githubusercontent.com/u/?v=4" alt="Tailwind-CSS-Avatar-component" /></div>
+                  </div>-->
+               <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 border" style="border-color: oklch(var(--s));">
+                  <li>
+                     <a href="/me">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="fill-current"  height="16" width="14" viewBox="0 0 448 512">
+                           <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                           <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/>
+                        </svg>
+                        Profile
+                     </a>
+                  </li>
+               </ul>
             </div>
+         </div>
+      </div>
 
-            <div class="mockup-code" style="aspect-ratio: 1/1;">
-                <pre><code class="language-python" style="background-color: transparent; font-size: large; margin-top: auto; padding-bottom: 2%;">'''If this means something to you
-then you are the right place'''
 
-from flask import Flask
 
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return 'Hello world.'
-
-app.run(host='0.0.0.0', port=8080)
-
-</code></pre>
-              </div>
-
-            
-            <div class="flex flex-row gap-x-4" style="margin-top: 8px;">
-            
-                <a href="{{url_for('authentication.login')}}"><button class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
-                    </svg>
-                    
-                    Sign Up
-                </button>
-
-                <button class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                    </svg>
-                    
-                    
-                    Lobby
-                </button>
-
-            </div>
-
+      <div class="flex flex-row">
+        <div class="flex flex-col">
+            <p class="text-2xl">text</p>
         </div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
-        <script>hljs.highlightAll();</script>
-    </body>
+        <div class="flex flex-col">
+
+        </div>
+      </div>
+
+
+
+
+
+
+
+      <script>
+         document.addEventListener('DOMContentLoaded', function () {
+           // Get the radio buttons and html element
+           const themeRadios = document.querySelectorAll('input[name="theme-dropdown"]');
+           const htmlElement = document.documentElement;
+         
+           // Load the theme from localStorage if available
+           const savedTheme = localStorage.getItem('userTheme');
+           if (savedTheme) {
+             htmlElement.setAttribute('data-theme', savedTheme);
+             // Check the corresponding radio button
+             const selectedRadio = document.querySelector(`input[value="${savedTheme}"]`);
+             if (selectedRadio) {
+               selectedRadio.checked = true;
+             }
+           }
+         
+           // Add event listener to each radio button
+           themeRadios.forEach(function (radio) {
+             radio.addEventListener('change', function () {
+               // Save the selected theme to localStorage
+               const selectedTheme = this.value;
+               localStorage.setItem('userTheme', selectedTheme);
+         
+               // Set the data-theme attribute of the html element
+               htmlElement.setAttribute('data-theme', selectedTheme);
+             });
+           });
+         });
+      </script>
+   </body>
 </html>

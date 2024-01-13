@@ -33,6 +33,7 @@ def convert_markdown_to_html(raw_text):
 
 @app.route('/')
 def index():
+    
     return render_template("mainPage.html")
 
 @app.route("/lobby", methods=['GET','POST'])
