@@ -1,9 +1,21 @@
+from functools import wraps
 from flask import Blueprint, abort, current_app, jsonify, request, url_for, session, redirect, make_response
 from authlib.integrations.flask_client import OAuth
 import google_auth_oauthlib
 import requests
+from main import check_session
 from mySQL import database
 from secret import *
+
+def session_shouldnt_exist(f):
+    #If a user's session already exists...they shouldn't need to use OAuth again
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if check_session(session=session):
+            return redirect("/lobby")
+        return f(*args, **kwargs)
+    return wrap
+
 
 authentication = Blueprint("authentication", __name__)
 oauth = OAuth(current_app)
@@ -20,6 +32,7 @@ GITHUB = oauth.register(
 )
 
 @authentication.route("/login")
+@session_shouldnt_exist
 def login():
     return GITHUB.authorize_redirect(GIT_OAUTH_CALLBACK_URL)
 
@@ -73,6 +86,7 @@ flow = Flow.from_client_secrets_file(
 
 
 @authentication.route("/google")
+@session_shouldnt_exist
 def G_login():
     authorization_url, state = flow.authorization_url()
     session["state"] = state

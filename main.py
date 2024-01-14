@@ -1,5 +1,4 @@
-import json
-import re
+from functools import wraps
 from flask import Flask, render_template, request
 from mySQL import database
 from secret import CLIENT_ID, CLIENT_SECRET
@@ -13,27 +12,20 @@ app.config["GITHUB_CLIENT_SECRET"] = CLIENT_SECRET
 
 
 def check_session(session):
-    return "token" in session and "username" in session and "id" in session
+    return "id" in session
 
-import markdown
-
-def convert_markdown_to_html(raw_text):
-    if raw_text == "" or raw_text == None:
-        return
-    # Define the pattern for matching <script> ... </script>
-    script_pattern = re.compile(r'<script\b[^>]*>.*?</script>', re.DOTALL)
-
-    # Use sub() method to replace matched patterns with an empty string
-    result_string = re.sub(script_pattern, '', raw_text)
-
-    html_content = markdown.markdown(raw_text)
-    return html_content
-
-
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if not check_session(session=session):
+            return redirect("/")
+        return f(*args, **kwargs)
+    return wrap
+    
 
 @app.route('/')
 def index():
-    if session == None:
+    if check_session(session=session):
         return redirect("/lobby")
     
     return render_template("mainPage.html")
@@ -50,6 +42,7 @@ def register():
     return render_template("register.html")
 
 @app.route("/lobby", methods=['GET','POST'])
+@login_required
 def lobby():
     
     if request.method == 'POST':
@@ -71,6 +64,7 @@ def lobby():
     return render_template("lobby.html", user=user, posts = database.get_all_posts()[::-1])
 
 @app.route("/me", methods=['GET', 'POST'])
+@login_required
 def mePage():
     if request.method == 'POST':
         action = request.form.get("action")  # Assuming you have a form field named 'message'
@@ -179,6 +173,7 @@ def userPage():
     return render_template("user.html", user=me, experiences=targetuser.experience, targetuser=targetuser, educations=targetuser.education)
 
 @app.route("/jobs")
+@login_required
 def jobPostings(priorityjob=None):
     #priorityJob means it will show up first. Can be used to see archived jobs
     
@@ -190,11 +185,12 @@ def jobPostings(priorityjob=None):
 
     return render_template("jobs.html", user= database.get_user(session["id"]), jobs=jobs, priorityjob = priorityjob)
 
-@app.route("/business") #this is for accessing a single business site 
-def businessTemplate():
-    return render_template("businessTemplate.html")
+#@app.route("/business") #this is for accessing a single business site 
+#def businessTemplate():
+#    return render_template("businessTemplate.html")
 
 @app.route("/verify", methods=['GET', 'POST'])
+@login_required
 def verify():
 
     user = database.get_user(session["id"])
@@ -237,6 +233,7 @@ def verify():
 
 
 @app.route("/post/new", methods=['GET', 'POST'])
+@login_required
 def createPost():
     if request.method == 'POST':
         action = request.form.get("action")
@@ -260,6 +257,7 @@ def createPost():
     return render_template("createPost.html", title="", content="...", user=database.get_user(session["id"]))
 
 @app.route("/post", methods=['GET', 'POST'])
+@login_required
 def detailedPost():
     if request.method == 'POST':
         post_id = request.form.get("post_owner_id")
@@ -284,6 +282,7 @@ def detailedPost():
     
 
 @app.route("/staff/sql", methods=['GET','POST'])
+@login_required
 def staffPage():
     user = database.get_user(session["id"])
     if not user.is_staff: redirect("lobby") #Get him out!
@@ -294,6 +293,7 @@ def staffPage():
     return render_template("staff.html", user=user, tables=tables, column_names=column_names, data=data, count=count)
 
 @app.route("/org/new", methods=['GET','POST'])
+@login_required
 def createBusiness():
     if request.method == 'POST':
         name = request.form.get("name")
@@ -328,6 +328,7 @@ def createBusiness():
 
 
 @app.route("/org/list")
+@login_required
 def businessList():
     organizations = database.get_organizations()
     user = database.get_user(session["id"])
@@ -335,6 +336,7 @@ def businessList():
     return render_template("orgList.html", organizations=organizations, user=user)
 
 @app.route("/org/admin", methods=['GET','POST'])
+@login_required
 def org_Admin():
     user = database.get_user(session["id"])
     id = request.args.get("id", None)
@@ -393,7 +395,5 @@ def orgDetails():
 
 
 if __name__ == "__main__":
-
     app.register_blueprint(authentication)
-    
     app.run()
