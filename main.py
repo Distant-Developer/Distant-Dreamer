@@ -21,7 +21,22 @@ def login_required(f):
             return redirect("/")
         return f(*args, **kwargs)
     return wrap
-    
+
+def verification_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if database.get_user(session["id"]).is_not_verified():
+            return redirect("/verified")
+        return f(*args, **kwargs)
+    return wrap
+
+def staff_only(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if not database.get_user(session["id"]).is_staff:
+            return redirect("/lobby")
+        return f(*args, **kwargs)
+    return wrap
 
 @app.route('/')
 def index():
@@ -180,8 +195,8 @@ def jobPostings(priorityjob=None):
 
     jobs = database.get_job_posts()
 
-
-    return render_template("jobs.html", user= database.get_user(session["id"]), jobs=jobs, priorityjob = priorityjob)
+    try: return render_template("jobs.html", user= database.get_user(session["id"]), jobs=jobs, priorityjob = priorityjob)
+    except: return redirect("/lobby")
 
 #@app.route("/business") #this is for accessing a single business site 
 #def businessTemplate():
@@ -230,6 +245,7 @@ def verify():
 
 @app.route("/post/new", methods=['GET', 'POST'])
 @login_required
+@verification_required
 def createPost():
     if request.method == 'POST':
         action = request.form.get("action")
@@ -278,10 +294,10 @@ def detailedPost():
     
 
 @app.route("/staff/sql", methods=['GET','POST'])
+@staff_only
 @login_required
 def staffPage():
     user = database.get_user(session["id"])
-    if not user.is_staff: redirect("lobby") #Get him out!
     
     tables = database.get_tables()
     table = request.form.get("table", tables[0][0])
@@ -290,6 +306,7 @@ def staffPage():
 
 @app.route("/org/new", methods=['GET','POST'])
 @login_required
+@verification_required
 def createBusiness():
     if request.method == 'POST':
         name = request.form.get("name")
@@ -325,6 +342,7 @@ def createBusiness():
 
 @app.route("/org/list")
 @login_required
+@verification_required
 def businessList():
     organizations = database.get_organizations()
     user = database.get_user(session["id"])
@@ -333,6 +351,7 @@ def businessList():
 
 @app.route("/org/admin", methods=['GET','POST'])
 @login_required
+@verification_required
 def org_Admin():
     user = database.get_user(session["id"])
     id = request.args.get("id", None)
