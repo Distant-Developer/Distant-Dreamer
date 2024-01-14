@@ -4,3 +4,4 @@ Flask==3.0.0
 Markdown==3.5.1
 secret==0.8
 requests
+google_auth_oauthlib
