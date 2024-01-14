@@ -164,13 +164,11 @@ def mePage():
     return render_template("me.html", experiences=user.experience, user=user, educations=user.education)
 
 @app.route("/user")
+@login_required
 def userPage():
-    id = request.args.get("id")
-    targetuser = database.get_user(id)
-
-    me = database.get_user(session["id"])
-
-    return render_template("user.html", user=me, experiences=targetuser.experience, targetuser=targetuser, educations=targetuser.education)
+    try: targetuser = database.get_user(request.args.get("id"))
+    except: return redirect("lobby")
+    return render_template("user.html", user=database.get_user(session["id"]), experiences=targetuser.experience, targetuser=targetuser, educations=targetuser.education)
 
 @app.route("/jobs")
 @login_required
