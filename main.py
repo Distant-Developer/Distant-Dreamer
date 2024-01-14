@@ -33,8 +33,21 @@ def convert_markdown_to_html(raw_text):
 
 @app.route('/')
 def index():
+    if session == None:
+        return redirect("/lobby")
     
     return render_template("mainPage.html")
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect("/")
+
+@app.route('/register')
+def register():
+    email = request.args.get("email")
+
+    return render_template("register.html")
 
 @app.route("/lobby", methods=['GET','POST'])
 def lobby():

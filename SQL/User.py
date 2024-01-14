@@ -5,7 +5,7 @@ from SQL.Experience import Experience
 from SQL.abstractSQL import abstractSQL
 
 class User(abstractSQL):
-    def __init__(self, id, token, username, email, is_verified, is_staff, linkedin_url=None, github_url=None, description=None, logo_url=None):
+    def __init__(self, id, token, username, email, is_verified, is_staff, linkedin_url=None, github_url=None, description=None, logo_url=None, type=None):
         super().__init__()
         self.id = id
         self.token = token
@@ -17,6 +17,7 @@ class User(abstractSQL):
         self.github_url = github_url
         self.description = self.remove_scripts(description)
         self.logo_url = logo_url
+        self.type = type
 
         self.education = self.get_educations()
         self.experience = self.get_experiences()

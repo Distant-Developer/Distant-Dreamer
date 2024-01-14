@@ -31,13 +31,14 @@ class dataSQL:
                 "id"	INTEGER PRIMARY KEY AUTOINCREMENT,
                 "token"	TEXT UNIQUE,
                 "username"	TEXT DEFAULT NULL,
-                "email"	INTEGER,
+                "email"	TEXT,
                 "is_verified" INTEGER NOT NULL DEFAULT 0,
                 "is_staff"	INTEGER NOT NULL DEFAULT 0,
                 "linkedin_url" TEXT DEFAULT NULL,
                 "github_url" TEXT DEFAULT NULL,
                 "description" TEXT DEFAULT NULL,
-                "logo_url" TEXT NOT NULL
+                "logo_url" TEXT NOT NULL,
+                "type" TEXT NOT NULL
             );
                                   
             CREATE TABLE IF NOT EXISTS posts (

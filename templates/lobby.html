@@ -21,11 +21,11 @@
               <div class="card w-48 bg-base-100 shadow-xl rounded border" style="border-color: oklch(var(--s));">
                   <figure class="w-32 rounded avatar self-center pt-8">
                     <div class="btn-ghost">
-                        <img class="w-32 rounded" src="https://avatars.githubusercontent.com/u/{{session.token}}?v=4" alt="Tailwind-CSS-Avatar-component" />
+                        <img class="w-32 rounded" src="{{user.logo_url}}" alt="Tailwind-CSS-Avatar-component" />
                     </div>
                   </figure>
-                  <div class="card-body pt-0">
-                    <h2 class="card-title"> {{session.username}} </h2>
+                  <div class="card-body pt-0 w-full items-center">
+                    <h2 class="card-title"> {{user.username}} </h2>
                     <!--<p>If a dog chews shoes whose shoes does he choose?</p>-->
                   </div>
               </div>
