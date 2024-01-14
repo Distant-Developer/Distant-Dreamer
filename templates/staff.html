@@ -38,6 +38,7 @@
                             {% for name in column_names %}
                             <th id="{{name}}">{{name}}</th>
                             {% endfor %}
+                            <th>Delete?</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -45,8 +46,14 @@
                           {% for item in data %}
                           <tr>
                             {% for x in item %}
-                            <th id="{{x}}"><input value="{{x}}" class="input input-xs w-auto input-ghost p-0" ></th>
+                            <th id="{{item[x]}}">
+                            <form method="post">
+                              <input name="update" value="{{item[x]}}" class="input input-xs w-auto input-ghost p-0">
+                              <input type="hidden" name="exec" value="UPDATE {{table}} SET {{x}} = ? WHERE id = {{item['id']}};"/>
+                            
+                            </form></th>
                             {% endfor %}
+                            <th><button class="btn btn-warning">Delete</button></th>
                           </tr>
                           {% endfor %}
                         </tbody>
@@ -73,7 +80,9 @@
                             return;
                           }
                 
-                          const cellText = cell.textContent.toLowerCase();
+                          const inputElement = cell.querySelector('form input');
+                          const cellText = inputElement ? inputElement.value.toLowerCase() : '';
+                          
                           if (cellText.includes(filterText)) {
                             found = true;
                           }
@@ -88,5 +97,7 @@
                     });
                   });
                 </script>
+                
+                
                 
 {%endblock%}

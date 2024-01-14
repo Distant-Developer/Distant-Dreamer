@@ -297,12 +297,22 @@ def detailedPost():
 @staff_only
 @login_required
 def staffPage():
+    if x := request.form.get("exec"):
+        print(x)
+        print(request.form.get("update"))
+        database.use_database(
+            x, (request.form.get("update"),)
+        )
+
+
     user = database.get_user(session["id"])
     
     tables = database.get_tables()
     table = request.form.get("table", tables[0][0])
     column_names, data, count = database.get_all_data(table)
-    return render_template("staff.html", user=user, tables=tables, column_names=column_names, data=data, count=count)
+
+
+    return render_template("staff.html", user=user, tables=tables, table=table, column_names=column_names, data=[dict(zip(column_names, row)) for row in data], count=count)
 
 @app.route("/org/new", methods=['GET','POST'])
 @login_required
