@@ -16,17 +16,16 @@
                     Tables
                     <div class="flex flex-row gap-2">
                         {% for table in tables %}
-                        <form method="post">
-                            <input type="hidden" name="table" value="{{table[0]}}">
+                        <a href="/staff/sql?table={{table[0]}}">
                             <button tabindex="0" role="button" class="btn btn-primary m-1">
                                 {{table[0]}}
                             </button>
-                        </form>
+                          </a>
                         {% endfor %}
                     </div>
 
-                    Data (Count: {{count[0]}})
 
+                    Data (Count: {{count[0]}})
                     <label for="filterInput">Filter</label>
                     <input type="text" id="filterInput" placeholder="Type to filter" class="input input-primary input-sm p-2">
 
