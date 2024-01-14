@@ -48,7 +48,7 @@
                               <th id="{{item[x]}}">
                               {% if x in no_change %}
                               <form>
-                                <input name="update" value="{{item[x]}}" class="input input-xs w-auto input-ghost p-0">
+                                <input value="{{item[x]}}" class="input input-xs w-auto input-ghost p-0" readonly>
                               </form>
                               {% else %}
                               <form method="post">
