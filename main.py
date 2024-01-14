@@ -194,13 +194,12 @@ def jobPostings(priorityjob=None):
 def verify():
 
     user = database.get_user(session["id"])
-
+    if user.is_verified: return redirect("lobby")
+    
     if request.method == 'POST':
         if email := request.form.get("email"):
 
-            if user.is_verified: #if email already verified...then no need to change it.
-                return redirect("lobby")
-
+            if database.email_exist(email): return redirect("lobby")
 
             database.use_database(
                 f"UPDATE users SET email = ? WHERE id = ?;", 
@@ -210,13 +209,12 @@ def verify():
                 ),
             )
         
-            SMTP.send_email(email, SMTP.generateCode(session["id"],email))
-
+            SMTP.send_email(email, SMTP.generateCode(session["id"],email,request.user_agent.string))
             return redirect("verify")
             
         elif code := request.form.get("code"):
             #email already given
-            id = SMTP.generateCode( str(session["id"]) , user.email)
+            id = SMTP.generateCode( session["id"] , user.email, request.user_agent.string)
             if id == code:
                 database.use_database(
                     f"UPDATE users SET is_verified = ? WHERE id = ?;", 

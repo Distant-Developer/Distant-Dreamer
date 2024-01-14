@@ -161,6 +161,17 @@ class dataSQL:
         self.close()
         return count
     
+    def email_exist(self, target):
+        self.connection = sqlite3.connect(self.dbfile)
+        self.cursor = self.connection.cursor()
+
+        self.cursor.execute("SELECT COUNT(*) FROM users WHERE email = ? AND is_verified = 1", (target,)) #where email is target and is Verified
+        count = self.cursor.fetchone()[0]
+
+        return count != 0 
+        # False -> Doesn't exist
+        # True -> Does Exist.
+    
     def user_exists(self, token):
         count = self.get_count(token)
         return int(count) >= 1

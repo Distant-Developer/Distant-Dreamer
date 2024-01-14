@@ -88,8 +88,7 @@ flow = Flow.from_client_secrets_file(
 @authentication.route("/google")
 @session_shouldnt_exist
 def G_login():
-    authorization_url, state = flow.authorization_url()
-    session["state"] = state
+    authorization_url, session["state"] = flow.authorization_url()
     return redirect(authorization_url)
 
 @authentication.route("/G_authorize")
@@ -99,22 +98,21 @@ def callback():
     if not session["state"] == request.args["state"]:
         abort(500)  # State does not match!
 
-    request_session = requests.session()
-    cached_session = cachecontrol.CacheControl(request_session)
-
     id_info = id_token.verify_oauth2_token(
         id_token=flow.credentials._id_token,
-        request=google.auth.transport.requests.Request(session=cached_session),
-        audience=G_CLIENT_ID
+        request=google.auth.transport.requests.Request(session=cachecontrol.CacheControl(requests.session())),
+        audience=G_CLIENT_ID,
+        clock_skew_in_seconds=10
     )
 
     if not database.user_exists(id_info.get("sub")): 
         database.use_database(
-            "INSERT INTO users (token, username, email, logo_url, type) VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO users (token, username, email, is_verified, logo_url, type) VALUES (?, ?, ?, ?, ?, ?)",
             (
                 id_info.get("sub"), 
                 id_info.get("name"),
                 id_info.get("email"),
+                1,
                 id_info.get("picture"),
                 "GOOGLE"
             ),

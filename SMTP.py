@@ -3,6 +3,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import ssl 
 from email.message import EmailMessage
+import uuid
 from secret import APP_PASSWORD
 
 def send_email(recEmail, code):
@@ -27,5 +28,5 @@ def send_email(recEmail, code):
         smtp.sendmail(sender, recEmail, em.as_string())
 
 
-def generateCode(id, email):
-    return f'{id}{email}'
+def generateCode(id, email, browser) -> str:
+    return str(uuid.uuid5(uuid.NAMESPACE_DNS, f"{id}{email}{browser}"))
