@@ -50,7 +50,7 @@
                   
                   <a href="/user?id={{post.owner_user.id}}" class="flex flex-row gap-2 ">
                     <div class="avatar">
-                      <div class="w-8 rounded"><img src="https://avatars.githubusercontent.com/u/{{session.token}}?v=4" alt="Tailwind-CSS-Avatar-component" /></div>
+                      <div class="w-8 rounded"><img src="{{post.owner_user.logo_url}}" alt="Tailwind-CSS-Avatar-component" /></div>
                     </div>
                     <p class="self-center">{{post.owner_user.username}}</p>
                   </a>

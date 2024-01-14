@@ -178,6 +178,7 @@ def jobPostings(priorityjob=None):
 
     jobs = database.get_job_posts()
 
+
     return render_template("jobs.html", user= database.get_user(session["id"]), jobs=jobs, priorityjob = priorityjob)
 
 @app.route("/business") #this is for accessing a single business site 
@@ -309,7 +310,7 @@ def createBusiness():
 
         #database.record_to_activity(session["id"], "organizations")
 
-        return redirect("/lobby")
+        return redirect("/org/admin")
         
 
     user = database.get_user(session["id"])

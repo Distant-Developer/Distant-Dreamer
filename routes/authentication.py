@@ -50,12 +50,9 @@ def authorize():
         (git_token,)
     )[0]
 
-    session["token"] =  git_token
-    session["username"] = str(profile["login"])
-
     session["id"] = id
-    session["acct_type"] = "user" #user or business
-    
+
+    session.permanent = True
     return redirect("lobby")
 
 import os
@@ -88,20 +85,14 @@ def callback():
     if not session["state"] == request.args["state"]:
         abort(500)  # State does not match!
 
-    credentials = flow.credentials
     request_session = requests.session()
     cached_session = cachecontrol.CacheControl(request_session)
-    token_request = google.auth.transport.requests.Request(session=cached_session)
 
     id_info = id_token.verify_oauth2_token(
-        id_token=credentials._id_token,
-        request=token_request,
+        id_token=flow.credentials._id_token,
+        request=google.auth.transport.requests.Request(session=cached_session),
         audience=G_CLIENT_ID
     )
-
-    print(id_info)
-
-
 
     if not database.user_exists(id_info.get("sub")): 
         database.use_database(
@@ -119,5 +110,7 @@ def callback():
         "SELECT id FROM users WHERE token = ?",
         (id_info.get("sub"),)
     )[0]
+
+    session.permanent = True
 
     return redirect("/lobby")

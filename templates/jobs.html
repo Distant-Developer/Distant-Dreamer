@@ -32,6 +32,7 @@
             </button>
             {% endif %}
 
+
             {% for job in jobs %}
             {% if job.archived != True %}
             <button id="{{job.id}}" onclick="changePositionScreen({{job.id}})" class="flex flex-row w-full h-auto btn-ghost p-4 items-center gap-4">
@@ -45,6 +46,7 @@
             </button>
             {% endif %}
             {% endfor %}
+
         </div>
 
         <div class="divider divider-horizontal m-0 p-0"></div>

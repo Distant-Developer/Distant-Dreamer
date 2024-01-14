@@ -106,3 +106,6 @@ class User(abstractSQL):
     def is_not_verified(self):
         not_verified = not self.is_verified
         return not_verified 
+    
+    def has_email(self):
+        return self.email != None
