@@ -110,7 +110,7 @@ def mePage():
                 ),
             )
 
-        if action == "addEdu": 
+        elif action == "addEdu": 
             database.use_database(
                 "INSERT INTO educations (associated_user_id, tuition_name, tuition_logo_url, position_description, dates) VALUES (?, ?, ?, ?, ?)",
                 (
@@ -148,6 +148,15 @@ def mePage():
                 "UPDATE users SET description = ? WHERE id = ?", 
                 (   
                     request.form.get("description"),
+                    session["id"]
+                ),
+            )
+        
+        elif x := request.form.get("username"):
+            database.use_database(
+                "UPDATE users SET username = ? WHERE id = ?", 
+                (   
+                    x,
                     session["id"]
                 ),
             )
