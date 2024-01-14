@@ -46,12 +46,18 @@
                           {% for item in data %}
                           <tr>
                             {% for x in item %}
-                            <th id="{{item[x]}}">
-                            <form method="post">
-                              <input name="update" value="{{item[x]}}" class="input input-xs w-auto input-ghost p-0">
-                              <input type="hidden" name="exec" value="UPDATE {{table}} SET {{x}} = ? WHERE id = {{item['id']}};"/>
-                            
-                            </form></th>
+                              <th id="{{item[x]}}">
+                              {% if x in no_change %}
+                              <form>
+                                <input name="update" value="{{item[x]}}" class="input input-xs w-auto input-ghost p-0">
+                              </form>
+                              {% else %}
+                              <form method="post">
+                                <input name="update" value="{{item[x]}}" class="input input-xs w-auto input-ghost p-0">
+                                <input type="hidden" name="exec" value="UPDATE {{table}} SET {{x}} = ? WHERE id = {{item['id']}};"/>
+                              </form>
+                              {% endif %}
+                            </th>
                             {% endfor %}
                             <th><button class="btn btn-warning">Delete</button></th>
                           </tr>

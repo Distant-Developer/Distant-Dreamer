@@ -312,7 +312,7 @@ def staffPage():
     column_names, data, count = database.get_all_data(table)
 
 
-    return render_template("staff.html", user=user, tables=tables, table=table, column_names=column_names, data=[dict(zip(column_names, row)) for row in data], count=count)
+    return render_template("staff.html", user=user, tables=tables, table=table, column_names=column_names, data=[dict(zip(column_names, row)) for row in data], count=count, no_change={'token', 'id', 'type', 'email'})
 
 @app.route("/org/new", methods=['GET','POST'])
 @login_required
