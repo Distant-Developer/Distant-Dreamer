@@ -111,7 +111,7 @@ class JobData {
 
 // Function to retrieve data based on ID
 function fetchDataById(id) {
-const apiUrl = `http://127.0.0.1:5000/developer/job?id=${id}`;
+const apiUrl = `/developer/job?id=${id}`;
 
 return fetch(apiUrl)
     .then(response => {
@@ -163,7 +163,7 @@ function changePositionScreen(jobIdToFetch) {
 }
 
 function fetchOrgDataById(id) {
-    const apiUrl = `http://127.0.0.1:5000/developer/org?id=${id}`;
+    const apiUrl = `/developer/org?id=${id}`;
 
     return fetch(apiUrl)
         .then(response => {
