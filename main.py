@@ -400,7 +400,7 @@ def businessList():
     organizations = database.get_organizations()
     user = database.get_user(session["id"])
 
-    return render_template("orgList.html", organizations=organizations, user=user)
+    return render_template("orgList.html", organizations=organizations[::-1], user=user)
 
 @app.route("/org/admin", methods=['GET','POST'])
 @login_required
