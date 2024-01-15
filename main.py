@@ -201,10 +201,20 @@ def userPage():
     except: return redirect("lobby")
     return render_template("user.html", user=database.get_user(session["id"]), experiences=targetuser.experience, targetuser=targetuser, educations=targetuser.education)
 
-@app.route("/jobs")
+@app.route("/jobs", methods=["POST","GET"])
 @login_required
 def jobPostings(priorityjob=None):
-    #priorityJob means it will show up first. Can be used to see archived jobs
+    if x := request.form.get("report"):
+        database.use_database(
+            "INSERT INTO reports (owner_id, reason, target_id, target_type) VALUES (?, ?, ?, ?)",
+            (
+                session["id"],
+                x,
+                request.form.get("id"),
+                "jobPost"
+            )
+        )
+        return redirect("/jobs")
     
     if id := request.args.get("id", None):
         priorityjob = database.get_jobpost(id=id)
@@ -213,10 +223,6 @@ def jobPostings(priorityjob=None):
 
     try: return render_template("jobs.html", user= database.get_user(session["id"]), jobs=jobs, priorityjob = priorityjob)
     except: return redirect("/lobby")
-
-#@app.route("/business") #this is for accessing a single business site 
-#def businessTemplate():
-#    return render_template("businessTemplate.html")
 
 @app.route("/verify", methods=['GET', 'POST'])
 @login_required

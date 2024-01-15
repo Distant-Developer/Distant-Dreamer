@@ -92,6 +92,7 @@ class dataSQL:
                 "position_content"	TEXT NOT NULL,
                 "app_url"	TEXT NOT NULL,
                 "archived"	INTEGER NOT NULL DEFAULT 0,
+                "hidden" INTEGER NOT NULL DEFAULT 0,
                 PRIMARY KEY("id")
             );
                                   

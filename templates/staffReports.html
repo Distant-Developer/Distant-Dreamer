@@ -26,7 +26,7 @@
                     
                 </div>
                 <div class="divider m-0 p-0"></div>
-                <a class="m-0 p-0" href="/user?id={{report.owner_id}}">Owner (ID #{{report.owner_id}})</a>
+                <a class="m-0 p-0" href="/user?id={{report.owner_id}}">Reporter (ID #{{report.owner_id}})</a>
             </div>
 
             
@@ -40,8 +40,17 @@
             <div class="flex flex-col gap-0">
                 <h3 class="m-0 p-0">Reported Content ({{report.target_type}})</h3>
                 <div class="divider m-0 p-0"></div>
+                {% if report.owner_is_organization() %}
+                <p class="m-0 p-0" href="/user?id={{report.detailed_report.owner_user}}">Organization (ID #{{report.get_org_owner().id}}) - Name: {{report.get_org_owner().name}}</p>
+                {% else %}
                 <a class="m-0 p-0" href="/user?id={{report.detailed_report.owner_user}}">Owner (ID #{{report.detailed_report.owner_user}})</a>
+                {% endif %}
+
+                {% if report.target_type == "jobPost" %}
+                <a class="m-0 p-0" href="/jobs?id={{report.target_id}}">Job Posting (ID #{{report.target_id}})</a>
+                {% else %}
                 <a class="m-0 p-0" href="/{{report.target_type}}?id={{report.target_id}}">Content (ID #{{report.target_id}})</a>
+                {% endif %}
             </div>
 
             {% if report.archived %}

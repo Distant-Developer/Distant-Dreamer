@@ -27,10 +27,16 @@ class Report(abstractSQL):
         if self.target_type=="post":
             x = self.get_original_post()
             return detailedReport(x.owner_id, x.content)
+        elif self.target_type=="jobPost":
+            x = self.get_original_Jobpost()
+            return detailedReport(x.owner_id, x.position_content)
         
     def hide_content(self):
         if self.target_type == "post":
             x = self.get_original_post()
+            x.hide()
+        elif self.target_type == "jobPost":
+            x = self.get_original_Jobpost()
             x.hide()
 
     
@@ -42,8 +48,30 @@ class Report(abstractSQL):
 
         return [Post(*row) for row in raw][0] #there should be only one lol
     
+    def get_original_Jobpost(self):
+        from SQL.JobPost import JobPost
+        raw = self.use_database(
+            f"SELECT * FROM Jobpost where ID = {self.target_id}", (), easySelect=False
+        )
+
+        return [JobPost(*row) for row in raw][0] #there should be only one lol
+    
     def not_archived(self):
         return not self.archived
+    
+    def owner_is_organization(self):
+        """
+        Checks if we are sending a report on an user/organization who caused said incident
+        """
+        return self.target_type == "jobPost"
+    
+    def get_org_owner(self):
+        from SQL.Organization import Organization
+        raw = self.use_database(
+            f"SELECT * FROM organizations where ID = {self.owner_id}", (), easySelect=False
+        )
+
+        return [Organization(*row) for row in raw][0] #should return 1 org; each post MUST have an owner
     
 class detailedReport():
     def __init__(self, owner_user, content):
