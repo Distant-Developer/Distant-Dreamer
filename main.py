@@ -41,20 +41,14 @@ def staff_only(f):
 @app.route('/')
 def index():
     if check_session(session=session):
-        return redirect("/lobby")
+        return redirect(url_for("/lobby"))
     
     return render_template("mainPage.html")
 
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect("/")
-
-@app.route('/register')
-def register():
-    email = request.args.get("email")
-
-    return render_template("register.html")
+    return redirect(url_for("/"))
 
 @app.route("/lobby", methods=['GET','POST'])
 @login_required
@@ -70,7 +64,7 @@ def lobby():
             )
         )
 
-        return redirect("lobby")
+        return redirect(url_for("lobby"))
     
     #sessionExists = check_session(session)
 
@@ -422,8 +416,9 @@ def orgDetails():
 
 if __name__ == "__main__":
     app.register_blueprint(authentication)
-    try:
+    debug = True
+    if not debug:
         from waitress import serve
         serve(app, host="0.0.0.0", port=PORT)
-    except:
+    else:
         app.run(host="0.0.0.0", port=PORT, debug=False, threaded=True)
