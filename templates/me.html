@@ -16,11 +16,36 @@
                 <div class="container None">
                   <div class ="flex flex-row gap-8">
                     <div class="grow-0 flex flex-col gap-2">
-                      <div class="avatar">
-                          <div class="w-72 rounded-full">
-                            <img src="{{user.logo_url}}" />
+                      <div class="relative group ">
+                        <div class="w-72 rounded-full overflow-hidden">
+                            <img src="{{user.logo_url}}" alt="User Avatar" class="w-full h-full object-cover" />
+                        </div>
+                        <button onclick="modal_profile.showModal()" class="hidden absolute bottom-4 right-4 rounded-full btn btn-primary group-hover:block">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="w-4" fill="oklch(var(--b))" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM323.8 202.5c-4.5-6.6-11.9-10.5-19.8-10.5s-15.4 3.9-19.8 10.5l-87 127.6L170.7 297c-4.6-5.7-11.5-9-18.7-9s-14.2 3.3-18.7 9l-64 80c-5.8 7.2-6.9 17.1-2.9 25.4s12.4 13.6 21.6 13.6h96 32H424c8.9 0 17.1-4.9 21.2-12.8s3.6-17.4-1.4-24.7l-120-176zM112 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"/></svg>
+                        </button>
+
+                        <dialog id="modal_profile" class="modal">
+                          <div class="modal-box modal-middle">
+                            
+                            <h3 class="font-bold text-lg">Change Avatar Logo Url</h3>
+                            <p class="py-4">Preview:</p>
+                            
+                            <form id="avatar_preview" method="post" class="flex flex-col gap-4">
+                              <div class="w-20 rounded-full overflow-hidden">
+                                <img src="{{user.logo_url}}" alt="User Avatar" class="w-full h-full object-cover" />
+                              </div>
+
+                              <input type="url" name="logo_url" value="{{user.logo_url}}" class="input input-primary" required/>
+  
+                              <div class="modal-action p-1" style="margin: 0;">
+                                <button class="btn btn-primary">Save</button>
+                            </div>
+                            </form>
+
                           </div>
-                      </div>
+                        </dialog>
+
+                    </div>
                           
                       <form method="post"><input type="text" class="text-2xl font-semibold whitespace-nowrap bg-base-100" name="username" value="{{user.username}}" /></form>
                         
@@ -344,5 +369,20 @@
 
                   x.innerHTML = content
 
+                  document.addEventListener("DOMContentLoaded", function () {
+                      // Wait for the DOM to be fully loaded
+                      var form = document.getElementById("avatar_preview");
+                      var imgElement = form.querySelector("img");
+                      var inputUrl = form.querySelector("input[name='logo_url']");
+              
+                      // Add input event listener to the URL input field
+                      inputUrl.addEventListener("input", function () {
+                          // Get the value from the input field
+                          var newImageUrl = inputUrl.value;
+              
+                          // Update the src attribute of the img element
+                          imgElement.src = newImageUrl;
+                      });
+                  });
                 </script>
 {% endblock %}

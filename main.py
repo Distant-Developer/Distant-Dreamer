@@ -177,6 +177,14 @@ def mePage():
                     session["id"]
                 ),
             )
+        elif x := request.form.get("logo_url"):
+            database.use_database(
+                "UPDATE users SET logo_url = ? WHERE id = ?", 
+                (   
+                    x,
+                    session["id"]
+                ),
+            )
 
         
         return redirect(url_for('mePage'))
