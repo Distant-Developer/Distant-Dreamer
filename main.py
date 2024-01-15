@@ -26,7 +26,7 @@ def verification_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
         if database.get_user(session["id"]).is_not_verified():
-            return redirect("/verified")
+            return redirect("/verify")
         return f(*args, **kwargs)
     return wrap
 
