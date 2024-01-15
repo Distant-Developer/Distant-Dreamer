@@ -45,6 +45,7 @@
             
             <div class="flex grow flex-1 flex-col group w-full gap-4">
               {% for post in posts %}
+              {% if post.not_hidden() %}
               <div class="self-center card w-full bg-base-300 shadow-xl ">
                 <div style="top: 2rem; right: 2rem;" class="absolute dropdown dropdown-end">
                   <button class="btn btn-sm btn-ghost">
@@ -123,6 +124,7 @@
                     
                   </div>
             </div>
+            {% endif %}
             {% endfor %}
             </div>
             

@@ -47,6 +47,7 @@ class dataSQL:
                 "owner_id"	INTEGER NOT NULL,
                 "title"	TEXT NOT NULL,
                 "content"	TEXT NOT NULL,
+                "hidden" INTEGER NOT NULL DEFAULT 0,
                 PRIMARY KEY("id" AUTOINCREMENT)
             );
                                   
@@ -117,6 +118,8 @@ class dataSQL:
                 "target_id"	TEXT NOT NULL,
                 "target_type"	TEXT NOT NULL,
                 "archived"	INTEGER NOT NULL DEFAULT 0,
+                "action" TEXT,
+                "action_reason" TEXT,
                 PRIMARY KEY("id" AUTOINCREMENT)
             );
 
@@ -337,6 +340,13 @@ class dataSQL:
         )
         #print(user_raw)
         return [Report(*row) for row in user_raw]
+    
+    def get_report(self, id):
+        user_raw = self.use_database(
+            "SELECT * from reports WHERE id = ?", (id), easySelect=False
+        )
+        #print(user_raw)
+        return [Report(*row) for row in user_raw][0]
 
     #This is Staff Related Stuff
     

@@ -330,8 +330,40 @@ def staffReport():
 
     reports = database.get_reports()
 
+    if request.method != "POST":
+        return render_template("staffReports.html", user=user, reports=reports[::-1])
+    
+    if x := request.form.get("ignore", None):
+        database.use_database(
+            "UPDATE reports SET archived = 1 WHERE id = ?", (request.form.get("id"),)
+        )
 
-    return render_template("staffReports.html", user=user, reports=reports)
+        database.use_database(
+            "UPDATE reports SET action = ? WHERE id = ?", ("ignored", request.form.get("id"),)
+        )
+
+        database.use_database(
+            f"UPDATE reports SET action_reason = ? WHERE id = ?", (x, request.form.get("id"),)
+        )
+    elif x := request.form.get("shadow", None):
+        database.use_database(
+            "UPDATE reports SET archived = 1 WHERE id = ?", (request.form.get("id"),)
+        )
+
+        database.use_database(
+            "UPDATE reports SET action = ? WHERE id = ?", ("unlisted", request.form.get("id"),)
+        )
+
+        database.use_database(
+            f"UPDATE reports SET action_reason = ? WHERE id = ?", (x, request.form.get("id"),)
+        )
+
+        report = database.get_report(request.form.get("id"))
+        report.hide_content()
+
+        
+
+    return redirect("/staff/reports")
 
 
 @app.route("/org/new", methods=['GET','POST'])

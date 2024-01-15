@@ -1,12 +1,13 @@
 from SQL.abstractSQL import abstractSQL
 
 class Post(abstractSQL):
-    def __init__(self, id, owner_id, title, content):
+    def __init__(self, id, owner_id, title, content, hidden):
         super().__init__("database.db")
         self.id = id
         self.owner_id = owner_id
         self.title = title
         self.content = content
+        self.hidden = self.int_to_bool(hidden)
 
         self.owner_user = self.get_owner()
     
@@ -42,7 +43,11 @@ class Post(abstractSQL):
         #    self.use_database(
         #        "DELETE comments where id = ?;" (comment.id)
         #    )
+        pass #TODO!
 
+    def hide(self):
         self.use_database(
-            "DELETE posts where id = ?;", (self.id)
+            f"UPDATE posts SET hidden = 1 WHERE id = ?", (self.id,)
         )
+    
+    def not_hidden(self): return not self.hidden

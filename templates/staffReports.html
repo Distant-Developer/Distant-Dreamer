@@ -37,7 +37,6 @@
             </div>
 
 
-
             <div class="flex flex-col gap-0">
                 <h3 class="m-0 p-0">Reported Content ({{report.target_type}})</h3>
                 <div class="divider m-0 p-0"></div>
@@ -45,19 +44,54 @@
                 <a class="m-0 p-0" href="/{{report.target_type}}?id={{report.target_id}}">Content (ID #{{report.target_id}})</a>
             </div>
 
-            <div class="flex flex-row">
-                <button class="btn btn-primary" onclick="my_modal_{{report.id}}.showModal()">Ignore</button>
-                <dialog id="my_modal_{{report.id}}" class="modal">
+            {% if report.archived %}
+            <div class="flex flex-col gap-0">
+                <h3 class="m-0 p-0">Action Taken -> {{report.action}}</h3>
+                <div class="divider m-0 p-0"></div>
+                <p class="m-0 p-0">Reason: {{report.action_reason}}</p>
+            </div>
+            {% endif %}
+
+
+            {% if report.not_archived() %}
+            <div class="flex flex-row gap-2">
+                <button class="btn btn-warning" onclick="hide_{{report.id}}.showModal()">Unlist</button>
+                <dialog id="hide_{{report.id}}" class="modal">
                 <div class="modal-box">
                     <form method="dialog">
                     <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </form>
-                    <h3 class="font-bold text-lg">Ignore Report..?</h3>
-                    <p class="py-4">Report is ignored. No action</p>
+                    <h3 class="font-bold text-lg m-0 p-0">Unlist</h3>
+                    <p class="py-4 m-0 p-0">Makes it No Longer Visible in /lobby</p>
+                    <form method="post">
+                        <input type="hidden" name="id" value="{{report.id}}">
+                        <textarea name="shadow" class="textarea textarea-primary w-full" placeholder="Reason?" required></textarea>
+                        <button class="btn btn-primary">Confirm</button>
+                    </form>
+
                 </div>
                 </dialog>
 
+                <button class="btn btn-primary" onclick="ignore_{{report.id}}.showModal()">Ignore</button>
+                <dialog id="ignore_{{report.id}}" class="modal">
+                <div class="modal-box">
+                    <form method="dialog">
+                    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    </form>
+                    <h3 class="font-bold text-lg m-0 p-0">Ignore Option</h3>
+                    <p class="py-4 m-0 p-0">Report is ignored. No action</p>
+                    <form method="post">
+                        <input type="hidden" name="id" value="{{report.id}}">
+                        <textarea name="ignore" class="textarea textarea-primary w-full" placeholder="Reason?" required></textarea>
+                        <button class="btn btn-primary">Confirm</button>
+                    </form>
+
+                </div>
+                </dialog>
+                
+
             </div>
+            {% endif %}
 
             
         </div>
