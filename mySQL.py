@@ -5,6 +5,7 @@ from SQL.Comment import Comment
 from SQL.Experience import Experience
 from SQL.Organization import Organization
 from SQL.Post import Post
+from SQL.Report import Report
 from SQL.User import User
 from SQL.Education import Education
 from SQL.JobPost import JobPost
@@ -106,6 +107,15 @@ class dataSQL:
                 "owner_id"	INTEGER NOT NULL,
                 "post_owner_id"	INTEGER NOT NULL,
                 "content"	TEXT NOT NULL,
+                PRIMARY KEY("id" AUTOINCREMENT)
+            );
+                                  
+            CREATE TABLE IF NOT EXISTS "reports" (
+                "id"	INTEGER NOT NULL UNIQUE,
+                "owner_id"	INTEGER NOT NULL,
+                "reason"	TEXT NOT NULL,
+                "target_id"	TEXT NOT NULL,
+                "target_type"	TEXT NOT NULL,
                 PRIMARY KEY("id" AUTOINCREMENT)
             );
             ''')
@@ -318,6 +328,13 @@ class dataSQL:
         )
         #print(user_raw)
         return [JobPost(*row) for row in raw][0]
+    
+    def get_reports(self):
+        user_raw = self.use_database(
+            "SELECT * from reports", (), easySelect=False
+        )
+        #print(user_raw)
+        return [Report(*row) for row in user_raw]
 
     #This is Staff Related Stuff
     

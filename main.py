@@ -54,23 +54,37 @@ def logout():
 @login_required
 def lobby():
     
-    if request.method == 'POST':
+    if request.method != "POST":
+        
+        user = database.get_user(session["id"])
+        
+        return render_template("lobby.html", user=user, posts = database.get_all_posts()[::-1])
+    
+    if x := request.form.get("post_owner_id"):
         database.use_database(
             "INSERT INTO comments (owner_id, post_owner_id, content) VALUES (?, ?, ?)",
             (
                 session["id"],
-                request.form.get("post_owner_id"),
+                x,
                 request.form.get("content"),
             )
         )
+    
+    elif x := request.form.get("report"):
+        database.use_database(
+            "INSERT INTO reports (owner_id, reason, target_id, target_type) VALUES (?, ?, ?, ?)",
+            (
+                session["id"],
+                x,
+                request.form.get("id"),
+                "post"
+            )
+        )
 
-        return redirect("lobby")
+    return redirect("lobby")
     
     #sessionExists = check_session(session)
 
-    user = database.get_user(session["id"])
-    
-    return render_template("lobby.html", user=user, posts = database.get_all_posts()[::-1])
 
 @app.route("/me", methods=['GET', 'POST'])
 @login_required
@@ -306,8 +320,19 @@ def staffPage():
 
     column_names, data, count = database.get_all_data(table)
 
-
     return render_template("staff.html", user=user, tables=tables, table=table, column_names=column_names, data=[dict(zip(column_names, row)) for row in data], count=count, no_change={'token', 'id', 'type', 'email'})
+
+@app.route("/staff/reports", methods=['GET','POST'])
+@staff_only
+@login_required
+def staffReport():
+    user = database.get_user(session["id"])
+
+    reports = database.get_reports()
+
+
+    return render_template("staffReports.html", user=user, reports=reports)
+
 
 @app.route("/org/new", methods=['GET','POST'])
 @login_required

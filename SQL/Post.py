@@ -35,3 +35,14 @@ class Post(abstractSQL):
         comments = [Comment(*row) for row in raw]
         return comments[:3], len(comments) > 3
     
+    def delete(self):
+        #delete all comments 
+        #comments = self.get_comments() 
+        #for comment in comments:
+        #    self.use_database(
+        #        "DELETE comments where id = ?;" (comment.id)
+        #    )
+
+        self.use_database(
+            "DELETE posts where id = ?;", (self.id)
+        )

@@ -46,13 +46,43 @@
             <div class="flex grow flex-1 flex-col group w-full gap-4">
               {% for post in posts %}
               <div class="self-center card w-full bg-base-300 shadow-xl ">
+                <div style="top: 2rem; right: 2rem;" class="absolute dropdown dropdown-end">
+                  <button class="btn btn-sm btn-ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4" fill="oklch(var(--bc))" viewBox="0 0 448 512"><path d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"/></svg>
+                  </button>
+
+                  <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                    <li><button onclick="my_modal_{{post.id}}.showModal()"> 
+                      <svg xmlns="http://www.w3.org/2000/svg" class="w-3" fill="oklch(var(--wa))" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M64 32C64 14.3 49.7 0 32 0S0 14.3 0 32V64 368 480c0 17.7 14.3 32 32 32s32-14.3 32-32V352l64.3-16.1c41.1-10.3 84.6-5.5 122.5 13.4c44.2 22.1 95.5 24.8 141.7 7.4l34.7-13c12.5-4.7 20.8-16.6 20.8-30V66.1c0-23-24.2-38-44.8-27.7l-9.6 4.8c-46.3 23.2-100.8 23.2-147.1 0c-35.1-17.6-75.4-22-113.5-12.5L64 48V32z"/></svg>
+                      Report
+                    </button></li>
+                      <dialog id="my_modal_{{post.id}}" class="modal">
+                        <div class="modal-box">
+                          <form method="dialog">
+                            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                          </form>
+                          <h3 class="font-bold text-lg">Report</h3>
+                          <p class="py-4">Please Fill in the Reason for the Report:</p>
+                          <form method="post">
+                            <input type="hidden" name="id" value="{{post.id}}">
+                            <textarea name="report" class="textarea textarea-warning w-full"></textarea>
+                            <button class="btn btn-warning">Submit</button>
+                          </form>
+                          
+                        </div>
+                      </dialog>
+                  </ul>
+                  
+                </div>
+
+
                 <div class="card-body">
                   
                   <a href="/user?id={{post.owner_user.id}}" class="flex flex-row gap-2 ">
-                    <div class="avatar">
+                    <div class="flex-none avatar">
                       <div class="w-8 rounded"><img src="{{post.owner_user.logo_url}}" alt="Tailwind-CSS-Avatar-component" /></div>
                     </div>
-                    <p class="self-center">{{post.owner_user.username}}</p>
+                    <p class="flex-1 self-center">{{post.owner_user.username}}</p>
                   </a>
 
                     <h2 id="displayedTitle" class="card-title text-2xl">{{post.title}}</h2>

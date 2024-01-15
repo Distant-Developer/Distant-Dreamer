@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block lobbyButton %}
+<div class="flex-1">
+  <a href="/staff/reports" class="flex items-center btn btn-ghost">
+      <span class="self-center text-xl font-semibold whitespace-nowrap">#staff-only</span>
+  </a>
+</div>
+{% endblock %}
+
+{% block title %}Staff{% endblock %}
+
+{%block content%}
+<div class="flex flex-col gap-4">
+    {% for report in reports %}
+    <div class="self-center card w-1/2 bg-base-300 shadow-xl ">
+        <div class="flex flex-col card-body prose gap-8">
+            <div class="flex flex-col gap-0">
+                <h3 class="m-0 p-0">Details (Report #{{report.id}})</h3>
+                <div class="divider m-0 p-0"></div>
+                <a class="m-0 p-0" href="/user?id={{report.owner_id}}">Owner (ID #{{report.owner_id}})</a>
+            </div>
+
+            
+            <div class="flex flex-col">            
+                <h3 class="m-0 p-0" >Reason</h3>
+                <div class="m-0 p-0 divider"></div>
+                <p class="m-0 p-0">{{report.reason}}</p>
+            </div>
+
+
+
+            <div class="flex flex-col gap-0">
+                <h3 class="m-0 p-0">Reported Content ({{report.target_type}})</h3>
+                <div class="divider m-0 p-0"></div>
+                <a class="m-0 p-0" href="/user?id={{report.detailed_report.owner_user}}">Owner (ID #{{report.detailed_report.owner_user}})</a>
+                <a class="m-0 p-0" href="/{{report.target_type}}?id={{report.target_id}}">Content (ID #{{report.target_id}})</a>
+            </div>
+
+            
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+                
+{%endblock%}
