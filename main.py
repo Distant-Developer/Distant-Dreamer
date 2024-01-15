@@ -341,33 +341,16 @@ def staffReport():
     if request.method != "POST":
         return render_template("staffReports.html", user=user, reports=reports[::-1])
     
-    if x := request.form.get("ignore", None):
+
+    if (x := request.form.get("ignore", None)) or (x := request.form.get("shadow", None)):
+        report_id = request.form.get("id")
         database.use_database(
-            "UPDATE reports SET archived = 1 WHERE id = ?", (request.form.get("id"),)
+            "UPDATE reports SET archived = 1, action = ?, action_reason = ? WHERE id = ?",
+            ("ignored" if "ignore" in request.form else "unlisted", x, report_id)
         )
 
-        database.use_database(
-            "UPDATE reports SET action = ? WHERE id = ?", ("ignored", request.form.get("id"),)
-        )
+        if "shadow" in request.form: database.get_report(report_id).hide_content()
 
-        database.use_database(
-            f"UPDATE reports SET action_reason = ? WHERE id = ?", (x, request.form.get("id"),)
-        )
-    elif x := request.form.get("shadow", None):
-        database.use_database(
-            "UPDATE reports SET archived = 1 WHERE id = ?", (request.form.get("id"),)
-        )
-
-        database.use_database(
-            "UPDATE reports SET action = ? WHERE id = ?", ("unlisted", request.form.get("id"),)
-        )
-
-        database.use_database(
-            f"UPDATE reports SET action_reason = ? WHERE id = ?", (x, request.form.get("id"),)
-        )
-
-        report = database.get_report(request.form.get("id"))
-        report.hide_content()
 
         
 
