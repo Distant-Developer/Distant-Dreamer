@@ -41,14 +41,14 @@ def staff_only(f):
 @app.route('/')
 def index():
     if check_session(session=session):
-        return redirect(url_for("/lobby"))
+        return redirect("/lobby")
     
     return render_template("mainPage.html")
 
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for("/"))
+    return redirect("/")
 
 @app.route("/lobby", methods=['GET','POST'])
 @login_required
@@ -64,7 +64,7 @@ def lobby():
             )
         )
 
-        return redirect(url_for("lobby"))
+        return redirect("lobby")
     
     #sessionExists = check_session(session)
 
