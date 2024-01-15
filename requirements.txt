@@ -5,3 +5,4 @@ Markdown==3.5.1
 secret==0.8
 requests
 google_auth_oauthlib
+waitress
