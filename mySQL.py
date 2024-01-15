@@ -37,6 +37,7 @@ class dataSQL:
                 "is_staff"	INTEGER NOT NULL DEFAULT 0,
                 "linkedin_url" TEXT DEFAULT NULL,
                 "github_url" TEXT DEFAULT NULL,
+                "discord" TEXT DEFAULT NULL,
                 "description" TEXT DEFAULT NULL,
                 "logo_url" TEXT NOT NULL,
                 "type" TEXT NOT NULL

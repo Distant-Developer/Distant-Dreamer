@@ -5,7 +5,7 @@ from SQL.Experience import Experience
 from SQL.abstractSQL import abstractSQL
 
 class User(abstractSQL):
-    def __init__(self, id, token, username, email, is_verified, is_staff, linkedin_url=None, github_url=None, description=None, logo_url=None, type=None):
+    def __init__(self, id, token, username, email, is_verified, is_staff, linkedin_url=None, github_url=None, discord=None, description=None, logo_url=None, type=None):
         super().__init__()
         self.id = id
         self.token = token
@@ -15,6 +15,7 @@ class User(abstractSQL):
         self.is_verified = self.int_to_bool(is_verified)
         self.linkedin_url = linkedin_url
         self.github_url = github_url
+        self.discord = discord
         self.description = self.remove_scripts(description)
         self.logo_url = logo_url
         self.type = type
@@ -91,6 +92,9 @@ class User(abstractSQL):
     
     def Github_isNotEmpty(self):
         return self.github_url != None
+    
+    def Discord_isNotEmpty(self):
+        return self.discord != None
     
     def remove_scripts(self, input_string):
         if input_string == "" or input_string == None:

@@ -169,6 +169,31 @@ def mePage():
                 ),
             )
         
+        elif x := request.form.get("linkedin_url"):
+            database.use_database(
+                "UPDATE users SET linkedin_url = ? WHERE id = ?", 
+                (
+                    x,
+                    session["id"]
+                )
+            )
+
+            database.use_database(
+                "UPDATE users SET github_url = ? WHERE id = ?", 
+                (
+                    request.form.get("github_url"),
+                    session["id"]
+                )
+            )
+
+            database.use_database(
+                "UPDATE users SET discord = ? WHERE id = ?", 
+                (
+                    request.form.get("discord"),
+                    session["id"]
+                )
+            )
+        
         elif x := request.form.get("username"):
             database.use_database(
                 "UPDATE users SET username = ? WHERE id = ?", 
