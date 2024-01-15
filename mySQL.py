@@ -116,8 +116,10 @@ class dataSQL:
                 "reason"	TEXT NOT NULL,
                 "target_id"	TEXT NOT NULL,
                 "target_type"	TEXT NOT NULL,
+                "archived"	INTEGER NOT NULL DEFAULT 0,
                 PRIMARY KEY("id" AUTOINCREMENT)
             );
+
             ''')
         
         # users

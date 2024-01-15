@@ -14,11 +14,6 @@ class JobPost(abstractSQL):
     def __repr__(self):
         return f"JobPost(id={self.id}, owner_id={self.owner_id}, position_title='{self.position_title}', position_content='{self.position_content}', app_url='{self.app_url}')"
     
-    def int_to_bool(self, input):
-        if input == 0: 
-            return False 
-        elif input == 1:
-            return True
     
     def archive(self):
         self.use_database(

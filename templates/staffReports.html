@@ -16,7 +16,15 @@
     <div class="self-center card w-1/2 bg-base-300 shadow-xl ">
         <div class="flex flex-col card-body prose gap-8">
             <div class="flex flex-col gap-0">
-                <h3 class="m-0 p-0">Details (Report #{{report.id}})</h3>
+                <div class="flex flex-row gap-4 items-center">
+                    <h3 class="m-0 p-0">Details (Report #{{report.id}})</h3>
+                    {% if report.archived %}
+                    <div class="badge badge-neutral">Reviewed</div>
+                    {% else %}
+                    <div class="badge badge-neutral">Not Reviewed</div>
+                    {% endif %}
+                    
+                </div>
                 <div class="divider m-0 p-0"></div>
                 <a class="m-0 p-0" href="/user?id={{report.owner_id}}">Owner (ID #{{report.owner_id}})</a>
             </div>
@@ -35,6 +43,20 @@
                 <div class="divider m-0 p-0"></div>
                 <a class="m-0 p-0" href="/user?id={{report.detailed_report.owner_user}}">Owner (ID #{{report.detailed_report.owner_user}})</a>
                 <a class="m-0 p-0" href="/{{report.target_type}}?id={{report.target_id}}">Content (ID #{{report.target_id}})</a>
+            </div>
+
+            <div class="flex flex-row">
+                <button class="btn btn-primary" onclick="my_modal_{{report.id}}.showModal()">Ignore</button>
+                <dialog id="my_modal_{{report.id}}" class="modal">
+                <div class="modal-box">
+                    <form method="dialog">
+                    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    </form>
+                    <h3 class="font-bold text-lg">Ignore Report..?</h3>
+                    <p class="py-4">Report is ignored. No action</p>
+                </div>
+                </dialog>
+
             </div>
 
             

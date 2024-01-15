@@ -93,3 +93,9 @@ class abstractSQL:
                 "SELECT * from organizations", (), easySelect=False
             )
         return [Organization(*row) for row in raw]
+    
+    def int_to_bool(self, input):
+        if input == 0: 
+            return False 
+        elif input == 1:
+            return True

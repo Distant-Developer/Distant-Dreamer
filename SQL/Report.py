@@ -2,13 +2,14 @@ from SQL.abstractSQL import abstractSQL
 
 
 class Report(abstractSQL):
-    def __init__(self, id, owner_id, reason, target_id, target_type):
+    def __init__(self, id, owner_id, reason, target_id, target_type, archived):
         super().__init__("database.db")
         self.id = id
         self.owner_id = owner_id
         self.reason = reason
         self.target_id = target_id
         self.target_type = target_type
+        self.archived = self.int_to_bool(archived)
 
         self.detailed_report = self.get_content()
 
