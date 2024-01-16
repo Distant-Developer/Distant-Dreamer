@@ -116,4 +116,7 @@ class User(abstractSQL):
         return self.email != None
     
     def check_special_badges(self):
-        return fetch(self.id)
+        x = fetch(self.id)
+        if x == None:
+            return []
+        return x
