@@ -1,4 +1,5 @@
 import json
+import os
 
 class SpecialBadge:
     def __init__(self, name, style):
@@ -13,13 +14,27 @@ def read_json():
         return json.loads(f.read())
     
 def find_by_id(data, target_id):
-    try:
-        badges = data[str(target_id)]
-        badgesUserHas = []  # Use a simple list without specifying the type
+    badges = data.get(str(target_id))
 
-        for badge in badges:
-            badgesUserHas.append(SpecialBadge(name=badge, style=data["badges"][badge]["style"]))
+    if badges is not None:
+        # Use a list comprehension for a more concise and efficient way to create the list
+        badgesUserHas = [SpecialBadge(name=badge, style=data["badges"][badge]["style"]) for badge in badges]
 
         return badgesUserHas
-    except:
-        return None
+
+    return None
+
+
+if __name__ == "__main__":
+    file_path = "Utils/customBadges.json"
+    if not os.path.exists(file_path):
+        # Create an empty dictionary (you can modify this as needed)
+        data_to_write = {}
+
+        # Write the data to the file
+        with open(file_path, 'w') as file:
+            json.dump(data_to_write, file)
+
+        print(f"The file '{file_path}' has been created.")
+    else:
+        print(f"The file '{file_path}' already exists.")
