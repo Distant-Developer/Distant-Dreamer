@@ -1,0 +1,20 @@
+RENAME THIS TO "customBadges.json"
+
+{
+    "badges": {
+        "Sponsor": {
+            "style": "fa-solid fa-book"
+        }
+    },
+    "1": ["Sponsor"]
+}
+
+$schema
+{
+    "badges": {
+        "NAME OF CUSTOM BADGE": {
+            "style" : "NAME OF STYLE; GET IT FROM FONT AWESOME"
+        }
+    },
+    "USER_ID": ["LIST OF CUSTOM BADGES YOU MADE"]
+}

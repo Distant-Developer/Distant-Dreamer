@@ -3,6 +3,7 @@ import re
 from SQL.Education import Education
 from SQL.Experience import Experience
 from SQL.abstractSQL import abstractSQL
+from Utils.customBadges import fetch
 
 class User(abstractSQL):
     def __init__(self, id, token, username, email, is_verified, is_staff, linkedin_url=None, github_url=None, discord=None, description=None, logo_url=None, type=None):
@@ -113,3 +114,6 @@ class User(abstractSQL):
     
     def has_email(self):
         return self.email != None
+    
+    def check_special_badges(self):
+        return fetch(self.id)

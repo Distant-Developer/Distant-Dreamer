@@ -215,16 +215,15 @@ def mePage():
         return redirect(url_for('mePage'))
 
     user = database.get_user(session["id"])
-
         
-    return render_template("me.html", experiences=user.experience, user=user, educations=user.education)
+    return render_template("me.html", experiences=user.experience, user=user, educations=user.education, badges = user.check_special_badges())
 
 @app.route("/user")
 @login_required
 def userPage():
     try: targetuser = database.get_user(request.args.get("id"))
     except: return redirect("lobby")
-    return render_template("user.html", user=database.get_user(session["id"]), experiences=targetuser.experience, targetuser=targetuser, educations=targetuser.education)
+    return render_template("user.html", user=database.get_user(session["id"]), experiences=targetuser.experience, targetuser=targetuser, educations=targetuser.education, badges=targetuser.check_special_badges())
 
 @app.route("/jobs", methods=["POST","GET"])
 @login_required

@@ -166,6 +166,7 @@ database.db
 #Secret.py
 secret.py
 client_secret.json 
+Utils/customBadges.json
 
 #Vs Code
 .vscode
