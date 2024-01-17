@@ -1,5 +1,6 @@
 from functools import wraps
-from flask import Flask, render_template, request
+import mimetypes
+from flask import Flask, render_template, request, send_file
 from mySQL import database
 from secret import CLIENT_ID, CLIENT_SECRET
 from routes.authentication import *
@@ -9,6 +10,8 @@ app = Flask(__name__,static_folder='static')
 app.secret_key = "SECRET_KEY"
 app.config["GITHUB_CLIENT_ID"] = CLIENT_ID
 app.config["GITHUB_CLIENT_SECRET"] = CLIENT_SECRET
+app.config['UPLOAD_FOLDER'] = 'uploads' #save files to uploads folder; temporarily solution for now
+app.config['RESUME_FOLDER'] = 'uploads/resumes'
 
 
 def check_session(session):
@@ -210,6 +213,8 @@ def mePage():
                     session["id"]
                 ),
             )
+        elif x := request.form.get("resume"):
+            print(x)
 
         
         return redirect(url_for('mePage'))
@@ -476,7 +481,8 @@ def org_Admin():
     
     return redirect("/org/admin?id="+str(org.id))  
 
-
+#/developer API
+#so far only GET can be used
 @app.route("/developer/job")
 def jobDetails():
     id = request.args.get("id")
@@ -491,7 +497,58 @@ def orgDetails():
 
     return org.to_dict()
 
+@app.route('/resume', methods=['POST'])
+def upload_file():
+    if not os.path.exists(app.config['UPLOAD_FOLDER']): os.makedirs(app.config['UPLOAD_FOLDER'])
+    if not os.path.exists(app.config['RESUME_FOLDER']): os.makedirs(app.config['RESUME_FOLDER'])
 
+    if session["id"] is None: return "Invalid Credentials."
+    user = database.get_user(session["id"])
+    
+    if 'file' not in request.files: return 'No file part'
+
+    file = request.files['file']
+    state = 1 if request.form.get("privacy") == "on" else 0
+
+    if file.filename == '':
+        return 'No selected file'
+
+    if file:
+        # Get a secure version of the original filename
+        from werkzeug.utils import secure_filename
+        original_filename = secure_filename(file.filename)
+        file_extension = os.path.splitext(original_filename)[1]
+
+        # Construct the new filename based on user ID and the secure original filename
+        new_filename = f"{user.id}{file_extension}"
+
+        # Specify the path to save the file
+        filename = os.path.join(app.config['RESUME_FOLDER'], new_filename)
+
+        # Save the file with the new filename
+        file.save(filename)
+
+        # Update resume location and state in the database
+        user.updateResumeLocation(new_filename, state)
+
+        return redirect("/me")
+    
+@app.route("/resumes/<filename>")
+def resumes(filename):
+    # Assuming your files are stored in app.config['RESUME_FOLDER']
+    file_path = os.path.join(app.config['RESUME_FOLDER'], filename)
+
+    # Use mimetypes to determine the content type
+    content_type, _ = mimetypes.guess_type(file_path)
+
+    # If the content type is not recognized, default to 'application/octet-stream'
+    if content_type is None:
+        content_type = 'application/octet-stream'
+
+    # For other file types, send the file as usual
+    return send_file(file_path, mimetype=content_type, as_attachment=False)
+
+    
 if __name__ == "__main__":
     app.register_blueprint(authentication)
     debug = True

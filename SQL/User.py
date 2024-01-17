@@ -6,7 +6,7 @@ from SQL.abstractSQL import abstractSQL
 from Utils.customBadges import fetch
 
 class User(abstractSQL):
-    def __init__(self, id, token, username, email, is_verified, is_staff, linkedin_url=None, github_url=None, discord=None, description=None, logo_url=None, type=None):
+    def __init__(self, id, token, username, email, is_verified, is_staff, linkedin_url=None, github_url=None, discord=None, description=None, logo_url=None, type=None, resume=None,private_resume=False):
         super().__init__()
         self.id = id
         self.token = token
@@ -20,6 +20,8 @@ class User(abstractSQL):
         self.description = self.remove_scripts(description)
         self.logo_url = logo_url
         self.type = type
+        self.resume = resume
+        self.private_resume = private_resume
 
         self.education = self.get_educations()
         self.experience = self.get_experiences()
@@ -120,3 +122,16 @@ class User(abstractSQL):
         if x == None:
             return []
         return x
+    
+    def updateResumeLocation(self, path: str, private_state: bool):
+        self.use_database(
+            "UPDATE users SET resume = ?, private_resume = ? WHERE id = ?", 
+            (   
+                path,
+                private_state,
+                self.id
+            ),
+        )
+    
+    def hasResume(self):
+        return self.resume != None

@@ -100,6 +100,25 @@
                     </script>
 
                       {% endif %}
+                      
+                      {% if user.hasResume() and not user.private_resume %}
+                      <div class="divider m-0 p-0">Resume</div>
+                      <div class="flex flex-row items-center w-full gap-2">
+                        <a href="resumes/{{ user.resume }}" class="w-full">
+                            <button class="btn btn-ghost p-0 w-full flex items-center">
+                            
+                            <div class="flex flex-row grow items-center">
+                              <span class="text-lg font-semibold text-primary">Resume</span>
+                              {% if user.private_resume %}
+                                  <div class="flex-none ml-auto badge badge-neutral">Private</div>
+                              {% endif %}
+                          </div>
+                            
+                          </button>
+                        </a>
+                      </div>
+                      {% endif %}
+
                     </div>
 
                 </div>
@@ -108,7 +127,7 @@
                   <article id="useraboutme" class="prose"></article>
 
 
-                  <div class="divider hover:font-bold divider-primary"> Experience </div>
+                  <!--- <div class="divider hover:font-bold divider-primary"> Experience </div>
                   <div class = "flex flex-col">
 
                     {% for experience in experiences %}
@@ -154,8 +173,8 @@
                   {% endfor %}
 
 
-                  <div class="divider hover:font-bold divider-primary"> License & Certification </div>
-                </div>
+                  <div class="divider hover:font-bold divider-primary"> License & Certification </div> --->
+                </div> 
               </div>
             </div>
           

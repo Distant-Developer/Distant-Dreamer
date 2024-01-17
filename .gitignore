@@ -170,3 +170,6 @@ Utils/customBadges.json
 
 #Vs Code
 .vscode
+
+#Not Needed to be Pushed
+/uploads

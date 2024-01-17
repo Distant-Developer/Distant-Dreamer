@@ -151,6 +151,74 @@
                           </div>
                         </dialog>
 
+                        <div class="divider m-0 p-0">Resume</div>
+                        {% if user.hasResume() %}
+                        <div class="flex flex-row items-center w-full gap-2">
+                          <a href="resumes/{{ user.resume }}" class="w-full">
+                              <button class="btn btn-ghost p-0 w-full flex items-center">
+                              
+                              <div class="flex flex-row grow items-center">
+                                <span class="text-lg font-semibold text-primary">Resume</span>
+                                {% if user.private_resume %}
+                                    <div class="flex-none ml-auto badge badge-neutral">Private</div>
+                                {% endif %}
+                            </div>
+                              
+                            </button>
+                          </a>
+                        </div>
+
+                        {% endif %}
+                        <button class="btn" onclick="modal_resume.showModal()">Add Resume</button>
+                        <dialog id="modal_resume" class="modal">
+                          <div class="modal-box modal-middle">
+                            
+                            <h3 class="font-bold text-lg">Add Resume</h3>
+                            
+                            <form action="/resume" method="post" enctype="multipart/form-data" class="space-y-4">
+                              <label for="file" class="block text-sm font-medium text-gray-600">Choose a file:</label>
+                              <div class="group">
+                                  <div class="relative border-dashed border-2 border-gray-500 p-4 rounded-md transition-transform transform group-hover:scale-105">
+                                      <input type="file" name="file" id="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                                      <div class="text-center">
+                                          <div class="mb-2">
+                                              <svg class="mx-auto h-6 w-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18"></path>
+                                              </svg>
+                                          </div>
+                                          <p class="text-sm text-gray-600" id="file-info">Drag and drop a file or click to select</p>
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="flex items-center">
+                                <input type="checkbox" id="privacyCheckbox" name="privacy" class="mr-2">
+                                <label for="privacyCheckbox" class="text-sm text-gray-600">Make Resume Private</label>
+                              </div>
+
+                            
+                              <button type="submit" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition">Upload</button>
+                            </form>
+                          </div>
+
+                        </dialog>
+
+                        <script>
+                          // Update the file info message if a file is selected
+                          document.getElementById('file').addEventListener('change', function () {
+                              const fileInfo = document.getElementById('file-info');
+                              if (this.files.length > 0) {
+                                  fileInfo.textContent = 'File ready to be uploaded: ' + this.files[0].name;
+                                  fileInfo.classList.add('text-primary'); // Add the "text-primary" class
+                                  fileInfo.classList.remove('text-gray-600'); // Remove the "text-primary" class
+                              } else {
+                                  fileInfo.textContent = 'Drag and drop a file or click to select';
+                                  fileInfo.classList.remove('text-primary'); // Remove the "text-primary" class
+                                  fileInfo.classList.add('text-gray-600')
+                              }
+                          });
+                      </script>
+
                     </div>
                     <div class="flex flex-col gap-2 grow">
                       <div class="divider hover:font-bold divider-primary"> About Me </div>
@@ -176,7 +244,7 @@
                       </dialog>
 
 
-                      <div class="divider hover:font-bold divider-primary"> Experience </div>
+                      <!--<div class="divider hover:font-bold divider-primary"> Experience </div>
                       <div class = "flex flex-col">
 
                         {% for experience in experiences %}
@@ -393,9 +461,8 @@
                             
                           </form>
                         </div>
-                      </dialog>
+                      </dialog> -->
 
-                      <div class="divider hover:font-bold divider-primary"> License & Certification </div>
                     </div>
                   </div>
                 </div>
