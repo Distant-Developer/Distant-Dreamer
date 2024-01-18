@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block lobbyButton %}
+<div class="flex-1">
+  <a href="/org/applications?id={{displayJob.id}}" class="flex items-center btn btn-ghost">
+      <span class="self-center text-xl font-semibold whitespace-nowrap">#Applications-For-#{{displayJob.id}}</span>
+  </a>
+</div>
+{% endblock %}
+
+{% block title %}Job Applications for JobPost #{{displayJob.id}}{% endblock %}
+{%block content%}
+<style>
+textarea:focus, input:focus, select:focus{
+    outline: none;
+}
+</style>
+
+<p class="text-2xl text-medium">Applications</p>
+<div class="divider"></div>
+<div class="grid grid-cols-3 gap-4">
+    {% for app in displayJob.applications() %}
+    <div class="group">
+        <div class="card w-full bg-base-300 shadow-xl p-4 transition-transform transform group-hover:scale-110 relative flex flex-col">
+            <a href="/user?id={{app.get_user().id}}" class="flex flex-row gap-2 ">
+                <div class="flex-none avatar">
+                    <div class="w-8 rounded"><img src="{{app.get_user().logo_url}}" alt="Tailwind-CSS-Avatar-component" /></div>
+                </div>
+                <p class="flex-1 self-center">{{app.get_user().username}}</p>
+            </a>
+
+            <div class="divider m-0"></div>
+            <div class="flex flex-row gap-2 m-0">
+                <a href="/resumes/{{app.get_user().resume}}" class="btn btn-ghost">
+                    <i class="fa-solid fa-paperclip"></i>
+                    <p>Resume</p>
+                </a>
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{%endblock%}

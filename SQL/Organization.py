@@ -15,8 +15,14 @@ class Organization(abstractSQL):
         self.logo_url = logo_url
 
     
-    def getPosts(self):
+    def getPosts(self, id=None):
         from SQL.JobPost import JobPost
+        if (id != None):
+            raw = self.use_database(
+                "SELECT * from jobPost WHERE owner_id = ? AND id = ?", (self.id,id), easySelect=False
+            )
+            return [JobPost(*row) for row in raw]
+
         raw = self.use_database(
             "SELECT * from jobPost WHERE owner_id = ?", (self.id,), easySelect=False
         )

@@ -244,14 +244,23 @@ def jobPostings(priorityjob=None):
             )
         )
         return redirect("/jobs")
+    elif x := request.form.get("appSend"):
+        database.use_database(
+            "INSERT INTO applicant (owner_id, applicant_id) VALUES (?, ?)",
+            (
+                x,
+                session["id"],
+            )
+        )
+        return redirect("/jobs")
     
     if id := request.args.get("id", None):
         priorityjob = database.get_jobpost(id=id)
 
     jobs = database.get_job_posts()
 
-    try: return render_template("jobs.html", user= database.get_user(session["id"]), jobs=jobs, priorityjob = priorityjob)
-    except: return redirect("/lobby")
+    return render_template("jobs.html", user= database.get_user(session["id"]), jobs=jobs, priorityjob = priorityjob)
+
 
 @app.route("/verify", methods=['GET', 'POST'])
 @login_required
@@ -466,20 +475,41 @@ def org_Admin():
         org.updateDetails("size", x)
     elif "postJobBoard" == request.form.get("action"):
         database.use_database(
-            "INSERT INTO jobPost (owner_id, position_title, position_content, app_url) VALUES (?, ?, ?, ?)",
+            "INSERT INTO jobPost (owner_id, position_title, position_content) VALUES (?, ?, ?)",
             (
                 org.id,
                 request.form.get("title"),
                 request.form.get("content"),
-                request.form.get("url"),
             ),
         )
     elif id := int(request.form.get("archive")):
-        print(id)
         job = database.get_jobpost(id)
         job.archive()
     
     return redirect("/org/admin?id="+str(org.id))  
+
+@app.route("/org/applications", methods=['GET','POST'])
+@login_required
+@verification_required
+def job_applications():
+    user = database.get_user(session["id"])
+    id = request.args.get("id", None) #Organization that owns Post
+    job = request.args.get("jobid", None) #finds Job Post
+
+    try: 
+        org = database.get_organizations(id=id)[0]
+        if org.owner_id == user.id:
+            pass
+        else:
+            org = user.get_organizations()[0]
+    except:
+        org = user.get_organizations()[0]
+
+    displayJob = org.getPosts(job)[0]
+    print(displayJob.applications())
+
+    return render_template("adminOrgApps.html", user=user, displayJob=displayJob)
+    
 
 #/developer API
 #so far only GET can be used

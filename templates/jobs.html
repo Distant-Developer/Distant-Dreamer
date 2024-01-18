@@ -26,7 +26,10 @@
                 
                 <div class="flex flex-col items-start w-full h-auto prose">
                     <h2 class="m-0">{{priorityjob.position_title}}</h2>
-                    <p>At {{priorityjob.get_owner().name}}</p>
+                    <p class="m-0">At {{priorityjob.get_owner().name}}</p>
+                    {% if priorityjob.has_applied(user.id) %}
+                    <div id="applied_{{priorityjob.id}}" class="badge badge-neutral m-0">Applied!</div>
+                    {% endif %}
                 </div>
 
             </button>
@@ -40,7 +43,10 @@
                 
                 <div class="flex flex-col items-start w-full h-auto prose">
                     <h2 class="m-0">{{job.position_title}}</h2>
-                    <p>At {{job.get_owner().name}}</p>
+                    <p class="m-0">At {{job.get_owner().name}}</p>
+                    {% if job.has_applied(user.id) %}
+                    <div id="applied_{{job.id}}" class="badge badge-neutral m-0">Applied!</div>
+                    {% endif %}
                 </div>
 
             </button>
@@ -103,15 +109,35 @@
                     <p id="main_Size" class="text-base">{{jobs[0].get_owner().size}}</p>
                 </div>
 
+                
                 <div id="archived_badge" class="hide badge badge-neutral mt-2">Archived</div>
 
 
                 <div class="divider"></div>
                 <p id="main_Jobcontent" class="p-0 text-base w-auto prose" id="title_content">{{jobs[0].position_content}}</p>
-                
 
                 <div class="flex flex-row w-full items-start justify-start mt-2">
-                    <a id="applybutton" href="url" class="btn btn-secondary">Apply Here</a>
+                    <!--<button id="applybutton" href="url" class="btn btn-secondary hidden" style="display: hidden;">Apply Here</button>-->
+
+
+                    <div class="group">
+                        <button id="applybutton" class="btn btn-primary transition-transform transform group-hover:scale-110 relative" onclick="apply_for_position.showModal()">Apply For Position</button>
+                    </div>
+                    
+                    <dialog id="apply_for_position" class="modal">
+                    <div class="modal-box">
+                        <form method="dialog">
+                        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                        </form>
+                        <h3 class="font-bold text-lg">Confirm Application</h3>
+                        <p class="py-4">By sending the application, we will send your resume and email to your employer.</p>
+                        <form method="post">
+                            <input type="hidden" name="appSend" id="appSend" value="{{jobs[0].id}}">
+                            <button type="submit" class="btn btn-primary">Send My Application!</button>
+                        </form>
+                    </div>
+                    </dialog>
+
                 </div>
 
             </div>
@@ -160,11 +186,11 @@ function changePositionScreen(jobIdToFetch) {
     fetchDataById(jobIdToFetch)
     .then(jobData => {
 
-        document.getElementById("id").value = jobData.ID
+        document.getElementById("id").value = jobData.ID;
 
         document.getElementById("main_JobTitle").innerHTML = jobData.POSITION_TITLE;
         document.getElementById("main_Jobcontent").innerHTML = convert(jobData.POSITION_CONTENT);
-        document.getElementById("applybutton").href = jobData.URL_APP;
+        
 
         if (jobData.ARCHIVED) {
             document.getElementById("archived_badge").style.display="block";
@@ -173,6 +199,14 @@ function changePositionScreen(jobIdToFetch) {
             document.getElementById("archived_badge").style.display="none";
             document.getElementById("applybutton").style.display="flex";
         }
+
+        //check if already applied and isn't already hidden by something else
+        if (checkAppliedStatus(jobData.ID) && document.getElementById("applybutton").style.display != "none") {
+            document.getElementById("applybutton").style.display="none";
+        } else {
+            document.getElementById("applybutton").style.display="flex";
+        }
+        document.getElementById("appSend").value = jobData.ID;
 
         return fetchOrgDataById(jobData.OWNER_ID);
     })
@@ -248,7 +282,16 @@ function addBounceAnimation(id) {
 }
 
 var positionsElement = document.getElementById('positions'); if (positionsElement) { var firstButton = positionsElement.querySelector('button'); if (firstButton) { changePositionScreen(firstButton.id); } else { console.error("No button found inside 'positions' element."); } } else { console.error("Element with id 'positions' not found."); }
-    
+
+function checkAppliedStatus(jobId) {
+    var appliedElement = document.getElementById('applied_'+jobId);
+
+    if (appliedElement) {
+        return true;
+    } else {
+        return false;
+    }
+}
 </script>
 
 {% endblock %}

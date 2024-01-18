@@ -1,6 +1,7 @@
 from datetime import datetime
 import sqlite3
 from SQL.Activity import Activity
+from SQL.Applicant import Applicant
 from SQL.Comment import Comment
 from SQL.Experience import Experience
 from SQL.Organization import Organization
@@ -95,8 +96,9 @@ class dataSQL:
                 "position_title"	TEXT NOT NULL,
                 "position_content"	TEXT NOT NULL,
                 "app_url"	TEXT NOT NULL,
+                "questions"	JSON NOT NULL DEFAULT '[]', 
                 "archived"	INTEGER NOT NULL DEFAULT 0,
-                "hidden" INTEGER NOT NULL DEFAULT 0,
+                "hidden"	INTEGER NOT NULL DEFAULT 0,
                 PRIMARY KEY("id")
             );
                                   
@@ -125,6 +127,14 @@ class dataSQL:
                 "archived"	INTEGER NOT NULL DEFAULT 0,
                 "action" TEXT,
                 "action_reason" TEXT,
+                PRIMARY KEY("id" AUTOINCREMENT)
+            );
+
+            CREATE TABLE IF NOT EXISTS "applicant" (
+                "id"	INTEGER NOT NULL UNIQUE,
+                "owner_id"	INTEGER NOT NULL,
+                "applicant_id"	INTEGER NOT NULL,
+                "answers"	JSON DEFAULT '[]',
                 PRIMARY KEY("id" AUTOINCREMENT)
             );
 
@@ -352,6 +362,12 @@ class dataSQL:
         )
         #print(user_raw)
         return [Report(*row) for row in user_raw][0]
+
+    def get_applicant_by_id(self, id, user_id, org_id):
+        user_raw = self.use_database(
+            "SELECT * from applicant WHERE id = ?", (id), easySelect=False
+        )
+        return [Applicant(*row) for row in user_raw][0] 
 
     #This is Staff Related Stuff
     
