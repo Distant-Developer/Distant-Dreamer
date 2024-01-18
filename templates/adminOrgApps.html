@@ -20,25 +20,45 @@ textarea:focus, input:focus, select:focus{
 <div class="divider"></div>
 <div class="grid grid-cols-3 gap-4">
     {% for app in displayJob.applications() %}
-    <div class="group">
+    <div class="group cursor-pointer" onclick="my_modal_{{app.get_user().id}}.showModal()">
         <div class="card w-full bg-base-300 shadow-xl p-4 transition-transform transform group-hover:scale-110 relative flex flex-col">
-            <a href="/user?id={{app.get_user().id}}" class="flex flex-row gap-2 ">
+            <div class="flex flex-row gap-2 ">
+                <div class="flex-none avatar">
+                    <div class="w-8 rounded"><img src="{{app.get_user().logo_url}}" alt="Tailwind-CSS-Avatar-component" /></div>
+                </div>
+                <p class="flex-1 self-center">{{app.get_user().username}}</p>
+            </div>
+
+            <div class="divider m-0"></div>
+            Click for more details.
+
+        </div>
+    </div>
+
+    <dialog id="my_modal_{{app.get_user().id}}" class="modal">
+        <div class="modal-box">
+            <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
+            <a href="users?id={{app.get_user().id}}" class="flex flex-row gap-2">
                 <div class="flex-none avatar">
                     <div class="w-8 rounded"><img src="{{app.get_user().logo_url}}" alt="Tailwind-CSS-Avatar-component" /></div>
                 </div>
                 <p class="flex-1 self-center">{{app.get_user().username}}</p>
             </a>
-
+            
             <div class="divider m-0"></div>
-            <div class="flex flex-row gap-2 m-0">
-                <a href="/resumes/{{app.get_user().resume}}" class="btn btn-ghost">
-                    <i class="fa-solid fa-paperclip"></i>
-                    <p>Resume</p>
-                </a>
-            </div>
+            {% if app.get_user().email != None %}
+            <p>Email: <strong>{{app.get_user().email}}</strong></p>
+            {% endif %}
+
+            <p>Resume: <a href="/resumes/{{app.get_user().resume}}" class="text-blue-500">Link</a></p>
+
+            <p>User Account: <a href="/user?id={{app.get_user().id}}" class="text-blue-500">Link</a></p>
 
         </div>
-    </div>
+    </dialog>
+    
     {% endfor %}
 </div>
 {%endblock%}
