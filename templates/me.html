@@ -232,20 +232,18 @@
                         </button>
                       </div>
 
-                      <div id="editorBox" class="group relative hidden">
+                      <form method="post" id="editorBox" class="group relative hidden" onsubmit="submitForm(event)">
                         <!--<textarea id="useraboutme_editable2" class="bg-base-300 w-full max-w-full h-96 border border-gray-600 rounded-lg shadow-md relative text-wrap" language="javascript" contenteditable="true" oninput="autoResizeTextarea(this)">
                         </textarea>-->
 
                         <div class="rounded-lg border border-gray-600">
-                            <div class="w-full h-96 bg-base-300 rounded-lg" id="editor"></div>
+                            <div class="w-full h-screen bg-base-300 rounded-lg" id="editor"></div>
                         </div>
 
-
-
-                        <button class="absolute top-6 -right-6 rounded-full btn btn-primary hover:scale-110">
+                        <button type="submit" class="absolute top-6 -right-6 rounded-full btn btn-primary hover:scale-110">
                           <i class="fa-solid fa-eye"></i>
                         </button>
-                      </div>
+                      </form>
 
                       
                       
@@ -495,29 +493,9 @@
 
                 <script>
                   function convert(input) {
-                    const clean = DOMPurify.sanitize(input);
                     var converter = new showdown.Converter();
-                    return converter.makeHtml(clean);
-                  }
-
-                  function format(html) {
-                      var tab = '\t';
-                      var result = '';
-                      var indent= '';
-
-                      html.split(/>\s*</).forEach(function(element) {
-                          if (element.match( /^\/\w/ )) {
-                              indent = indent.substring(tab.length);
-                          }
-
-                          result += indent + '<' + element + '>\r\n';
-
-                          if (element.match( /^<?\w[^>]*[^\/]$/ ) && !element.startsWith("input")  ) { 
-                              indent += tab;              
-                          }
-                      });
-
-                      return result.substring(1, result.length-3);
+                    const html = converter.makeHtml(input);
+                    return DOMPurify.sanitize(html);
                   }
 
                   var x = document.getElementById("useraboutme");
@@ -543,7 +521,7 @@
 
 
                   var x = document.getElementById("editor");
-                  var content = convert(`{{user.description}}`);
+                  var content = `{{user.description}}`;
                   x.innerHTML = content
                   
                   var editor = ace.edit("editor");
@@ -554,6 +532,28 @@
                     document.getElementById("preview").style.display="none";
                     document.getElementById("editorBox").style.display="block";
                   }
+
+                  function submitForm(event) {
+                    event.preventDefault();
+
+                    var rawCode = editor.getValue();
+                    
+                    var formData = new FormData();
+                    formData.append('description', rawCode);
+
+                    console.log(formData);
+
+                    fetch("/me", {
+                      method: 'POST',
+                      body: formData
+                    })
+                    .then(response => {
+                      if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                      }
+                      window.location.replace("/me");
+                    })
+                }
                     
 
                 </script>

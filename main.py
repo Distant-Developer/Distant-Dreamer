@@ -163,11 +163,12 @@ def mePage():
                 ),
             )
         
-        elif action == "upDescription":
+        elif x := request.form.get("description"):
+            print("UPDATED")
             database.use_database(
                 "UPDATE users SET description = ? WHERE id = ?", 
                 (   
-                    request.form.get("description"),
+                    x,
                     session["id"]
                 ),
             )
