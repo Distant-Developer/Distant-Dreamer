@@ -131,10 +131,14 @@
                         </form>
                         <h3 class="font-bold text-lg">Confirm Application</h3>
                         <p class="py-4">By sending the application, we will send your resume and email to your employer.</p>
+                        {% if user.hasResume() %}
                         <form method="post">
                             <input type="hidden" name="appSend" id="appSend" value="{{jobs[0].id}}">
-                            <button type="submit" class="btn btn-primary">Send My Application!</button>
+                            <button class="btn btn-primary hover:scale-110">Send My Application!</button>
                         </form>
+                        {% else %}
+                        <p>We cannot send your application without a resume.</p>
+                        {% endif %}
                     </div>
                     </dialog>
 
