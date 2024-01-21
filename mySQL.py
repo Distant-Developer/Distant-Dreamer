@@ -285,7 +285,7 @@ class dataSQL:
             "SELECT * from posts", (), easySelect=False
         )
         #print(user_raw)
-        return [Post(*row) for row in raw]
+        return tuple(Post(*row) for row in raw)
     
 
     
@@ -340,7 +340,7 @@ class dataSQL:
         raw = self.use_database(
             "SELECT * from jobPost", (), easySelect=False
         )
-        return [JobPost(*row) for row in raw]
+        return tuple(JobPost(*row) for row in raw)
     
     def get_jobpost(self, id):
         raw = self.use_database(

@@ -57,10 +57,8 @@ def logout():
 @login_required
 def lobby():
     
-    if request.method != "POST":
-        
+    if request.method == "GET":    
         user = database.get_user(session["id"])
-        
         return render_template("lobby.html", user=user, posts = database.get_all_posts()[::-1])
     
     if x := request.form.get("post_owner_id"):
